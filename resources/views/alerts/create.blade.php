@@ -1,30 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-    
-    @if (count($errors) > 0)
-        <ul class="alert alert-danger" role="alert">
-            @foreach ($errors->all() as $error)
-                <li class="ml-4">{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
 
-    <h1>No.{{ $location->id }} の注意喚起情報</h1>
+    <h1>注意喚起情報の投稿</h1>
 
     <div class="row">
         <div class="col-6">
-            {!! Form::model($location, ['route' => ['locations.update', $location->id], 'method' => 'put','files' => true,]) !!}
-                
-                 <div class="form-group">
+            {!! Form::model($alert, ['route' => 'alerts.store','files' => true]) !!}
+        
+                <p>
                     {!! Form::label('content', 'メッセージ') !!}
                     {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
                     {!! Form::file('thefile') !!}
-                </div>
+                </p>
                 
-                <div class="form-group">
+                 <p>
                     {!! Form::label('area', 'エリア') !!}
-                   {!! Form::select('area', ['わからない'=>'わからない', '赤大路町'=>'赤大路町', '芥川町'=>'芥川町', '明田町'=>'明田町', 
+                    {!! Form::select('area', ['わからない'=>'わからない', '赤大路町'=>'赤大路町', '芥川町'=>'芥川町', '明田町'=>'明田町', 
                     '明野町'=>'明野町','朝日町'=>'朝日町', '阿武野'=>'阿武野','安満磐手町'=>'安満磐手町', '天川新町'=>'天川新町', '天川町'=>'天川町',
                     '安満北の町'=>'安満北の町','安満御所の町'=>'安満御所の町','安満新町'=>'安満新町','安満中の町'=>'安満中の町',
                     '安満西の町'=>'安満西の町', '安満東の町'=>'安満東の町','安岡寺町'=>'安岡寺町', '井尻'=>'井尻', '出灰'=>'出灰', '今城町'=>'今城町', 
@@ -57,17 +49,28 @@
                     '宮が谷町'=>'宮が谷町','宮田町'=>'宮田町','宮之川町'=>'宮之川町','宮之川原元町'=>'宮之川原元町','宮野町'=>'宮野町','紫町'=>'紫町',
                     '名神町'=>'名神町','柳川町'=>'柳川町','八幡町'=>'八幡町','山手町'=>'山手町','弥生が丘町'=>'弥生が丘町','淀の原町'=>'淀の原町',
                     '霊仙寺町'=>'霊仙寺町','若松町'=>'若松町'], 'わからない') !!}
+                </p>
+                <div>
+                    @if (\Session::has('error'))
+                        <div class="alert alert-error" id="error">
+                            {!! \Session::get('error') !!}
+                        </div>
+                    @endif
                 </div>
-                
-                <div class="form-group">
+                <style>
+                    #error {
+                        color: red;
+                    }
+                </style>
+                <p>
                     {!! Form::label('place', '場所') !!}
                     {!! Form::text('place', null, ['class' => 'form-control']) !!}
-                </div>
+                </p>
                 
-                {!! Form::submit('更新', ['class' => 'btn btn-primary']) !!}
+                {!! Form::submit('投稿', ['class' => 'btn btn-primary']) !!}
         
             {!! Form::close() !!}
         </div>
+        </div>
     </div>
-
 @endsection

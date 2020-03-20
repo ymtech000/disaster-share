@@ -15,12 +15,15 @@ class CreateLocationsTable extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('content');    // content カラム追加
-            $table->string('image');      // image  カラム追加
-            $table->string('area');      // area   カラム追加
-            $table->string('place');      // place カラム追加
-            $table->string('time');         // timeカラム追加
+            $table->integer('user_id')->unsigned()->index();
+            $table->string('place');
+            $table->string('facility');
+            $table->string('lat');
+            $table->string('lng');
             $table->timestamps();
+            
+            // 外部キー制約
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -34,7 +37,3 @@ class CreateLocationsTable extends Migration
         Schema::dropIfExists('locations');
     }
 }
-
-
-
-
