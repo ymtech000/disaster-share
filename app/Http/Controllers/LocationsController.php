@@ -60,23 +60,34 @@ class LocationsController extends Controller
      public function show($id)
     {
         $location = Location::find($id);
-
+        
         return view('locations.show', [
             'location' => $location,
         ]);
     }
     
-    public function destroy($id)
+    public function destroy1($id)
     {
         $location = \App\Location::find($id);
         if (\Auth::id() === $location->user_id) {
             $location->delete();
         }
-        if(url()->previous() == "/users/{user}"){
-            return redirect('/locations');
-        }
-        else{
+        if(url()->current() == "users/{user}"){
             return back();
         }
+        else{
+            return redirect('/locations');
+        }
+    }
+    
+     public function destroy2($id)
+    {
+        $location = \App\Location::find($id);
+        if (\Auth::id() === $location->user_id) {
+            $location->delete();
+        }
+
+            return redirect('/locations');
+        
     }
 }

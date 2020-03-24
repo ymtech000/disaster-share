@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Alert;
+use Storage;
 
 class AlertsController extends Controller
 {
@@ -52,6 +53,27 @@ class AlertsController extends Controller
         $filename='';
         if ($request->file('thefile')->isValid([])) {
             $filename = $request->file('thefile')->store('img');
+            
+            /*
+            // S3サーバへ格納
+            $disk = Storage::disk('s3');
+            //dd($filename);
+            // S3 にファイルをアップロード（パスはバケットディレクトリを起点として相対パスで記述）
+            $disk->put('pogtor528/' . $filename, 'storage/' . $filename, 'public'); // ← (4)
+
+            // S3の完全URLを得る
+            $url = $disk->url('pogtor528/' . $filename);
+            //dd($url);
+            */
+            
+            //s3アップロード開始
+            $image = $request->file('thefile');
+            // バケットの`pogtor528`フォルダへアップロード
+            $path = Storage::disk('s3')->putFile('pogtor528', $image, 'public');
+            // アップロードした画像のフルパスを取得
+            $url = Storage::disk('s3')->url($path);
+
+            
         }
         
         //時間のセット
@@ -71,7 +93,8 @@ class AlertsController extends Controller
                 'area' => $request->area,
                 'place' => $request->place,
                 'time' => $now,
-                'image' => $filename,
+                //'image' => $filename,
+                'image' => $url,
                 'lat' => $lat,
                 'lng' => $lng,
             ]);
@@ -97,11 +120,8 @@ class AlertsController extends Controller
         if (\Auth::id() === $alert->user_id) {
             $alert->delete();
         }
-        if(url()->previous() == "/users/{user}"){
+        
             return redirect('/alerts');
-        }
-        else{
-            return back();
-        }
+        
     }
 }

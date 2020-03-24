@@ -21,7 +21,7 @@
                     <td>{{ $alert->user->name }}</td>
                     <td>{!! link_to_route('alerts.show', $alert->id, ['id' => $alert->id]) !!}</td>
                     <td>{{ $alert->content }}</td>
-                    <td><img src="{{asset('storage/'.$alert->image)}}" width="150" height="150"></td>
+                    <td><img src="{{$alert->image}}" width="150" height="150"></td>
                     <td>{{ $alert->area }}</td>
                     <td>{{ $alert->place }}</td>
                     <td>{{ $alert->time }}</td>

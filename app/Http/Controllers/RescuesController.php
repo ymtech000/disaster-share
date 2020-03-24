@@ -102,11 +102,7 @@ class RescuesController extends Controller
         if (\Auth::id() === $rescue->user_id) {
             $rescue->delete();
         }
-        if(url()->previous() == "/users/{user}"){
+        
             return redirect('/rescues');
-        }
-        else{
-            return back();
-        }
     }
 }

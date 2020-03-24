@@ -15,6 +15,8 @@ Route::get('/alerts', 'AlertsController@index'); // 注意喚起
 
 Route::get('/rescues', 'RescuesController@index'); // 救助要請
 
+Route::get('/locations', 'LocationsController@index'); // 重要施設の共有
+
 Route::get('/searches1','Searches1Controller@index'); //救助要請情報検索
 
 Route::get('/searches2', 'Searches2Controller@index'); //注意喚起情報投稿検索

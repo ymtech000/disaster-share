@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1>No.{{ $location->id }} の注意喚起情報</h1>
+    <h1>No.{{ $location->id }} の重要施設</h1>
 
     <table class="table table-bordered">
         <tr>
