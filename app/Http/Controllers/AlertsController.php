@@ -54,25 +54,12 @@ class AlertsController extends Controller
         if ($request->file('thefile')->isValid([])) {
             $filename = $request->file('thefile')->store('img');
             
-            /*
-            // S3サーバへ格納
-            $disk = Storage::disk('s3');
-            //dd($filename);
-            // S3 にファイルをアップロード（パスはバケットディレクトリを起点として相対パスで記述）
-            $disk->put('pogtor528/' . $filename, 'storage/' . $filename, 'public'); // ← (4)
-
-            // S3の完全URLを得る
-            $url = $disk->url('pogtor528/' . $filename);
-            //dd($url);
-            */
-            
             //s3アップロード開始
             $image = $request->file('thefile');
             // バケットの`pogtor528`フォルダへアップロード
             $path = Storage::disk('s3')->putFile('pogtor528', $image, 'public');
             // アップロードした画像のフルパスを取得
             $url = Storage::disk('s3')->url($path);
-
             
         }
         
@@ -93,7 +80,6 @@ class AlertsController extends Controller
                 'area' => $request->area,
                 'place' => $request->place,
                 'time' => $now,
-                //'image' => $filename,
                 'image' => $url,
                 'lat' => $lat,
                 'lng' => $lng,

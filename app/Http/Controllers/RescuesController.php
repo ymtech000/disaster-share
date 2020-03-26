@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Rescue;
 use App\Rescuecomment;
+use Storage;
 
 
 class RescuesController extends Controller
@@ -50,11 +51,18 @@ class RescuesController extends Controller
             ]
         ]);
     
-        //画像ファイル受け取り処理
         $filename='';
         if ($request->file('thefile')->isValid([])) {
             $filename = $request->file('thefile')->store('img');
+            
+            //s3アップロード開始
+            $image = $request->file('thefile');
+            // バケットの`pogtor528`フォルダへアップロード
+            $path = Storage::disk('s3')->putFile('pogtor528', $image, 'public');
+            // アップロードした画像のフルパスを取得
+            $url = Storage::disk('s3')->url($path);
         }
+            
         
         //時間のセット
         date_default_timezone_set('Asia/Tokyo');
@@ -74,7 +82,7 @@ class RescuesController extends Controller
             'area' => $request->area,
             'place' => $request->place,
             'time' => $now,
-            'image' => $filename,
+            'image' => $url,
             'lat' => $lat,
             'lng' => $lng,
         ]);
