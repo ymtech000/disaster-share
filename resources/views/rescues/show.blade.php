@@ -15,7 +15,7 @@
         </tr>
         <tr>
             <th>画像</th>
-            <td><img src="{{asset('storage/'.$rescue->image)}}" width="150" height="150"></td>
+            <td><img src="{{$rescue->image}}" width="150" height="150"></td>
         </tr>
         <tr>
             <th>場所</th>

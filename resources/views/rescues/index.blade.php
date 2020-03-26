@@ -21,7 +21,7 @@
                     <td>{{ $rescue->user->name }}</td>
                     <td>{!! link_to_route('rescues.show', $rescue->id, ['id' => $rescue->id]) !!}</td>
                     <td>{{ $rescue->content }}</td>
-                    <td><img src="{{asset('storage/'.$rescue->image)}}" width="150" height="150"></td>
+                    <td><img src="{{$rescue->image}}" width="150" height="150"></td>
                     <td>{{ $rescue->area }}</td>
                     <td>{{ $rescue->place }}</td>
                     <td>{{ $rescue->time }}</td>
