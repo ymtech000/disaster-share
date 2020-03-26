@@ -53,7 +53,7 @@
                                                     @endif
                                                 </td>
                                                 <td>{{ $data->content }}</td>
-                                                <td><img src="{{asset('storage/'.$data->image)}}" width="150" height="150"></td>
+                                                <td><img src="{{$data->image}}" width="150" height="150"></td>
                                                 <td>{{ $data->area }}</td>
                                                 <td>{{ $data->place }}</td>
                                                 <td>{{ $data->time }}</td>

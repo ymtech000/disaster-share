@@ -20,7 +20,7 @@
                     
                         <tr>
                             <td>{{ $rescue->content }}</td>
-                            <td><img src="{{asset('storage/'.$rescue->image)}}" width="150" height="150"></td>
+                            <td><img src="{{$rescue->image}}" width="150" height="150"></td>
                             <td>{{ $rescue->area }}</td>
                             <td>{{ $rescue->place }}</td>
                         </tr>
