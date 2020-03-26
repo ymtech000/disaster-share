@@ -57,11 +57,10 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'key' => 'AKIAUVRIVAON27W525HL',
+            'secret' => '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',
             'region' => 'us-east-1',
-            
-            'bucket' => env('AWS_BUCKET'),
+            'bucket' => 'pogtor528',
         ],
 
     ],
