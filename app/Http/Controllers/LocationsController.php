@@ -66,27 +66,13 @@ class LocationsController extends Controller
         ]);
     }
     
-    public function destroy1($id)
+     public function destroy($id)
     {
         $location = \App\Location::find($id);
         if (\Auth::id() === $location->user_id) {
             $location->delete();
         }
-        if(url()->current() == "users/{user}"){
-            return back();
-        }
-        else{
-            return redirect('/locations');
-        }
-    }
-    
-     public function destroy2($id)
-    {
-        $location = \App\Location::find($id);
-        if (\Auth::id() === $location->user_id) {
-            $location->delete();
-        }
-
+        
             return redirect('/locations');
         
     }
