@@ -13,13 +13,9 @@
 
 Route::get('/alerts', 'AlertsController@index'); // 注意喚起
 
-Route::get('/rescues', 'RescuesController@index'); // 救助要請
+Route::get('/post_searches', 'Post_SearchesController@index'); //注意喚起情報投稿検索
 
-Route::get('/locations', 'LocationsController@index'); // 重要施設の共有
-
-Route::get('/searches1','Searches1Controller@index'); //救助要請情報検索
-
-Route::get('/searches2', 'Searches2Controller@index'); //注意喚起情報投稿検索
+Route::get('/area_searches', 'Area_SearchesController@index');
 
 Route::get('/unsubscribe', 'UnsubscribesController@index'); //退会
 
@@ -43,17 +39,25 @@ Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
 
 // ユーザ機能
 Route::group(['middleware' => 'auth'], function () {
-Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'destroy']]);
-Route::resource('alerts', 'AlertsController'); 
-Route::resource('rescues', 'RescuesController');
-Route::resource('searches1', 'Searches1Controller');
-Route::resource('searches2', 'Searches2Controller');
-Route::resource('unsubscribe', 'UnsubscribesController');
-Route::resource('alertcomments', 'AlertcommentsController', ['only' => ['show', 'store', 'destroy']]);
-Route::resource('rescuecomments', 'RescuecommentsController', ['only' => ['show', 'store', 'destroy']]);
-Route::resource('locations', 'LocationsController', ['only' => ['index', 'create', 'show', 'store', 'destroy']]);
+    Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'destroy']]);
+    Route::resource('alerts', 'AlertsController'); 
+    Route::resource('post_searches', 'Post_SearchesController', ['only' => ['index']]);
+    Route::resource('area_searches', 'Area_SearchesController', ['only' => ['index']]);
+    Route::resource('unsubscribe', 'UnsubscribesController', ['only' => ['index']]);
+    Route::resource('alertcomments', 'AlertcommentsController', ['only' => ['show', 'store', 'destroy']]);
+    Route::group(['prefix' => 'users/{id}'], function () {
+        Route::post('follow', 'UserFollowController@store')->name('user.follow');
+        Route::delete('unfollow', 'UserFollowController@destroy')->name('user.unfollow');
+        Route::get('followings', 'UsersController@followings')->name('users.followings');
+        Route::get('followers', 'UsersController@followers')->name('users.followers');
+        Route::get('favoritings', 'UsersController@favoritings')->name('users.favoritings');
+        Route::post('image', 'UsersController@image')->name('users.image');
+        });
+    Route::group(['prefix' => 'alerts/{id}'], function () {
+                Route::post('favorite', 'FavoritesController@store')->name('alerts.favorite');
+                Route::delete('unfavorite', 'FavoritesController@destroy')->name('alerts.unfavorite');
+        });
 });
-
 
 
 //管理者機能
@@ -80,5 +84,3 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function(){
 
 //　googlemap
 Route::get('alertmaps', 'AlertmapsController@index')->name('alertmaps.index');
-Route::get('rescuemaps', 'RescuemapsController@index')->name('rescuemaps.index');
-Route::get('locationmaps', 'LocationmapsController@index')->name('locationmaps.index');

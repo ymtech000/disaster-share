@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'content', 'area', 'place', 'time', 'image',
+        'name', 'email', 'password', 'image',
     ];
 
     /**
@@ -32,23 +32,99 @@ class User extends Authenticatable
         return $this->hasMany(Alert::class);
     }
     
-    public function rescues()
-    {
-        return $this->hasMany(Rescue::class);
-    }
     
     public function alertcomments()
     {
         return $this->hasMany(Alertcomment::class);
     }
     
-    public function rescuecomments()
+    public function followings()
     {
-        return $this->hasMany(Rescuecomment::class);
+        return $this->belongsToMany(User::class, 'user_follow', 'user_id', 'follow_id')->withTimestamps();
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'user_follow', 'follow_id', 'user_id')->withTimestamps();
     }
     
-    public function locations()
+    public function follow($userId)
     {
-        return $this->hasMany(Location::class);
+        // 既にフォローしているかの確認
+        $exist = $this->is_following($userId);
+        // 相手が自分自身ではないかの確認
+        $its_me = $this->id == $userId;
+    
+        if ($exist || $its_me) {
+            // 既にフォローしていれば何もしない
+            return false;
+        } else {
+            // 未フォローであればフォローする
+            $this->followings()->attach($userId);
+            return true;
+        }
+    }
+    
+    public function unfollow($userId)
+    {
+        // 既にフォローしているかの確認
+        $exist = $this->is_following($userId);
+        // 相手が自分自身かどうかの確認
+        $its_me = $this->id == $userId;
+    
+        if ($exist && !$its_me) {
+            // 既にフォローしていればフォローを外す
+            $this->followings()->detach($userId);
+            return true;
+        } else {
+            // 未フォローであれば何もしない
+            return false;
+        }
+    }
+    
+    public function is_following($userId)
+    {
+        return $this->followings()->where('follow_id', $userId)->exists();
+    }
+    
+    public function favorites()
+    {
+        return $this->belongsToMany(Alert::class, 'favorites', 'user_id', 'alerts_id')->withTimestamps();
+    }
+    
+    public function favorite($alertId)
+    {
+        // 既にいいねしているかの確認
+        $exist = $this->is_favorite($alertId);
+       
+    
+        if ($exist) {
+            // 既にいいねしていれば何もしない
+            return false;
+        } else {
+            // 未いいねであればフォローする
+            $this->favorites()->attach($alertId);
+            return true;
+        }
+    }
+    
+    public function unfavorite($alertId)
+    {
+        // 既にいいねしているかの確認
+        $exist = $this->is_favorite($alertId);
+      
+        if ($exist) {
+            // 既にいいねしていればいいねを外す
+            $this->favorites()->detach($alertId);
+            return true;
+        } else {
+            // 未いいねであれば何もしない
+            return false;
+        }
+    }
+    
+    public function is_favorite($alertId)
+    {
+        return $this->favorites()->where('alerts_id', $alertId)->exists();
     }
 }

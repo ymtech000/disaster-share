@@ -1,32 +1,45 @@
 @extends('layouts.app')
-
 @section('content')
-    @if (Auth::check())
-        <h1>機能一覧</h1>
-        {!! link_to_route('rescues.index', '救助要請掲示板', [], ['class' => 'btn btn-primary']) !!}
-        {!! link_to_route('alerts.index', '注意喚起掲示板', [], ['class' => 'btn btn-primary']) !!}
-        {!! link_to_route('locations.index', '重要施設の共有掲示板', [], ['class' => 'btn btn-primary']) !!}
-        <div class="row">
-            <aside class="col-sm-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">{{ Auth::user()->name }}</h3>
-                    </div>
-                    <div class="card-body">
-                        <img class="rounded img-fluid" src="{{ Gravatar::src(Auth::user()->email, 500) }}" alt="">
-                    </div>
-                </div>
-            </aside>
-        </div>
-    @else
-        <div class="center jumbotron">
-            <div class="text-center">
-                <h1>ようこそ災害掲示板へ</h1>
-                {!! link_to_route('signup.get', '会員登録', [], ['class' => 'btn btn-lg btn-primary']) !!}
-                <!--{!! link_to_route('admin.register', '管理者会員登録', [], ['class' => 'btn btn-lg btn-primary']) !!}-->
-                
-            </div>
-        </div>
-    @endif
-    
+<div class="jumbotron jumbotron-fluid mb-0">
+
+  
+      <div class="text-center">
+          <h1>DISASTER SHARE</h1>
+          <h3>災害時に位置情報を共有することのできるアプリです。</h3>
+          <p>{!! link_to_route('signup.get', '新規登録はこちら', [], ['class' => 'btn btn-lg btn-primary']) !!}</p>
+      </div>
+</div>
 @endsection
+ 
+<style>
+    img {
+        border-radius: 50%;  /* 角丸半径を50%にする(=円形にする) */
+        width:  180px;       /* ※縦横を同値に */
+        height: 180px;       /* ※縦横を同値に */
+    }
+    .jumbotron{
+        background:url("{{asset('assets/dawn.jpg')}}");
+        background-size: cover;
+    }
+    .text-center h1{
+        font-size:65px;
+        opacity: 0.7;
+        letter-spacing: 5px;
+        padding-top:40px;
+    }
+    .text-center h3{
+        padding-top:100px;
+    }
+    .text-center p{
+        margin-top:60px;
+    }
+    .lesson {
+      float: left;
+      width: 33.3%;
+      text-align:center;
+    }
+    .lesson{
+      padding-right:15px;
+      padding-left:15px;
+    }
+</style>

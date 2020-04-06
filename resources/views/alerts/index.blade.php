@@ -1,90 +1,57 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <h1>注意喚起掲示板</h1>
-
-    @if (count($alerts) > 0)
-        <table class="table table-striped">
-            @foreach ($alerts as $alert)
-            <thead>
-                <tr>
-                    <th>投稿者</th>
-                    <th>No.</th>
-                    <th>メッセージ</th>
-                    <th>画像</th>
-                    <th>エリア</th>
-                    <th>場所の詳細</th>
-                    <th>日時</th>
-                </tr>
-                <tr>
-                    <td>{{ $alert->user->name }}</td>
-                    <td>{!! link_to_route('alerts.show', $alert->id, ['id' => $alert->id]) !!}</td>
-                    <td>{{ $alert->content }}</td>
-                    <td><img src="{{$alert->image}}" width="150" height="150"></td>
-                    <td>{{ $alert->area }}</td>
-                    <td>{{ $alert->place }}</td>
-                    <td>{{ $alert->time }}</td>
-                </tr>
-            </thead>
-                <tr>
-                    <td columnspan='2'>コメント数：{{count($alert->alertcomments)}}</td>
-                    <td align="left">
-                        @if(count($alert->alertcomments)>0)
-                            <font color="blue" data-toggle="collapse" data-target="#example-{{$alert->id}}" aria-expand="false" aria-controls="example-1">
-                                スレッドを表示する
-                            </font>
-                            <div class="collapse" id="example-{{$alert->id}}">
-                                <div class="card card-body">
-                                    @foreach($alert->alertcomments->where('parent_id', null) as $alertcomment)
-                                        <table>
-                                            <thread>
-                                                <tr>
-                                                    <th>投稿者</th>
-                                                    <th>No.</th>
-                                                    <th>コメント</th>
-                                                    <th>日時</th>
-                                                </tr>
-                                                <tr>
-                                                    <td>{{$alertcomment->user->name}}</td>
-                                                    <td>{!! link_to_route('alertcomments.show', $alertcomment->id, ['id' => $alertcomment->id]) !!}</td>
-                                                    <td>{{$alertcomment->comment}}</td>
-                                                    <td>{{$alertcomment->time}}</td>
-                                                </tr>
-                                            </thread>
-                                        </table>
-                                        @foreach($alert->alertcomments->where('parent_id', $alertcomment->id) as $alertcomment)
-                                        <font color="blue" data-toggle="collapse" data-target="#example-{{$alertcomment->id}}" aria-expand="false" aria-controls="example-2">
-                                            スレッドを表示する
-                                        </font>
-                                        <div class="collapse" id="example-{{$alertcomment->id}}">
-                                        <div class="card card-body">
-                                        <table>
-                                            <thread>
-                                                <tr>
-                                                    <th>投稿者</th>
-                                                    <th>No.</th>
-                                                    <th>コメント</th>
-                                                    <th>日時</th>
-                                                </tr>
-                                                <tr>
-                                                    <td>{{$alertcomment->user->name}}</td>
-                                                    <td>{!! link_to_route('alertcomments.show', $alertcomment->id, ['id' => $alertcomment->id]) !!}</td>
-                                                    <td>{{$alertcomment->comment}}</td>
-                                                    <td>{{$alertcomment->time}}</td>
-                                                </tr>
-                                            </thread>
-                                        </table>
-                                        @endforeach
-                                    @endforeach
-                                </div>
+<h1 class="text-center font-weight-bold font-family-Tahoma">DISASTER  INFORMATION</h1>
+<div class="conteiner">
+    <div class="card-group　mx-auto">
+        <div id="lists" class="row">
+            @if (count($alerts) > 0)
+                <table class="table table-striped">
+                    @foreach ($alerts as $alert)
+                        <div class="card border-0 col-6 col-sm-6 col-md-4 post-cards">
+                            <div class="profile">
+                                <a href="users/{{$user->id}}"><img class="avatar-type-circle float-left mr-sm-2 ml-1 d-none d-sm-block" src="/assets/default-a877b525b8bae5a97946d44b91113c09ec0c0b98e34c356205bd37cd299430cb.jpg" width="30" height="30" /></a>
+                                <p>{{$alert->user->name}}</p>
                             </div>
-                        @endif
-                    </td>
-                </tr>
-            @endforeach
-        </table>
-        {!! link_to_route('alertmaps.index', '地図', [], ['class' => 'btn btn-primary']) !!}
-   @endif
-    {!! link_to_route('alerts.create', '注意喚起情報の投稿', [], ['class' => 'btn btn-primary']) !!}
+                            <a href="alerts/{{$alert->id}}"><img src="{{$alert->image}}" width="270" height="270" class="img"></a>
+                            <div class="buttons">
+                                <div class="favorite-button">
+                                    @include('favorites.favorite_button', ['alert' => $alert])
+                                </div>
+                                <div class="area"><i class="fa fa-location-arrow"></i> {{$alert->area}}</div>
+                            </div>
+                            <div class="title">{{$alert->title}}</div>
+                        </div>
+                    @endforeach
+                </table>
+            @endif
+        </div>
+    </div>
+</div>
 @endsection
+<style>
+    .profile{
+        display:inline;
+    }
+    .comment{
+        float:left;
+        margin-right:10px;
+    }
+    .row{
+        padding-left:70px;
+        padding-right:70px;
+    }
+    .img{
+        border-radius:5px;
+        margin-bottom:10px;
+    }
+    .favorite-button{
+        width:10px;
+    }
+    .title{
+        font-weight:bold;
+    }
+    .contents{
+        float:left;
+    }
+</style>

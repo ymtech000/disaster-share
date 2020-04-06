@@ -14,12 +14,14 @@ class Controller extends BaseController
 
     public function counts($user) {
         $count_alerts = $user->alerts()->count();
-        $count_rescues = $user->rescues()->count();
-        $count_locations = $user->locations()->count();
+        $count_followings = $user->followings()->count();
+        $count_followers = $user->followers()->count();
+        $count_favorites = $user->favorites()->count();
         return [
             'count_alerts' => $count_alerts,
-            'count_rescues' => $count_rescues,
-            'count_locations' => $count_locations,
+            'count_followings' => $count_followings,
+            'count_followers' => $count_followers,
+            'count_favorites' => $count_favorites,
         ];
        
     }

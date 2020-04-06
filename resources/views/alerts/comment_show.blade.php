@@ -13,10 +13,6 @@
             <th>メッセージ</th>
             <td>{{ $alertcomment->content }}</td>
         </tr>
-        <tr>
-            <th>画像</th>
-            <td><img src ="{{asset('storage/'.$alertcomment->image)}}" width="150" height="150"</td>
-        </tr>
     </table>
     
    {!! Form::open(['route' => 'alertcomments.store','files' => true]) !!}

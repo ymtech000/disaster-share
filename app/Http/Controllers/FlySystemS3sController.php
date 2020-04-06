@@ -18,7 +18,6 @@ class FlySystemS3Controller extends Controller
 
     // S3の完全URLを得る
     $url = $disk->url('test/test.jpg'); 
-    // $url → https://s3-REGION.amazonaws.com/BUCKET_NAME/test/test.jpg みたいな完全URLが返る
 
     // S3上に指定ファイルが存在するか確認
     if($disk->exists('test/test.jpg')) { 

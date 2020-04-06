@@ -18,6 +18,11 @@
                     {!! Form::label('email', 'メールアドレス') !!}
                     {!! Form::email('email', old('email'), ['class' => 'form-control']) !!}
                 </div>
+                
+                <div class="form-group">
+                    {!! Form::label('icon', 'アイコン') !!}
+                    {!! Form::file('icon') !!}
+                </div>
 
                 <div class="form-group">
                     {!! Form::label('password', 'パスワード') !!}

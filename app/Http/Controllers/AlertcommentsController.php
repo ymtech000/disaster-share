@@ -36,7 +36,8 @@ class AlertcommentsController extends Controller
             'time' => $now,
         ]);
         
-        return redirect('/alerts');
+        // return redirect('/alerts/{alert}');
+        return back();
     }
     
      public function show($id)

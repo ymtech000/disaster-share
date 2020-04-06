@@ -17,6 +17,7 @@ class CreateAlertsTable extends Migration
             $table->increments('id');
             $table->string('content');    // content カラム追加
             $table->integer('user_id')->unsigned()->index();
+            $table->string('title')->nullable(); //title カラム追加
             $table->string('image')->nullable();      // image  カラム追加
             $table->string('area')->nullable();     // area   カラム追加
             $table->string('place')->nullable();      // place カラム追加
