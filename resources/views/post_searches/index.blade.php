@@ -21,7 +21,7 @@
                             @foreach ($datas as $data)
                                 <div class="card border-0 col-6 col-sm-6 col-md-4 post-cards">
                                     <div class="profile">
-                                            <a href="/users/47"><img class="avatar-type-circle float-left mr-sm-2 ml-1 d-none d-sm-block" src="/assets/default-a877b525b8bae5a97946d44b91113c09ec0c0b98e34c356205bd37cd299430cb.jpg" width="30" height="30" /></a>
+                                            <a href="users/{{$data->user->id}}"><img class="float-left user-image" src="{{$data->user->image}}" width="35" height="35"></a>
                                             <div>{{$data->user->name}}</div>
                                     </div>
                                     <a href="alerts/{{$data->id}}"><img src="{{$data->image}}" width="270" height="270" class="img"></a>

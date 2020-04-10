@@ -10,7 +10,7 @@
                     @foreach ($alerts as $alert)
                         <div class="card border-0 col-6 col-sm-6 col-md-4 post-cards">
                             <div class="profile">
-                                <a href="users/{{$user->id}}"><img class="avatar-type-circle float-left mr-sm-2 ml-1 d-none d-sm-block" src="/assets/default-a877b525b8bae5a97946d44b91113c09ec0c0b98e34c356205bd37cd299430cb.jpg" width="30" height="30" /></a>
+                                <a href="users/{{$user->id}}"><img class="float-left user-image" src="{{$alert->user->image}}" width="35" height="35"></a>
                                 <p>{{$alert->user->name}}</p>
                             </div>
                             <a href="alerts/{{$alert->id}}"><img src="{{$alert->image}}" width="270" height="270" class="img"></a>
@@ -53,5 +53,13 @@
     }
     .contents{
         float:left;
+    }
+    .user-image{
+        border-radius:50%;
+        margin-right:10px;
+        margin-bottom:10px;
+    }
+    p{
+        margin-bottom:10px;
     }
 </style>

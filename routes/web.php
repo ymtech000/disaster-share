@@ -19,6 +19,8 @@ Route::get('/area_searches', 'Area_SearchesController@index');
 
 Route::get('/unsubscribe', 'UnsubscribesController@index'); //退会
 
+Route::get('/profile_edit', 'Profile_EditsController@index');
+
 
 Route::get('/', function () {
   return view('welcome');
@@ -44,6 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('post_searches', 'Post_SearchesController', ['only' => ['index']]);
     Route::resource('area_searches', 'Area_SearchesController', ['only' => ['index']]);
     Route::resource('unsubscribe', 'UnsubscribesController', ['only' => ['index']]);
+    Route::resource('profile_edit', 'Profile_EditsController', ['only' => ['index']]);
     Route::resource('alertcomments', 'AlertcommentsController', ['only' => ['show', 'store', 'destroy']]);
     Route::group(['prefix' => 'users/{id}'], function () {
         Route::post('follow', 'UserFollowController@store')->name('user.follow');

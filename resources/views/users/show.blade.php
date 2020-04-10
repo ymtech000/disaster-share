@@ -2,19 +2,8 @@
 
 @section('content')
     <h1 class="text-center font-weight-bold font-family-Tahoma">YOUR PAGE</h1>
-    
-    <form action="users/{{Auth::user()->id}}/image" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-                画像
-            <div class="file_upload">
-                <input type="file" id="file_upload" name="thefile">
-            </div>
-        </div>
-        <input type="submit">
-    </form>
-    @if($user->image !== null)
-        <img src="{{$user->image}}">
-    @endif
+    {!! link_to_route('profile_edit.index', 'プロフィールを編集', [], ['class' => 'btn btn-light']) !!}
+    @if($user->image == null)
     <div class="profile">
         <div class="card">
             <div class="card-body">
@@ -23,6 +12,10 @@
             <h3>{{ $user->name}}</h3>
         </div>
     </div>
+    @else
+    <img src="{{$user->image}}" width="300" height="300">
+    @endif
+    
     <div>
         <div class="navtabs">
             @include('users.navtabs', ['user' => $user])

@@ -2,13 +2,11 @@
 
 @section('content')
 
-    <h1 class="text-center font-weight-bold font-family-Tahoma">EDIT PAGE</h1>
-
-    <div class="row">
-        <div class="col-6">
-            {!! Form::model($alert, ['route' => ['alerts.update', $alert->id], 'method' => 'put']) !!}
+    <h1 class="text-center font-weight-bold font-family-Tahoma">EDIT</h1>
+    {!! Form::model($alert, ['route' => ['alerts.update', $alert->id], 'method' => 'put', 'files' => true]) !!}
         
-                <label>
+    <p>画像</p>
+    <label>
         <span class="fa fa-file-image"></span>
         <input type="file" style="display:none" name="thefile">
     </label>
@@ -65,11 +63,10 @@
             </div>
         @endif
     </div>
-                {!! Form::submit('更新', ['class' => 'btn btn-primary']) !!}
+       <p class="submit">{!! Form::submit('投稿', ['class' => 'btn btn-primary']) !!}</p> 
         
-            {!! Form::close() !!}
+    {!! Form::close() !!}
         </div>
-    </div>
 
 @endsection
 <style>
@@ -104,4 +101,3 @@
         }
         
 </style>
-    

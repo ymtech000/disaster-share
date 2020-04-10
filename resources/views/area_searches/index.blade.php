@@ -1,7 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    {!! Form::open(['route' => 'area_searches.index', 'method' => 'get']) !!}
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.3.min.js">
+window.addEventListener('DOMContentLoaded', function(){
+  $("#submit_select").change(function(){
+    $("#submit_form").submit();
+  });
+});
+</script>
+
+    {!! Form::open(['route' => 'area_searches.index', 'method' => 'get'], '', ['id' => 'submit_form']) !!}
         <div class="form-group">
     {!! Form::select('search', ['わからない'=>'わからない', '赤大路町'=>'赤大路町', '芥川町'=>'芥川町', '明田町'=>'明田町', 
         '明野町'=>'明野町','朝日町'=>'朝日町', '阿武野'=>'阿武野','安満磐手町'=>'安満磐手町', '天川新町'=>'天川新町', '天川町'=>'天川町',
@@ -33,9 +41,9 @@
         '別所本町'=>'別所本町','別所新町'=>'別所新町','別所中の町'=>'別所中の町','紅茸町'=>'紅茸町','本町'=>'本町','前島'=>'前島',
         '真上町'=>'真上町','牧田町'=>'牧田町','松川町'=>'松川町','松が丘'=>'松が丘','松原町'=>'松原町','三島江'=>'三島江','緑が丘'=>'緑が丘',
         '緑町'=>'緑町','南芥川町'=>'南芥川町','南大樋町'=>'南大樋町','南庄所町'=>'南庄所町','南総持寺町'=>'南総持寺町','南松原町'=>'南松原町',
-        '宮が谷町'=>'宮が谷町','宮田町'=>'宮田町','宮之川町'=>'宮之川町','宮之川原元町'=>'宮之川原元町','宮野町'=>'宮野町','紫町'=>'紫町',
+        '宮が谷町'=>'宮が谷町','c宮田町'=>'宮田町','宮之川町'=>'宮之川町','宮之川原元町'=>'宮之川原元町','宮野町'=>'宮野町','紫町'=>'紫町',
         '名神町'=>'名神町','柳川町'=>'柳川町','八幡町'=>'八幡町','山手町'=>'山手町','弥生が丘町'=>'弥生が丘町','淀の原町'=>'淀の原町',
-        '霊仙寺町'=>'霊仙寺町','若松町'=>'若松町'], 'わからない', ['class' => 'form-control']) !!}
+        '霊仙寺町'=>'霊仙寺町','若松町'=>'若松町'], 'わからない', ['class' => 'form-control', 'id' => 'submit_select']) !!}
         </div>
             <div class="search">
                 {!! Form::submit('検索', ['class' => 'btn btn-primary btn-block']) !!}
@@ -54,7 +62,7 @@
                             @foreach ($datas as $data)
                                 <div class="card border-0 col-6 col-sm-6 col-md-4 post-cards">
                                     <div class="profile">
-                                            <a href="/users/47"><img class="avatar-type-circle float-left mr-sm-2 ml-1 d-none d-sm-block" src="/assets/default-a877b525b8bae5a97946d44b91113c09ec0c0b98e34c356205bd37cd299430cb.jpg" width="30" height="30" /></a>
+                                            <a href="users/{{$data->user->id}}"><img class="float-left user-image" src="{{$data->user->image}}" width="35" height="35"></a>
                                             <div>{{$data->user->name}}</div>
                                     </div>
                                     <a href="alerts/{{$data->id}}"><img src="{{$data->image}}" width="270" height="270" class="img"></a>

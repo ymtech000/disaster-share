@@ -5,7 +5,7 @@
     <div class="prof">
         <div class="card border-0 col-md-4 post-cards">
             <div class="profile">
-                <a href="users/{{$alert->user->id}}"><img class="avatar-type-circle float-left mr-sm-2 ml-1 d-none d-sm-block" src="/assets/default-a877b525b8bae5a97946d44b91113c09ec0c0b98e34c356205bd37cd299430cb.jpg" width="30" height="30" /></a>
+                <a href="{{route('users.show',['id' => $alert->user->id])}}"><img class="float-left user-image" src="{{$alert->user->image}}" width="35" height="35"></a>
                 <p>{{$alert->user->name}}</p>
             </div>
             <div class="img">

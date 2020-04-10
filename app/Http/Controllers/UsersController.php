@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Storage;
+use Auth;
 
 use App\User; // 追加
 
@@ -100,10 +102,15 @@ class UsersController extends Controller
         return view('users.favorites', $data);
     }
     
-    public function image(Request $request) {
-        dd($request);
-        $validatedData = $request->validate([
-          "thefile" => "required|image"
+    public function image(Request $request, $id) {
+       
+        $this->validate($request, [
+            'thefile' => [
+               'required',
+               'file',
+               'image',
+               'mimes:jpeg,png',
+            ]
         ]);
         
          //画像ファイル受け取り処理
@@ -119,11 +126,11 @@ class UsersController extends Controller
             $url = Storage::disk('s3')->url($path);
         }
         
-        $user = new User;
+        $user = User::find($id);
         $user->image = $url;
        
         $user->save();
             
-        return back();
+        return redirect()->route('users.show', ['id' => Auth::user()->id]);
     }
 }
