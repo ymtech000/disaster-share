@@ -19,7 +19,6 @@
                     <li class="nav-item">{!! link_to_route('users.index', 'ユーザー', [], ['class' => 'nav-link']) !!}</li>
                     <li class="nav-item">{!! link_to_route('alerts.index', '投稿一覧',[], ['class' => 'nav-link']) !!}</li>
                     <li class="nav-item">{!! link_to_route('alerts.create', '新規投稿',[], ['class' => 'nav-link']) !!}</li>
-                    <li class="nav-item">{!! link_to_route('area_searches.index', 'エリア検索', [], ['class' => 'nav-link']) !!}</li>
                     <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
                     <ul class="dropdown-menu dropdown-menu-right">

@@ -20,6 +20,13 @@
             @yield('content')
         </div>
         
+        <script type="text/javascript">
+            window.addEventListener('DOMContentLoaded', function(){
+              $("#submit_select").change(function(){
+                $("#submit_form").submit();
+              });
+            });
+        </script>
         <script type="text/javascript" src="/mod/LKBNX/v2.23/demo/cn/cn.php"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>

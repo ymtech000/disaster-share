@@ -2,6 +2,9 @@
 
 @section('content')
 <h1 class="text-center font-weight-bold font-family-Tahoma">DISASTER  INFORMATION</h1>
+<form id="submit_form" method="get" action="area_searches">
+    @include('commons.area')
+</form>
 <div class="conteiner">
     <div class="card-group　mx-auto">
         <div id="lists" class="row">
