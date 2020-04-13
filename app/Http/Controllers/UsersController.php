@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Storage;
 use Auth;
+use Hash;
 
 use App\User; // 追加
 
@@ -131,6 +132,40 @@ class UsersController extends Controller
        
         $user->save();
             
+        return redirect()->route('users.show', ['id' => Auth::user()->id]);
+    }
+    
+    public function edit($id)
+     {
+    
+        $user = Auth::user();
+        
+        return view('users.edit',[ 'user' => $user ]);
+    
+     }
+     
+     public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'name' => 'required|string|max:191',
+            'email' => 'required|string|email|max:191',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+            
+        $user = User::find($id);
+        
+        $user->name = $request->name;
+        $user->email = $request->email;
+        
+        if(Hash::check($request->current_password, Auth::user()->password)){
+            $user->password = Hash::make($request->password);
+        }
+        else{
+            return back();
+        }
+        
+        $user->save();
+        
         return redirect()->route('users.show', ['id' => Auth::user()->id]);
     }
 }

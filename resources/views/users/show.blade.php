@@ -3,6 +3,7 @@
 @section('content')
     <h1 class="text-center font-weight-bold font-family-Tahoma">YOUR PAGE</h1>
     {!! link_to_route('profile_edit.index', 'プロフィールを編集', [], ['class' => 'btn btn-light']) !!}
+    {!! link_to_route('users.edit', 'プロフ編集',['id' => $user->id], ['class' => 'btn btn-light']) !!}
     @if($user->image == null)
     <div class="profile">
         <div class="card">

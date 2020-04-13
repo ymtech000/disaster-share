@@ -158,39 +158,6 @@ class AlertsController extends Controller
     }
     
     
-    // public function image(Request $request, $id) {
-    //     // dd($request);
-    //     $this->validate($request, [
-    //         'thefile' => [
-    //           'required',
-    //           'file',
-    //           'image',
-    //           'mimes:jpeg,png',
-    //         ]
-    //     ]);
-        
-    //      //画像ファイル受け取り処理
-    //     $filename='';
-    //     if ($request->file('thefile')->isValid([])) {
-    //         $filename = $request->file('thefile')->store('img');
-            
-    //         //s3アップロード開始
-    //         $image = $request->file('thefile');
-    //         // バケットの`pogtor528`フォルダへアップロード
-    //         $path = Storage::disk('s3')->putFile('pogtor528', $image, 'public');
-    //         // アップロードした画像のフルパスを取得
-    //         $url = Storage::disk('s3')->url($path);
-    //     }
-        
-    //     $user = User::find($id);
-    //     $user->image = $url;
-       
-    //     $user->save();
-            
-    //     return redirect()->route('users.show', ['id' => Auth::user()->id]);
-    // }
-    
-    
     // getでalerts/id/editにアクセスされた場合の「更新画面表示処理」
     public function edit($id)
     {

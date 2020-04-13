@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    
-    <h3 class="brown p-2">投稿一覧</h3>
+    <h1 class="text-center font-weight-bold font-family-Tahoma">DISASTER  INFORMATION</h1>
+    <form id="submit_form" method="get" action="area_searches">
+        @include('commons.area_search')
+    </form>
     <div class="container">
         <!--検索ボタンが押された時に表示される-->
         @if(!empty($datas))

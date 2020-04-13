@@ -41,7 +41,7 @@ Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
 
 // ユーザ機能
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'destroy']]);
+    Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'destroy', 'update', 'edit']]);
     Route::resource('alerts', 'AlertsController'); 
     Route::resource('post_searches', 'Post_SearchesController', ['only' => ['index']]);
     Route::resource('area_searches', 'Area_SearchesController', ['only' => ['index']]);

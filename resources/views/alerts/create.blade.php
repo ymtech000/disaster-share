@@ -3,7 +3,7 @@
 @section('content')
 
 <h1 class="text-center font-weight-bold font-family-Tahoma">NEW POST</h1>
-{!! Form::model($alert, ['route' => 'alerts.store']) !!}
+{!! Form::model($alert, ['route' => 'alerts.store', 'files' => true]) !!}
 
     <p>画像</p>
     <label>
