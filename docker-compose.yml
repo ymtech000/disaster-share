@@ -1,0 +1,6 @@
+workspace:
+    build: ./workspace
+    volumes:
+     - ${APP_CODE_PATH_HOST}:/var/www/
+    ports:
+     - "22:22"
