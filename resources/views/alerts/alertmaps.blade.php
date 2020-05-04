@@ -4,8 +4,8 @@
 <div id="map"></div>
 <style>
 #map {
-    width: 700px;
-    height: 400px;
+    width: 1200px;
+    height: 700px;
 }
 </style>
 
@@ -44,7 +44,7 @@ function initMap(){
                 map: map // マーカーを立てる地図を指定
             });
             infoWindow[i] = new google.maps.InfoWindow({ // 吹き出しの追加
-                content:　'<div class="map">' + markerData[i]['name'] + '</div>'  // 吹き出しに表示する内容
+                content:　'<div class="map">' + <a href="{{route('alerts.show',['id' => $maps->id])}}">markerData[i]['name']</a> + '</div>'  // 吹き出しに表示する内容
             });
             markerEvent(i); // マーカーにクリックイベントを追加
         }
@@ -60,5 +60,4 @@ function markerEvent(i) {
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoKnN8__KItXFDswfAfs_y3VHwfbX3_ms&callback=initMap"></script>
 
-{!! link_to_route('alerts.index', '戻る', [], ['class' => 'btn btn-primary']) !!}
 @endsection

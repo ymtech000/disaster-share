@@ -6,7 +6,6 @@
     @else
         <h1 class="text-center font-weight-bold font-family-Tahoma">USER PAGE</h1>
     @endif
-    <span class="fa fa-ellipsis-h"></span>
     <div class="container">
         <div class="row">
             <aside class="col-sm-4 col-md-4">
@@ -23,6 +22,7 @@
             @include('alerts.alerts', ['alerts' => $alerts])
         @endif
     </div>
+    
 @endsection
 <style>
     .card{

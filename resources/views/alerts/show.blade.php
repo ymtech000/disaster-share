@@ -15,6 +15,13 @@
                     <p>{{$alert->user->name}}</p>
                 </div>
             @endif
+            @if(Auth::id() == $alert->user_id)
+                <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>
+                <ul class="dropdown-menu" style="list-style: none;">
+                    <li class="dropdown-item">{!! link_to_route('alerts.edit', '編集', ['id' => $alert->id]) !!}</li>
+                    <li class="dropdown-item"><span class="fa fa-trash delete-btn"></span>{!! link_to_route('alerts.destroy', '削除', ['id' => $alert->id]) !!}</li>
+                </ul>
+            @endif
             <div class="img">
                 <img class="place-img" src="{{$alert->image}}" width="450" height="450">
             </div>
@@ -26,15 +33,6 @@
     <div class='form-row'>
         <h2 class="col-md-4">{{$alert->title}}</h2>
         <div class="buttons col-md-2">
-            <div class="delete-button">
-                @if(Auth::id() == $alert->user_id)
-                    {!! Form::model($alert, ['route' => ['alerts.destroy', $alert->id], 'method' => 'delete']) !!}
-                        <button name="button" type="submit" class="delete-button">
-                            <i class="fa fa-trash delete-btn"></i>
-                        </button>
-                    {!! Form::close() !!}
-                @endif
-            </div>
             <div class="heart-button">
                 @include('favorites.favorite_button', ['alert' => $alert])
             </div>
@@ -67,9 +65,6 @@
         </div>
     </div>
     <div class="back">{!! link_to_route('alerts.index', '戻る', ['id' => $alert->id], ['class' => 'btn btn-primary']) !!}</div>
-    @if(Auth::id() == $alert->user_id)
-        <div class="edit">{!! link_to_route('alerts.edit', 'このメッセージを編集', ['id' => $alert->id], ['class' => 'btn btn-light']) !!}</div>
-    @endif
     
     {!! Form::open(['route' => 'alertcomments.store']) !!}
         <div class="form-group">
@@ -91,7 +86,7 @@
                 <!--<font color="blue" data-toggle="collapse" data-target="#example-{{$alert->id}}" aria-expand="false" aria-controls="example-1">-->
                 <!--    スレッドを表示する-->
                 <!--</font>-->
-                <div>
+                <!--<div class="collapse" id="example-{{$alert->id}}">-->
                     <div class="card card-body">
                         @foreach($alert->alertcomments->where('parent_id', null) as $alertcomment)
                             <table>
@@ -103,46 +98,55 @@
                                             <td><a href="{{route('users.show',['id' => $alertcomment->user->id])}}"><img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35"></a></td>
                                         @endif
                                         <td>{{$alertcomment->user->name}}</td>
-                                        <td>{!! link_to_route('alertcomments.show', $alertcomment->id, ['id' => $alertcomment->id]) !!}</td>
                                         <td>{{$alertcomment->comment}}</td>
                                         <td>{{$alertcomment->time}}</td>
                                         <td>
-                                            <div class="delete-button">
-                                                @if(Auth::id() == $alertcomment->user_id)
-                                                    {!! Form::model($alertcomment, ['route' => ['alertcomments.destroy', $alertcomment->id], 'method' => 'delete']) !!}
-                                                        <button name="button" type="submit" class="delete-button">
-                                                            <i class="fa fa-trash delete-btn"></i>
-                                                        </button>
-                                                    {!! Form::close() !!}
-                                                @endif
-                                            </div>
+                                            @if(Auth::id() == $alertcomment->user_id)
+                                                <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>
+                                                <ul class="dropdown-menu" style="list-style: none;">
+                                                    <li class="dropdown-item">{!! link_to_route('alertcomments.show', 'コメント', ['id' => $alertcomment->id]) !!}</li>
+                                                    <li class="dropdown-item"><span class="fa fa-trash delete-btn"></span>{!! link_to_route('alertcomments.destroy', '削除', ['id' => $alertcomment->id]) !!}</li>
+                                                </ul>
+                                            @else
+                                                <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>
+                                                <ul class="dropdown-menu" style="list-style: none;">
+                                                    <li class="dropdown-item">{!! link_to_route('alertcomments.show', 'コメント', ['id' => $alertcomment->id]) !!}</li>
+                                                </ul>
+                                            @endif
                                         </td>
                                     </tr>
                                 </thread>
                             </table>
                             @foreach($alert->alertcomments->where('parent_id', $alertcomment->id) as $alertcomment)
-                                <font color="blue" data-toggle="collapse" data-target="#example-{{$alertcomment->id}}" aria-expand="false" aria-controls="example-2">
-                                    スレッドを表示する
-                                </font>
-                                <div class="collapse" id="example-{{$alertcomment->id}}">
+                                <!--<font color="blue" data-toggle="collapse" data-target="#example-{{$alertcomment->id}}" aria-expand="false" aria-controls="example-2">-->
+                                <!--    スレッドを表示する-->
+                                <!--</font>-->
+                                <!--<div class="collapse" id="example-{{$alertcomment->id}}">-->
                                     <div class="card card-body">
                                         <table>
                                             <thread>
                                                 <tr>
+                                                    @if($alertcomment->user->image == null)
+                                                        <td><a href="{{route('users.show',['id' => $alertcomment->user->id])}}"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($user->email, 500) }}" width="35" height="35" alt=""></a></td>
+                                                    @else
+                                                        <td><a href="{{route('users.show',['id' => $alertcomment->user->id])}}"><img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35"></a></td>
+                                                    @endif
                                                     <td>{{$alertcomment->user->name}}</td>
-                                                    <td>{!! link_to_route('alertcomments.show', $alertcomment->id, ['id' => $alertcomment->id]) !!}</td>
                                                     <td>{{$alertcomment->comment}}</td>
                                                     <td>{{$alertcomment->time}}</td>
                                                     <td>
-                                                        <div class="delete-button">
-                                                            @if(Auth::id() == $alertcomment->user_id)
-                                                                {!! Form::model($alertcomment, ['route' => ['alertcomments.destroy', $alertcomment->id], 'method' => 'delete']) !!}
-                                                                    <button name="button" type="submit" class="delete-button">
-                                                                        <i class="fa fa-trash delete-btn"></i>
-                                                                    </button>
-                                                                {!! Form::close() !!}
-                                                            @endif
-                                                        </div>
+                                                        @if(Auth::id() == $alertcomment->user_id)
+                                                            <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>
+                                                            <ul class="dropdown-menu" style="list-style: none;">
+                                                                <li class="dropdown-item">{!! link_to_route('alertcomments.show', 'コメント', ['id' => $alertcomment->id]) !!}</li>
+                                                                <li class="dropdown-item"><span class="fa fa-trash delete-btn"></span>{!! link_to_route('alertcomments.destroy', '削除', ['id' => $alertcomment->id]) !!}</li>
+                                                            </ul>
+                                                        @else
+                                                            <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>
+                                                            <ul class="dropdown-menu" style="list-style: none;">
+                                                                <li class="dropdown-item">{!! link_to_route('alertcomments.show', 'コメント', ['id' => $alertcomment->id]) !!}</li>
+                                                            </ul>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             </thread>

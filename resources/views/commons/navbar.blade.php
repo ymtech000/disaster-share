@@ -5,9 +5,9 @@
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#nav-bar">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <button name="button" type="submit" class="map-button">
-          <a href="/alertmaps"><i class="fa fa-map-marker-alt"></i></a>
-        </button>
+        <!--<button name="button" type="submit" class="map-button">-->
+          <a href="/alertmaps"><span class="fa fa-map-marker-alt"></span></a>
+        <!--</button>-->
         <a href="/post_searches"><span class="fas fa-search"></span></a>
         
         <div class="collapse navbar-collapse" id="nav-bar">
@@ -18,18 +18,17 @@
                     <li class="nav-item">{!! link_to_route('alerts.index', '投稿一覧',[], ['class' => 'nav-link']) !!}</li>
                     <li class="nav-item">{!! link_to_route('alerts.create', '新規投稿',[], ['class' => 'nav-link']) !!}</li>
                     <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                            <li class="dropdown-item">{!! link_to_route('users.show', 'プロフィール', ['id' => Auth::id()]) !!}</li>
-                            <li class="dropdown-divider"></li>
-                            <li class="dropdown-item">{!! link_to_route('users.edit', '設定', ['id' => Auth::id()]) !!}</li>
-                            <li class="dropdown-divider"></li>
-                            <li class="dropdown-item">{!! link_to_route('logout.get', 'ログアウト') !!}</li>
-                    </ul>
-                        </li>
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="dropdown-item">{!! link_to_route('users.show', 'プロフィール', ['id' => Auth::id()]) !!}</li>
+                                <li class="dropdown-divider"></li>
+                                <li class="dropdown-item">{!! link_to_route('users.edit', '設定', ['id' => Auth::id()]) !!}</li>
+                                <li class="dropdown-divider"></li>
+                                <li class="dropdown-item">{!! link_to_route('logout.get', 'ログアウト') !!}</li>
+                        </ul>
+                    </li>
                 @else
                     <li class="nav-item">{!! link_to_route('login', 'ログイン', [], ['class' => 'nav-link']) !!}</li>
-                    <!--<li class="nav-item">{!! link_to_route('login', 'かんたんログインログイン', [], ['class' => 'nav-link']) !!}</li>-->
                 @endif
             </ul>
         </div>

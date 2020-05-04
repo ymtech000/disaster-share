@@ -7,6 +7,7 @@
         @include('commons.area_search')
     </form>
 </div>
+
 <div class="conteiner">
     <div class="card-group　mx-auto">
         <div id="lists" class="row">
