@@ -17,6 +17,7 @@ class AlertmapsController extends Controller
                     'user' => $user,
                     'maps' => $alerts,
                 ];
+                
                 return view('alerts.alertmaps', $data);
         }
     }

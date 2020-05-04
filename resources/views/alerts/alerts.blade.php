@@ -1,45 +1,49 @@
-<ul class="media-list">
-    @foreach ($alerts as $alert)
-        <li class="media mb-3">
-            <img class="mr-2 rounded" src="{{ Gravatar::src($alert->user->email, 50) }}" alt="">
-            <div class="media-body">
-                <div>
-                    {!! link_to_route('users.show', $alert->user->name, ['id' => $alert->user->id]) !!} <span class="text-muted">posted at {{ $alert->created_at }}</span>
-                </div>
-                <div>
-                    <td><img src="{{$alert->image}}" width="150" height="150"></td>
-                <!--<table class="table table-striped">-->
-                <!--    <thead>-->
-                <!--        <tr>-->
-                <!--            <th>メッセージ</th>-->
-                <!--            <th>画像</th>-->
-                <!--            <th>エリア</th>-->
-                <!--            <th>場所の詳細</th>-->
-                <!--        </tr>-->
-                <!--    </thead>-->
-                <!--        <tr>-->
-                <!--            <td>{{ $alert->content }}</td>-->
-                <!--            <td><img src="{{$alert->image}}" width="150" height="150"></td>-->
-                <!--            <td>{{ $alert->area }}</td>-->
-                <!--            <td>{{ $alert->place }}</td>-->
-                <!--        </tr>-->
-                <!--</table>-->
-                </div>
-                <div>
-                    @if (Auth::id() == $alert->user_id)
-                        {!! Form::open(['route' => ['alerts.destroy', $alert->id], 'method' => 'delete']) !!}
-                            <!--{!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}-->
-                            <button name="button" type="submit" class="delete-button">
-                                <i class="fa fa-trash delete-btn"></i>
-                            </button>
-                        {!! Form::close() !!}
-                    @endif
-                    @include('favorites.favorite_button', ['alert' => $alert])
-                </div>
-            </div>
-        </li>
-    @endforeach
-    
-</ul>
-{{ $alerts->links('pagination::bootstrap-4') }}
+<div class="conteiner">
+    <div class="card-group　mx-auto">
+        <div id="lists" class="row">
+            @if (count($alerts) > 0)
+                <table class="table table-striped">
+                    @foreach ($alerts as $alert)
+                        <div class="card border-0 col-8 col-sm-6 col-md-4 post-cards">
+                            @if($alert->user->image == null)
+                                <div class="profile">
+                                    <a href="/users/{{$alert->user->id}}"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($alert->user->email, 500) }}" width="35" height="35" alt=""></a>
+                                    <p>{{$alert->user->name}}</p>
+                                </div>
+                            @else
+                                <div class="profile">
+                                    <a href="/users/{{$alert->user->id}}"><img class="float-left user-img" src="{{$alert->user->image}}" width="35" height="35"></a>
+                                    <p>{{$alert->user->name}}</p>
+                                </div>
+                            @endif
+                            <a href="/alerts/{{$alert->id}}"><img src="{{$alert->image}}" width="270" height="270" class="img"></a>
+                            <div>
+                                <div class="col-md-4 title">{{$alert->title}}</div>
+                                <div class="col-md-6 heart-button">
+                                    @include('favorites.favorite_button', ['alert' => $alert])
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </table>
+                {{ $alerts->links('pagination::bootstrap-4') }}
+            @endif
+        </div>
+    </div>
+</div>
 
+<style>
+    .media{
+        float:left;
+        padding-right:15px;
+        padding-left:15px;
+    }
+    .user-img{
+        border-radius:50%;
+        margin-right:10px;
+        margin-bottom:10px;
+    }
+</style>
+            
+            
+      

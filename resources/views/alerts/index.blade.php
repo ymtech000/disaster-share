@@ -2,31 +2,40 @@
 
 @section('content')
 <h1 class="text-center font-weight-bold font-family-Tahoma">DISASTER  INFORMATION</h1>
-<form id="submit_form" method="get" action="area_searches">
-    @include('commons.area')
-</form>
+<div class="submit-select">
+    <form id="submit_form" method="get" action="area_searches">
+        @include('commons.area_search')
+    </form>
+</div>
 <div class="conteiner">
     <div class="card-group　mx-auto">
         <div id="lists" class="row">
             @if (count($alerts) > 0)
                 <table class="table table-striped">
                     @foreach ($alerts as $alert)
-                        <div class="card border-0 col-6 col-sm-6 col-md-4 post-cards">
-                            <div class="profile">
-                                <a href="users/{{$user->id}}"><img class="float-left user-image" src="{{$alert->user->image}}" width="35" height="35"></a>
-                                <p>{{$alert->user->name}}</p>
-                            </div>
+                        <div class="card border-0 col-8 col-sm-10 col-md-4 post-cards">
+                            @if($alert->user->image == null)
+                                <div class="profile">
+                                    <a href="/users/{{$alert->user->id}}"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($alert->user->email, 500) }}" width="35" height="35" alt=""></a>
+                                    <p>{{$alert->user->name}}</p>
+                                </div>
+                            @else
+                                <div class="profile">
+                                    <a href="/users/{{$alert->user->id}}"><img class="float-left user-img" src="{{$alert->user->image}}" width="35" height="35"></a>
+                                    <p>{{$alert->user->name}}</p>
+                                </div>
+                            @endif
                             <a href="alerts/{{$alert->id}}"><img src="{{$alert->image}}" width="270" height="270" class="img"></a>
-                            <div class="buttons">
-                                <div class="favorite-button">
+                            <div>
+                                <div class="col-md-4 title">{{$alert->title}}</div>
+                                <div class="col-md-6 heart-button">
                                     @include('favorites.favorite_button', ['alert' => $alert])
                                 </div>
-                                <div class="area"><i class="fa fa-location-arrow"></i> {{$alert->area}}</div>
                             </div>
-                            <div class="title">{{$alert->title}}</div>
                         </div>
                     @endforeach
                 </table>
+                {{ $alerts->links('pagination::bootstrap-4') }}
             @endif
         </div>
     </div>
@@ -48,21 +57,28 @@
         border-radius:5px;
         margin-bottom:10px;
     }
-    .favorite-button{
-        width:10px;
-    }
     .title{
         font-weight:bold;
+        float:left;
     }
     .contents{
         float:left;
     }
-    .user-image{
+    .user-img{
         border-radius:50%;
-        margin-right:10px;
         margin-bottom:10px;
     }
     p{
         margin-bottom:10px;
+    }
+    .submit-select{
+        width:170px;
+        margin-left:840px;
+    }
+    .heart-button{
+        float:right;
+    }
+    .fa-search{
+        color:black;
     }
 </style>

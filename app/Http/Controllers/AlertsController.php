@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Alert;
 use Storage;
+use App\Http\Requests\StoreAlert;
 
 class AlertsController extends Controller
 {
@@ -14,7 +14,7 @@ class AlertsController extends Controller
         $data = [];
         if (\Auth::check()) {
             $user = \Auth::user();
-            $alerts = Alert::orderBy('created_at', 'desc')->paginate(10);
+            $alerts = Alert::orderBy('created_at', 'desc')->paginate(9);
             $data = [
                 'user' => $user,
                 'alerts' => $alerts,
@@ -35,26 +35,12 @@ class AlertsController extends Controller
     }
      
     // postでalerts/にアクセスされた場合の「新規登録処理」
-    public function store(Request $request)
+    public function store(StoreAlert $request)
     {
-        $this->validate($request, [
-            'content' => 'required|max:140',
-            'title' => 'required|max:15',
-            'place' => 'required|max:50',
-            'area' => 'required',
-            'thefile' => [
-               'required',
-               'file',
-               'image',
-               'mimes:jpeg,png',
-            ]
-        ]);
-    
         //画像ファイル受け取り処理
         $filename='';
         if ($request->file('thefile')->isValid([])) {
             $filename = $request->file('thefile')->store('img');
-            
             //s3アップロード開始
             $image = $request->file('thefile');
             // バケットの`pogtor528`フォルダへアップロード
@@ -66,54 +52,38 @@ class AlertsController extends Controller
         //時間のセット
         date_default_timezone_set('Asia/Tokyo');
         $now = date("Y/m/d H:i");
-        
-        $location = $this->getLocation($request->place);
-        
-        if($location == null){
-            return back()->with('error', '指定された場所が存在しません。');
-        }
-        else{
-            $lat = $location['lat']; // latを取得
-            $lng = $location['lng']; // lngを取得
+       
             $request->user()->alerts()->create([
                 'content' => $request->content,
                 'title' => $request->title,
                 'area' => $request->area,
-                'place' => $request->place,
+                'location' => $request->location,
                 'time' => $now,
                 'image' => $url,
-                'lat' => $lat,
-                'lng' => $lng,
+                'lat' => $request->lat,
+                'lng' => $request->lng,
             ]);
             return redirect('/alerts');
-        }
     }
     
    // getでalerts/idにアクセスされた場合の「取得表示処理」
     public function show($id)
     {
         $alert = Alert::find($id);
-
-        return view('alerts.show', [
+        $user = \Auth::user();
+        $alerts = Alert::find($id);
+       
+        $data = [
             'alert' => $alert,
-        ]);
+            'user' => $user,
+            'maps' => $alerts,
+        ];
+
+        return view('alerts.show', $data);
     }
     
-    public function update(Request $request, $id)
+    public function update(StoreAlert $request, $id)
     {
-        $this->validate($request, [
-            'content' => 'required|max:140',
-            'title' => 'required|max:15',
-            'place' => 'required|max:50',
-            'area' => 'required',
-            'thefile' => [
-               'required',
-               'file',
-               'image',
-               'mimes:jpeg,png',
-            ]
-        ]);
-        
         //画像ファイル受け取り処理
         $filename='';
         if ($request->file('thefile')->isValid([])) {
@@ -131,32 +101,28 @@ class AlertsController extends Controller
         date_default_timezone_set('Asia/Tokyo');
         $now = date("Y/m/d H:i");
         
-        $location = $this->getLocation($request->place);
-        
-        if($location == null){
-            return back()->with('error', '指定された場所が存在しません。');
-        }
-        else{
-            $lat = $location['lat']; // latを取得
-            $lng = $location['lng']; // lngを取得
+        // if($request->lat == null　&& $request->lng == null){
+        //     return back()->with('error', '指定された場所が存在しません。');
+        // }
+        // else{
+            // $lat = $location['lat']; // latを取得
+            // $lng = $location['lng']; // lngを取得
             
             $alert = Alert::find($id);
             
             $alert->content = $request->content;
             $alert->title = $request->title;
             $alert->area = $request->area;
-            $alert->place = $request->place;
+            $alert->location = $request->location;
             $alert->time = $now;
             $alert->image = $url;
-            $alert->lat = $lat;
-            $alert->lng = $lng;
+            $alert->lat = $request->lat;
+            $alert->lng = $request->lng;
             
             $alert->save();
             
             return redirect('/alerts');
-        }
     }
-    
     
     // getでalerts/id/editにアクセスされた場合の「更新画面表示処理」
     public function edit($id)

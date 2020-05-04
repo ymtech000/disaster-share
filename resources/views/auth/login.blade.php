@@ -4,7 +4,7 @@
     <div class="text-center">
         <h1>ログイン</h1>
     </div>
-
+ @include('commons.error_messages')
     <div class="row">
         <div class="col-sm-6 offset-sm-3">
 
@@ -23,6 +23,7 @@
             {!! Form::close() !!}
 
             <p class="mt-2">会員登録は {!! link_to_route('signup.get', 'こちら') !!}</p>
+            {!! link_to_route('login.guest', 'ゲストログイン', [], ['class' => 'btn btn-primary']) !!}
         </div>
     </div>
 @endsection

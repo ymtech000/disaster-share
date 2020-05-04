@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Storage;
 use Auth;
 use Hash;
+use App\Http\Requests\StoreUser;
 
 use App\User; // 追加
 
@@ -38,6 +39,9 @@ class UsersController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
+        if(Auth::id() ==1){
+            return back()->with('error', 'ゲストユーザーは退会することができません。');
+        }
         $user->delete();
 
         return back();
@@ -103,38 +107,6 @@ class UsersController extends Controller
         return view('users.favorites', $data);
     }
     
-    public function image(Request $request, $id) {
-       
-        $this->validate($request, [
-            'thefile' => [
-               'required',
-               'file',
-               'image',
-               'mimes:jpeg,png',
-            ]
-        ]);
-        
-         //画像ファイル受け取り処理
-        $filename='';
-        if ($request->file('thefile')->isValid([])) {
-            $filename = $request->file('thefile')->store('img');
-            
-            //s3アップロード開始
-            $image = $request->file('thefile');
-            // バケットの`pogtor528`フォルダへアップロード
-            $path = Storage::disk('s3')->putFile('pogtor528', $image, 'public');
-            // アップロードした画像のフルパスを取得
-            $url = Storage::disk('s3')->url($path);
-        }
-        
-        $user = User::find($id);
-        $user->image = $url;
-       
-        $user->save();
-            
-        return redirect()->route('users.show', ['id' => Auth::user()->id]);
-    }
-    
     public function edit($id)
      {
     
@@ -144,28 +116,93 @@ class UsersController extends Controller
     
      }
      
-     public function update(Request $request, $id)
+     public function update(StoreUser $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required|string|max:191',
-            'email' => 'required|string|email|max:191',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+        $filename='';
+        if( request()->hasFile('thefile')){
+            //画像ファイル受け取り処理
+            if (request()->file('thefile')->isValid([])) {
+                $filename = $request->file('thefile')->store('img');
+                //s3アップロード開始
+                $image = $request->file('thefile');
+                // バケットの`pogtor528`フォルダへアップロード
+                $path = Storage::disk('s3')->putFile('pogtor528', $image, 'public');
+                // アップロードした画像のフルパスを取得
+                $url = Storage::disk('s3')->url($path);
+            }
             
-        $user = User::find($id);
-        
-        $user->name = $request->name;
-        $user->email = $request->email;
-        
-        if(Hash::check($request->current_password, Auth::user()->password)){
-            $user->password = Hash::make($request->password);
+            $user = User::find($id);
+            $user->introduction = $request->introduction;
+            $user->image = $url;
+            if(Auth::id() !==1){
+                $user->name = $request->name;
+                $user->email = $request->email;
+                if($request->password !== null){
+                    if(Hash::check($request->current_password, Auth::user()->password)){
+                        $user->password = Hash::make($request->password);
+                    }
+                    else{
+                        return back()->with('error', '現在のパスワードが間違っています。');
+                    }
+                }
+            }
+            else if($request->password !== null){
+                return back()->with('error', 'ゲストユーザーは名前, メールアドレス, パスワードの変更ができません。');
+            }
+            else if($user->name !== $request->name){
+                return back()->with('error', 'ゲストユーザーは名前, メールアドレス, パスワードの変更ができません。');
+            }
+            else if($user->email !== $request->email){
+                return back()->with('error', 'ゲストユーザーは名前, メールアドレス, パスワードの変更ができません。');
+            }
+            else{
+                $user->name = $request->name;
+                $user->email = $request->email;
+            }
+            
+            $user->save();
         }
         else{
-            return back();
+            $user = User::find($id);
+            $user->introduction = $request->introduction;
+            if(Auth::id() !==1){
+                $user->name = $request->name;
+                $user->email = $request->email;
+                if($request->password !== null){   
+                    if(Hash::check($request->current_password, Auth::user()->password)){
+                        $user->password = Hash::make($request->password);
+                    }
+                    else{
+                        return back()->with('error', '現在のパスワードが間違っています。');
+                    }
+                }
+            }
+            else if($request->password !== null){
+                return back()->with('error', 'ゲストユーザーは名前, メールアドレス, パスワードの変更ができません。');
+            }
+            else if($user->name !== $request->name){
+                return back()->with('error', 'ゲストユーザーは名前, メールアドレス, パスワードの変更ができません。');
+            }
+            else if($user->email !== $request->email){
+                return back()->with('error', 'ゲストユーザーは名前, メールアドレス, パスワードの変更ができません。');
+            }
+            else{
+                $user->name = $request->name;
+                $user->email = $request->email;
+            }
+            
+            $user->save();
         }
+        return redirect()->route('users.show', ['id' => Auth::id()]);
+    }
+    
+    public function image_destroy($filename)
+    {
         
-        $user->save();
-        
-        return redirect()->route('users.show', ['id' => Auth::user()->id]);
+        // $user = User::find($id);
+        // dd(Auth::user()->image);
+        // Auth::user()->image->delete();
+
+        return redirect()->route('users.show', ['id' => Auth::id()]);
     }
 }

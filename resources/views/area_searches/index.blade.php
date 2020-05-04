@@ -2,9 +2,11 @@
 
 @section('content')
     <h1 class="text-center font-weight-bold font-family-Tahoma">DISASTER  INFORMATION</h1>
-    <form id="submit_form" method="get" action="area_searches">
-        @include('commons.area_search')
-    </form>
+    <div class="submit-select">
+        <form id="submit_form" method="get" action="area_searches">
+            @include('commons.area_search')
+        </form>
+    </div>
     <div class="container">
         <!--検索ボタンが押された時に表示される-->
         @if(!empty($datas))
@@ -14,11 +16,18 @@
                     <div id="lists" class="row">
                         <table class="table table-striped">
                             @foreach ($datas as $data)
-                                <div class="card border-0 col-6 col-sm-6 col-md-4 post-cards">
-                                    <div class="profile">
-                                            <a href="users/{{$data->user->id}}"><img class="float-left user-image" src="{{$data->user->image}}" width="35" height="35"></a>
-                                            <div>{{$data->user->name}}</div>
-                                    </div>
+                                <div class="card border-0 col-8 col-sm-6 col-md-4 post-cards">
+                                    @if($data->user->image == null)
+                                        <div class="profile">
+                                            <a href="/users/{{$data->user->id}}"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($data->user->email, 500) }}" width="35" height="35" alt=""></a>
+                                            <p>{{$data->user->name}}</p>
+                                        </div>
+                                    @else
+                                        <div class="profile">
+                                            <a href="/users/{{$data->user->id}}"><img class="float-left user-img" src="{{$data->user->image}}" width="35" height="35"></a>
+                                            <p>{{$data->user->name}}</p>
+                                        </div>
+                                    @endif
                                     <a href="alerts/{{$data->id}}"><img src="{{$data->image}}" width="270" height="270" class="img"></a>
                                     <div class="card-body border-bottom">
                                         <div class="contents">
@@ -29,6 +38,7 @@
                                 </div>
                             @endforeach
                         </table>
+                    
                     </div>
                 </div>
             </div>
@@ -53,5 +63,15 @@
     }
     .img{
         border-radius:5px;
+    }
+    .user-img{
+        border-radius:50%;
+        margin-right:10px;
+        margin-bottom:10px;
+    }
+    .submit-select{
+        width:170px;
+        text-align:right;
+        margin-left:840px;
     }
 </style>

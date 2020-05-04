@@ -2,37 +2,49 @@
 
 @section('content')
     <h1 class="text-center font-weight-bold font-family-Tahoma">DETAILS</h1>
-    <div class="prof">
-        <div class="card border-0 col-md-4 post-cards">
-            <div class="profile">
-                <a href="{{route('users.show',['id' => $alert->user->id])}}"><img class="float-left user-image" src="{{$alert->user->image}}" width="35" height="35"></a>
-                <p>{{$alert->user->name}}</p>
-            </div>
-            <div class="img">
-                <img src="{{$alert->image}}" width="450" height="450">
-            </div>
-        </div>
-    </div>
-    <div class="buttons">
-        <div class="delete-button">
-            @if(Auth::user()->name == $alert->user->name)
-                {!! Form::model($alert, ['route' => ['alerts.destroy', $alert->id], 'method' => 'delete']) !!}
-                    <button name="button" type="submit" class="delete-button">
-                        <i class="fa fa-trash delete-btn"></i>
-                    </button>
-                {!! Form::close() !!}
+    <div class='form-row'>
+        <div class="card border-0 col-6 col-md-4 post-cards">
+            @if($alert->user->image == null)
+                <div class="profile">
+                    <a href="/users/{{$alert->user->id}}"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($alert->user->email, 500) }}" width="35" height="35" alt=""></a>
+                    <p>{{$alert->user->name}}</p>
+                </div>
+            @else
+                <div class="profile">
+                    <a href="/users/{{$alert->user->id}}"><img class="float-left user-img" src="{{$alert->user->image}}" width="35" height="35"></a>
+                    <p>{{$alert->user->name}}</p>
+                </div>
             @endif
+            <div class="img">
+                <img class="place-img" src="{{$alert->image}}" width="450" height="450">
+            </div>
         </div>
-        <div class="heart-button">
-            @include('favorites.favorite_button', ['alert' => $alert])
+        <div class="map">
+            @include('commons.map')
         </div>
     </div>
-    <p>{{$alert->title}}</p>
-    {!! link_to_route('alerts.edit', 'このメッセージを編集', ['id' => $alert->id], ['class' => 'btn btn-light']) !!}
+    <div class='form-row'>
+        <h2 class="col-md-4">{{$alert->title}}</h2>
+        <div class="buttons col-md-2">
+            <div class="delete-button">
+                @if(Auth::id() == $alert->user_id)
+                    {!! Form::model($alert, ['route' => ['alerts.destroy', $alert->id], 'method' => 'delete']) !!}
+                        <button name="button" type="submit" class="delete-button">
+                            <i class="fa fa-trash delete-btn"></i>
+                        </button>
+                    {!! Form::close() !!}
+                @endif
+            </div>
+            <div class="heart-button">
+                @include('favorites.favorite_button', ['alert' => $alert])
+            </div>
+        </div>
+    </div>
    <div class='form-row'>
         <div class='col-md-7'>
             <table class="table table-bordered">
                 <tr>
+                    <th>メッセージ</th>
                     <td>{{ $alert->content }}</td>
                 </tr>
             </table>
@@ -45,7 +57,7 @@
                 </tr>
                 <tr>
                     <th>場所</th>
-                    <td>{{ $alert->place }}</td>
+                    <td>{{ $alert->location }}</td>
                 </tr>
                 <tr>
                     <th>時間</th>
@@ -54,8 +66,12 @@
             </table>
         </div>
     </div>
-    {!! Form::open(['route' => 'alertcomments.store','files' => true]) !!}
-        {{ csrf_field() }}
+    <div class="back">{!! link_to_route('alerts.index', '戻る', ['id' => $alert->id], ['class' => 'btn btn-primary']) !!}</div>
+    @if(Auth::id() == $alert->user_id)
+        <div class="edit">{!! link_to_route('alerts.edit', 'このメッセージを編集', ['id' => $alert->id], ['class' => 'btn btn-light']) !!}</div>
+    @endif
+    
+    {!! Form::open(['route' => 'alertcomments.store']) !!}
         <div class="form-group">
             {{ Form::hidden('alert_id', $alert->id) }}
             {!! Form::label('comment', 'コメント') !!}
@@ -72,26 +88,36 @@
         <td columnspan='2'>コメント数：{{count($alert->alertcomments)}}</td>
         <td align="left">
             @if(count($alert->alertcomments)>0)
-                <font color="blue" data-toggle="collapse" data-target="#example-{{$alert->id}}" aria-expand="false" aria-controls="example-1">
-                    スレッドを表示する
-                </font>
-                <div class="collapse" id="example-{{$alert->id}}">
+                <!--<font color="blue" data-toggle="collapse" data-target="#example-{{$alert->id}}" aria-expand="false" aria-controls="example-1">-->
+                <!--    スレッドを表示する-->
+                <!--</font>-->
+                <div>
                     <div class="card card-body">
                         @foreach($alert->alertcomments->where('parent_id', null) as $alertcomment)
                             <table>
                                 <thread>
                                     <tr>
-                                        <th>投稿者</th>
-                                        <th>No.</th>
-                                        <th>コメント</th>
-                                        <th>日時</th>
+                                        @if($alertcomment->user->image == null)
+                                            <td><a href="{{route('users.show',['id' => $alertcomment->user->id])}}"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($user->email, 500) }}" width="35" height="35" alt=""></a></td>
+                                        @else
+                                            <td><a href="{{route('users.show',['id' => $alertcomment->user->id])}}"><img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35"></a></td>
+                                        @endif
+                                        <td>{{$alertcomment->user->name}}</td>
+                                        <td>{!! link_to_route('alertcomments.show', $alertcomment->id, ['id' => $alertcomment->id]) !!}</td>
+                                        <td>{{$alertcomment->comment}}</td>
+                                        <td>{{$alertcomment->time}}</td>
+                                        <td>
+                                            <div class="delete-button">
+                                                @if(Auth::id() == $alertcomment->user_id)
+                                                    {!! Form::model($alertcomment, ['route' => ['alertcomments.destroy', $alertcomment->id], 'method' => 'delete']) !!}
+                                                        <button name="button" type="submit" class="delete-button">
+                                                            <i class="fa fa-trash delete-btn"></i>
+                                                        </button>
+                                                    {!! Form::close() !!}
+                                                @endif
+                                            </div>
+                                        </td>
                                     </tr>
-                                <tr>
-                                    <td>{{$alertcomment->user->name}}</td>
-                                    <td>{!! link_to_route('alertcomments.show', $alertcomment->id, ['id' => $alertcomment->id]) !!}</td>
-                                    <td>{{$alertcomment->comment}}</td>
-                                    <td>{{$alertcomment->time}}</td>
-                                </tr>
                                 </thread>
                             </table>
                             @foreach($alert->alertcomments->where('parent_id', $alertcomment->id) as $alertcomment)
@@ -103,16 +129,21 @@
                                         <table>
                                             <thread>
                                                 <tr>
-                                                <th>投稿者</th>
-                                                <th>No.</th>
-                                                <th>コメント</th>
-                                                <th>日時</th>
-                                                </tr>
-                                                <tr>
-                                                <td>{{$alertcomment->user->name}}</td>
-                                                <td>{!! link_to_route('alertcomments.show', $alertcomment->id, ['id' => $alertcomment->id]) !!}</td>
-                                                <td>{{$alertcomment->comment}}</td>
-                                                <td>{{$alertcomment->time}}</td>
+                                                    <td>{{$alertcomment->user->name}}</td>
+                                                    <td>{!! link_to_route('alertcomments.show', $alertcomment->id, ['id' => $alertcomment->id]) !!}</td>
+                                                    <td>{{$alertcomment->comment}}</td>
+                                                    <td>{{$alertcomment->time}}</td>
+                                                    <td>
+                                                        <div class="delete-button">
+                                                            @if(Auth::id() == $alertcomment->user_id)
+                                                                {!! Form::model($alertcomment, ['route' => ['alertcomments.destroy', $alertcomment->id], 'method' => 'delete']) !!}
+                                                                    <button name="button" type="submit" class="delete-button">
+                                                                        <i class="fa fa-trash delete-btn"></i>
+                                                                    </button>
+                                                                {!! Form::close() !!}
+                                                            @endif
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             </thread>
                                         </table>
@@ -127,12 +158,16 @@
     </tr>
 @endsection
 <style>
-    img{
-        border-radius:10px;
-    }
-    .img{
-        /*text-align:center;*/
+    
+    .place-img{
         padding-bottom:30px;
+        border-radius:5px;
+    }
+    
+    .user-img{
+        border-radius:50%;
+        margin-right:10px;
+        margin-bottom:10px;
     }
     .delete-button{
         float:left;
@@ -141,6 +176,23 @@
     .heart-button{
         font-size:25px;
         margin-left:10px;
+    }
+    .post-cards{
+        float:left;
+    }
+    .map{
+        margin-left:150px;
+        margin-top:115px;
+    }
+    .heart-button{
+        margin-left:5px;
+    }
+    .edit{
+        float:right;
+        padding-bottom:5px
+    }
+    .back{
+        float:right;
     }
     
 </style>

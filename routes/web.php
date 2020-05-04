@@ -19,7 +19,6 @@ Route::get('/area_searches', 'Area_SearchesController@index');
 
 Route::get('/unsubscribe', 'UnsubscribesController@index'); //退会
 
-Route::get('/profile_edit', 'Profile_EditsController@index');
 
 
 Route::get('/', function () {
@@ -38,6 +37,7 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 Route::group(['middleware' => ['auth']], function () {
 Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
 });
+Route::get('guest', 'Auth\LoginController@authenticate')->name('login.guest');
 
 // ユーザ機能
 Route::group(['middleware' => 'auth'], function () {
@@ -46,7 +46,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('post_searches', 'Post_SearchesController', ['only' => ['index']]);
     Route::resource('area_searches', 'Area_SearchesController', ['only' => ['index']]);
     Route::resource('unsubscribe', 'UnsubscribesController', ['only' => ['index']]);
-    Route::resource('profile_edit', 'Profile_EditsController', ['only' => ['index']]);
     Route::resource('alertcomments', 'AlertcommentsController', ['only' => ['show', 'store', 'destroy']]);
     Route::group(['prefix' => 'users/{id}'], function () {
         Route::post('follow', 'UserFollowController@store')->name('user.follow');
@@ -55,34 +54,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('followers', 'UsersController@followers')->name('users.followers');
         Route::get('favoritings', 'UsersController@favoritings')->name('users.favoritings');
         Route::post('image', 'UsersController@image')->name('users.image');
+        Route::delete('image_destroy', 'UsersController@image_destroy')->name('users.image_destroy');
         });
     Route::group(['prefix' => 'alerts/{id}'], function () {
                 Route::post('favorite', 'FavoritesController@store')->name('alerts.favorite');
                 Route::delete('unfavorite', 'FavoritesController@destroy')->name('alerts.unfavorite');
         });
-});
-
-
-//管理者機能
-Route::group(['prefix' => 'admin', 'middleware' => 'guest:admin'], function() {
-    Route::get('/', function () {
-        return view('admin.welcome');
-    });
-    //ログイン
-    // Route::get('login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.login');
-    Route::get('login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.login');
-    Route::post('login', 'Admin\Auth\LoginController@login')->name('admin.login');
-    
-    //ユーザ登録
-    Route::get('register', 'Admin\Auth\RegisterController@showRegisterForm')->name('admin.register');
-    Route::post('register', 'Admin\Auth\RegisterController@register')->name('admin.register');
-    
-    Route::get('password/rest', 'Admin\Auth\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
-});
-//ログアウト
-Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function(){
-    Route::post('logout', 'Admin\Auth\LoginController@logout')->name('admin.logout');
-    Route::get('home', 'Admin\HomeController@index')->name('admin.home');
 });
 
 //　googlemap

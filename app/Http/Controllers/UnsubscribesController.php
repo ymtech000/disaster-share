@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class UnsubscribesController extends Controller
 {
     public function index(){
-        return view('unsubscribe.index');
+        return view('users.edit');
     }
 }

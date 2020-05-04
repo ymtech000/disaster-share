@@ -35,8 +35,6 @@ class AlertcommentsController extends Controller
             'parent_id' => $request->parent_id,
             'time' => $now,
         ]);
-        
-        // return redirect('/alerts/{alert}');
         return back();
     }
     
@@ -56,7 +54,7 @@ class AlertcommentsController extends Controller
         $alert = Alertcomment::find($id);
         $alert->delete();
 
-        return redirect('/alerts');
+        return back();
     }
 }
 

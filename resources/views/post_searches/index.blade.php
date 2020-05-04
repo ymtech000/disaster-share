@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<h1 class="text-center font-weight-bold font-family-Tahoma">DISASTER  INFORMATION</h1>
     {!! Form::open(['route' => 'post_searches.index', 'method' => 'get']) !!}
         <div class="form-group">
             {!! Form::text('search' ,'', ['class' => 'form-control', 'placeholder' => '検索はこちらから'] ) !!}
@@ -9,7 +10,6 @@
             </div>
         </div>
     {!! Form::close() !!}
-    <h3 class="brown p-2">投稿一覧</h3>
     <div class="container">
         <!--検索ボタンが押された時に表示される-->
         @if(!empty($datas))
@@ -19,11 +19,18 @@
                     <div id="lists" class="row">
                         <table class="table table-striped">
                             @foreach ($datas as $data)
-                                <div class="card border-0 col-6 col-sm-6 col-md-4 post-cards">
-                                    <div class="profile">
-                                            <a href="users/{{$data->user->id}}"><img class="float-left user-image" src="{{$data->user->image}}" width="35" height="35"></a>
-                                            <div>{{$data->user->name}}</div>
-                                    </div>
+                                <div class="card border-0 col-8 col-sm-6 col-md-4 post-cards">
+                                    @if($data->user->image == null)
+                                        <div class="profile">
+                                            <a href="/users/{{$data->user->id}}"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($data->user->email, 500) }}" width="35" height="35" alt=""></a>
+                                            <p>{{$data->user->name}}</p>
+                                        </div>
+                                    @else
+                                        <div class="profile">
+                                            <a href="/users/{{$data->user->id}}"><img class="float-left user-img" src="{{$data->user->image}}" width="35" height="35"></a>
+                                            <p>{{$data->user->name}}</p>
+                                        </div>
+                                    @endif
                                     <a href="alerts/{{$data->id}}"><img src="{{$data->image}}" width="270" height="270" class="img"></a>
                                     <div class="card-body border-bottom">
                                         <div class="contents">
@@ -34,6 +41,7 @@
                                 </div>
                             @endforeach
                         </table>
+                        {{ $datas->links('pagination::bootstrap-4') }}
                     </div>
                 </div>
             </div>
@@ -57,5 +65,10 @@
     }
     .img{
         border-radius:5px;
+    }
+    .user-img{
+        border-radius:50%;
+        margin-right:10px;
+        margin-bottom:10px;
     }
 </style>
