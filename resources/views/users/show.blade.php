@@ -6,6 +6,13 @@
     @else
         <h1 class="text-center font-weight-bold font-family-Tahoma">USER PAGE</h1>
     @endif
+    <div>
+                @if (\Session::has('error'))
+                    <div class="alert alert-error" id="error">
+                        {!! \Session::get('error') !!}
+                    </div>
+                @endif
+            </div>
     <div class="container">
         <div class="row">
             <aside class="col-sm-4 col-md-4">

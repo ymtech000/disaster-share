@@ -7,7 +7,7 @@
         {!! Form::model($alert, ['route' => 'alerts.store', 'files' => true, 'onsubmit' => "return false;"]) !!}
             {!! Form::label('thefile', '画像') !!}
             <label>
-                <a href="#"><span class="fa fa-file-image"></span></a>
+                <span class="fa fa-file-image" style="cursor: pointer"></span>
                 <input type="file" style="display:none" name="thefile">
             </label>
         <div class='form-row'>
@@ -163,3 +163,10 @@
         padding-top:20px;
     }
 </style>
+ 
+
+
+
+ 
+ 
+</html>
