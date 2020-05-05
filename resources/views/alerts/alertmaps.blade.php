@@ -18,9 +18,10 @@ var maps = @json($maps);
 
 for (var i = 0; i < maps.length; i++){
     markerData.push({
+        id: Number(maps[i].id),
         name: maps[i].content,
         lat: Number(maps[i].lat),
-        lng: Number(maps[i].lng)
+        lng: Number(maps[i].lng),
     });
 }
 
@@ -44,7 +45,7 @@ function initMap(){
                 map: map // マーカーを立てる地図を指定
             });
             infoWindow[i] = new google.maps.InfoWindow({ // 吹き出しの追加
-                content:　'<div class="map">' + <a href="{{route('alerts.show',['id' => $maps->id])}}">markerData[i]['name']</a> + '</div>'  // 吹き出しに表示する内容
+                content:'<div class="map">'+'<a style="color:black;" href="/alerts/' +markerData[i]["id"]+'">' +markerData[i]['name']+'</a>'+'</div>'  // 吹き出しに表示する内容
             });
             markerEvent(i); // マーカーにクリックイベントを追加
         }

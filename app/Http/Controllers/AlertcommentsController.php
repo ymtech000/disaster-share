@@ -51,10 +51,10 @@ class AlertcommentsController extends Controller
     // deleteでalerts/idにアクセスされた場合の「削除処理」
     public function destroy($id)
     {
-        $alert = Alertcomment::find($id);
-        $alert->delete();
+        $alertcomment = Alertcomment::find($id);
+        $alertcomment->delete();
 
-        return back();
+        return redirect('/alerts');
     }
 }
 

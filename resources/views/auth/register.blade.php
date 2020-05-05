@@ -27,7 +27,7 @@
                 <div class="form-group">
                     <p>画像(任意)</p>
                     <label>
-                        <span class="fa fa-file-image"></span>
+                        <span class="fa fa-file-image" style="cursor:pointer;"></span>
                         <input type="file" style="display:none" name="thefile">
                     </label>
                 </div>

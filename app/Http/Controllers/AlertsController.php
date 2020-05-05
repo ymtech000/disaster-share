@@ -15,6 +15,7 @@ class AlertsController extends Controller
         if (\Auth::check()) {
             $user = \Auth::user();
             $alerts = Alert::orderBy('created_at', 'desc')->paginate(9);
+            
             $data = [
                 'user' => $user,
                 'alerts' => $alerts,

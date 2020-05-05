@@ -15,7 +15,7 @@
         </tr>
     </table>
     
-   {!! Form::open(['route' => 'alertcomments.store','files' => true]) !!}
+   {!! Form::open(['route' => 'alertcomments.store']) !!}
     {{ csrf_field() }}
 
     <div class="form-group">
@@ -33,9 +33,9 @@
     {!! Form::close() !!}
     
      @if(Auth::user()->name == $alertcomment->user->name)
-    {!! Form::model($alertcomment, ['route' => ['alertcomments.destroy', $alertcomment->id], 'method' => 'delete']) !!}
-        {!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}
-    {!! Form::close() !!}
+        {!! Form::model($alertcomment, ['route' => ['alertcomments.destroy', $alertcomment->id], 'method' => 'delete']) !!}
+            {!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}
+        {!! Form::close() !!}
     @endif
 
 @endsection

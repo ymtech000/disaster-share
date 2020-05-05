@@ -5,9 +5,6 @@
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#nav-bar">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <!--<button name="button" type="submit" class="map-button">-->
-          <a href="/alertmaps"><span class="fa fa-map-marker-alt"></span></a>
-        <!--</button>-->
         <a href="/post_searches"><span class="fas fa-search"></span></a>
         
         <div class="collapse navbar-collapse" id="nav-bar">
@@ -15,7 +12,7 @@
             <ul class="navbar-nav">
                 @if (Auth::check())
                     <li class="nav-item">{!! link_to_route('users.index', 'ユーザー', [], ['class' => 'nav-link']) !!}</li>
-                    <li class="nav-item">{!! link_to_route('alerts.index', '投稿一覧',[], ['class' => 'nav-link']) !!}</li>
+                    <li class="nav-item">{!! link_to_route('alertmaps.index', '場所一覧', [], ['class' => 'nav-link']) !!}</li>
                     <li class="nav-item">{!! link_to_route('alerts.create', '新規投稿',[], ['class' => 'nav-link']) !!}</li>
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>

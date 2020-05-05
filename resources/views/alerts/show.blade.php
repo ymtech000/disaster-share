@@ -2,6 +2,7 @@
 
 @section('content')
     <h1 class="text-center font-weight-bold font-family-Tahoma">DETAILS</h1>
+    
     <div class='form-row'>
         <div class="card border-0 col-6 col-md-4 post-cards">
             @if($alert->user->image == null)
@@ -80,86 +81,143 @@
         {!! Form::submit('コメントする', ['class' => 'btn btn-primary']) !!}
     {!! Form::close() !!}
     <tr>
-        <td columnspan='2'>コメント数：{{count($alert->alertcomments)}}</td>
-        <td align="left">
-            @if(count($alert->alertcomments)>0)
+                    <td columnspan='2'>コメント数：{{count($alert->alertcomments)}}</td>
+                    <td align="left">
+                        @if(count($alert->alertcomments)>0)
+                            <font color="blue" data-toggle="collapse" data-target="#example-{{$alert->id}}" aria-expand="false" aria-controls="example-1">
+                                スレッドを表示する
+                            </font>
+                            <div class="collapse" id="example-{{$alert->id}}">
+                                <div class="card card-body">
+                                    @foreach($alert->alertcomments->where('parent_id', null) as $alertcomment)
+                                        <table>
+                                            <thread>
+                                                <tr>
+                                                    <th>投稿者</th>
+                                                    <th>No.</th>
+                                                    <th>コメント</th>
+                                                    <th>日時</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{$alertcomment->user->name}}</td>
+                                                    <td>{!! link_to_route('alertcomments.show', $alertcomment->id, ['id' => $alertcomment->id]) !!}</td>
+                                                    <td>{{$alertcomment->comment}}</td>
+                                                    <td>{{$alertcomment->time}}</td>
+                                                </tr>
+                                            </thread>
+                                        </table>
+                                        @foreach($alert->alertcomments->where('parent_id', $alertcomment->id) as $alertcomment)
+                                        <font color="blue" data-toggle="collapse" data-target="#example-{{$alertcomment->id}}" aria-expand="false" aria-controls="example-2">
+                                            スレッドを表示する
+                                        </font>
+                                        <div class="collapse" id="example-{{$alertcomment->id}}">
+                                        <div class="card card-body">
+                                        <table>
+                                            <thread>
+                                                <tr>
+                                                    <th>投稿者</th>
+                                                    <th>No.</th>
+                                                    <th>コメント</th>
+                                                    <th>日時</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{$alertcomment->user->name}}</td>
+                                                    <td>{!! link_to_route('alertcomments.show', $alertcomment->id, ['id' => $alertcomment->id]) !!}</td>
+                                                    <td>{{$alertcomment->comment}}</td>
+                                                    <td>{{$alertcomment->time}}</td>
+                                                </tr>
+                                            </thread>
+                                        </table>
+                                        @endforeach
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                    </td>
+                </tr>
+    
+    <!--<tr>-->
+    <!--    <td columnspan='2'>コメント数：{{count($alert->alertcomments)}}</td>-->
+    <!--    <td align="left">-->
+    <!--        @if(count($alert->alertcomments)>0)-->
                 <!--<font color="blue" data-toggle="collapse" data-target="#example-{{$alert->id}}" aria-expand="false" aria-controls="example-1">-->
                 <!--    スレッドを表示する-->
                 <!--</font>-->
                 <!--<div class="collapse" id="example-{{$alert->id}}">-->
-                    <div class="card card-body">
-                        @foreach($alert->alertcomments->where('parent_id', null) as $alertcomment)
-                            <table>
-                                <thread>
-                                    <tr>
-                                        @if($alertcomment->user->image == null)
-                                            <td><a href="{{route('users.show',['id' => $alertcomment->user->id])}}"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($user->email, 500) }}" width="35" height="35" alt=""></a></td>
-                                        @else
-                                            <td><a href="{{route('users.show',['id' => $alertcomment->user->id])}}"><img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35"></a></td>
-                                        @endif
-                                        <td>{{$alertcomment->user->name}}</td>
-                                        <td>{{$alertcomment->comment}}</td>
-                                        <td>{{$alertcomment->time}}</td>
-                                        <td>
-                                            @if(Auth::id() == $alertcomment->user_id)
-                                                <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>
-                                                <ul class="dropdown-menu" style="list-style: none;">
-                                                    <li class="dropdown-item">{!! link_to_route('alertcomments.show', 'コメント', ['id' => $alertcomment->id]) !!}</li>
-                                                    <li class="dropdown-item"><span class="fa fa-trash delete-btn"></span>{!! link_to_route('alertcomments.destroy', '削除', ['id' => $alertcomment->id]) !!}</li>
-                                                </ul>
-                                            @else
-                                                <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>
-                                                <ul class="dropdown-menu" style="list-style: none;">
-                                                    <li class="dropdown-item">{!! link_to_route('alertcomments.show', 'コメント', ['id' => $alertcomment->id]) !!}</li>
-                                                </ul>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                </thread>
-                            </table>
-                            @foreach($alert->alertcomments->where('parent_id', $alertcomment->id) as $alertcomment)
+    <!--                <div class="card card-body">-->
+    <!--                    @foreach($alert->alertcomments->where('parent_id', null) as $alertcomment)-->
+    <!--                        <table>-->
+    <!--                            <thread>-->
+    <!--                                <tr>-->
+    <!--                                    @if($alertcomment->user->image == null)-->
+    <!--                                        <td><a href="{{route('users.show',['id' => $alertcomment->user->id])}}"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($user->email, 500) }}" width="35" height="35" alt=""></a></td>-->
+    <!--                                    @else-->
+    <!--                                        <td><a href="{{route('users.show',['id' => $alertcomment->user->id])}}"><img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35"></a></td>-->
+    <!--                                    @endif-->
+    <!--                                    <td>{{$alertcomment->user->name}}</td>-->
+    <!--                                    <td>{{$alertcomment->comment}}</td>-->
+    <!--                                    <td>{{$alertcomment->time}}</td>-->
+    <!--                                    <td>-->
+    <!--                                        @if(Auth::id() == $alertcomment->user_id)-->
+    <!--                                            <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>-->
+    <!--                                            <ul class="dropdown-menu" style="list-style: none;">-->
+    <!--                                                <li class="dropdown-item">{!! link_to_route('alertcomments.show', 'コメント', ['id' => $alertcomment->id]) !!}</li>-->
+    <!--                                                <li class="dropdown-item"><span class="fa fa-trash delete-btn"></span>{!! link_to_route('alertcomments.destroy', '削除', ['id' => $alertcomment->id]) !!}</li>-->
+    <!--                                            </ul>-->
+    <!--                                        @else-->
+    <!--                                            <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>-->
+    <!--                                            <ul class="dropdown-menu" style="list-style: none;">-->
+    <!--                                                <li class="dropdown-item">{!! link_to_route('alertcomments.show', 'コメント', ['id' => $alertcomment->id]) !!}</li>-->
+    <!--                                            </ul>-->
+    <!--                                        @endif-->
+    <!--                                    </td>-->
+    <!--                                </tr>-->
+    <!--                            </thread>-->
+    <!--                        </table>-->
+    <!--                        @foreach($alert->alertcomments->where('parent_id', $alertcomment->id) as $alertcomment)-->
                                 <!--<font color="blue" data-toggle="collapse" data-target="#example-{{$alertcomment->id}}" aria-expand="false" aria-controls="example-2">-->
                                 <!--    スレッドを表示する-->
                                 <!--</font>-->
                                 <!--<div class="collapse" id="example-{{$alertcomment->id}}">-->
-                                    <div class="card card-body">
-                                        <table>
-                                            <thread>
-                                                <tr>
-                                                    @if($alertcomment->user->image == null)
-                                                        <td><a href="{{route('users.show',['id' => $alertcomment->user->id])}}"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($user->email, 500) }}" width="35" height="35" alt=""></a></td>
-                                                    @else
-                                                        <td><a href="{{route('users.show',['id' => $alertcomment->user->id])}}"><img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35"></a></td>
-                                                    @endif
-                                                    <td>{{$alertcomment->user->name}}</td>
-                                                    <td>{{$alertcomment->comment}}</td>
-                                                    <td>{{$alertcomment->time}}</td>
-                                                    <td>
-                                                        @if(Auth::id() == $alertcomment->user_id)
-                                                            <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>
-                                                            <ul class="dropdown-menu" style="list-style: none;">
-                                                                <li class="dropdown-item">{!! link_to_route('alertcomments.show', 'コメント', ['id' => $alertcomment->id]) !!}</li>
-                                                                <li class="dropdown-item"><span class="fa fa-trash delete-btn"></span>{!! link_to_route('alertcomments.destroy', '削除', ['id' => $alertcomment->id]) !!}</li>
-                                                            </ul>
-                                                        @else
-                                                            <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>
-                                                            <ul class="dropdown-menu" style="list-style: none;">
-                                                                <li class="dropdown-item">{!! link_to_route('alertcomments.show', 'コメント', ['id' => $alertcomment->id]) !!}</li>
-                                                            </ul>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                            </thread>
-                                        </table>
-                                    </div>
-                                </div>
-                            @endforeach
-                        @endforeach
-                   </div>
-               </div>
-            @endif
-        </td>
-    </tr>
+    <!--                                <div class="card card-body">-->
+    <!--                                    <table>-->
+    <!--                                        <thread>-->
+    <!--                                            <tr>-->
+    <!--                                                @if($alertcomment->user->image == null)-->
+    <!--                                                    <td><a href="{{route('users.show',['id' => $alertcomment->user->id])}}"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($user->email, 500) }}" width="35" height="35" alt=""></a></td>-->
+    <!--                                                @else-->
+    <!--                                                    <td><a href="{{route('users.show',['id' => $alertcomment->user->id])}}"><img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35"></a></td>-->
+    <!--                                                @endif-->
+    <!--                                                <td>{{$alertcomment->user->name}}</td>-->
+    <!--                                                <td>{{$alertcomment->comment}}</td>-->
+    <!--                                                <td>{{$alertcomment->time}}</td>-->
+    <!--                                                <td>-->
+    <!--                                                    @if(Auth::id() == $alertcomment->user_id)-->
+    <!--                                                        <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>-->
+    <!--                                                        <ul class="dropdown-menu" style="list-style: none;">-->
+    <!--                                                            <li class="dropdown-item">{!! link_to_route('alertcomments.show', 'コメント', ['id' => $alertcomment->id]) !!}</li>-->
+    <!--                                                            <li class="dropdown-item"><span class="fa fa-trash delete-btn"></span>{!! link_to_route('alertcomments.destroy', '削除', ['id' => $alertcomment->id]) !!}</li>-->
+    <!--                                                        </ul>-->
+    <!--                                                    @else-->
+    <!--                                                        <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>-->
+    <!--                                                        <ul class="dropdown-menu" style="list-style: none;">-->
+    <!--                                                            <li class="dropdown-item">{!! link_to_route('alertcomments.show', 'コメント', ['id' => $alertcomment->id]) !!}</li>-->
+    <!--                                                        </ul>-->
+    <!--                                                    @endif-->
+    <!--                                                </td>-->
+    <!--                                            </tr>-->
+    <!--                                        </thread>-->
+    <!--                                    </table>-->
+    <!--                                </div>-->
+    <!--                            </div>-->
+    <!--                        @endforeach-->
+    <!--                    @endforeach-->
+    <!--               </div>-->
+    <!--           </div>-->
+    <!--        @endif-->
+    <!--    </td>-->
+    <!--</tr>-->
+    
 @endsection
 <style>
     

@@ -13,6 +13,7 @@ class AlertmapsController extends Controller
         if (\Auth::check()) {
             $user = \Auth::user();
                 $alerts = Alert::orderBy('created_at', 'desc')->get();
+                
                 $data = [
                     'user' => $user,
                     'maps' => $alerts,
