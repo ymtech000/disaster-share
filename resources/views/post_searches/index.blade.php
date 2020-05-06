@@ -3,12 +3,12 @@
 @section('content')
 <h1 class="text-center font-weight-bold font-family-Tahoma">DISASTER  INFORMATION</h1>
     {!! Form::open(['route' => 'post_searches.index', 'method' => 'get']) !!}
-        <div class="form-group">
-            {!! Form::text('search' ,'', ['class' => 'form-control', 'placeholder' => '検索はこちらから'] ) !!}
-            <div class="search">
-                {!! Form::submit('検索', ['class' => 'btn btn-primary btn-block']) !!}
-            </div>
-        </div>
+        <ul>
+            <li>{!! Form::text('search' ,'', ['class' => 'form-control', 'placeholder' => '検索はこちらから'] ) !!}</li>
+            <button type="submit" name="button">
+                <li style="color:black" class="fas fa-search"></li>
+            </button>
+        </ul>
     {!! Form::close() !!}
     <div class="container">
         <!--検索ボタンが押された時に表示される-->
@@ -41,7 +41,7 @@
                                 </div>
                             @endforeach
                         </table>
-                        {{ $datas->links('pagination::bootstrap-4') }}
+                        
                     </div>
                 </div>
             </div>
@@ -61,7 +61,7 @@
         margin-right:10px;
     }
     .search{
-        margin-top:20px;
+        display:inline-block;
     }
     .img{
         border-radius:5px;
@@ -70,5 +70,8 @@
         border-radius:50%;
         margin-right:10px;
         margin-bottom:10px;
+    }
+    li{
+        display:inline-block;
     }
 </style>

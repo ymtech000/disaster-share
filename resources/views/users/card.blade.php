@@ -5,7 +5,6 @@
         <a href="#" class="nav-link" data-toggle="dropdown"><span class="fa fa-ellipsis-h"></span></a>
         <ul class="dropdown-menu" style="list-style: none;">
             <li class="dropdown-item">{!! link_to_route('users.edit', '設定', ['id' => Auth::id()]) !!}</li>
-            <!--<li class="dropdown-item">{!! link_to_route('users.destroy', '退会', ['id' => Auth::id()]) !!}</li>-->
             <li class="dropdown-item"><a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#testModal">退会</a></li>
             <li class="dropdown-item">{!! link_to_route('logout.get', 'ログアウト') !!}</li>
         </ul>

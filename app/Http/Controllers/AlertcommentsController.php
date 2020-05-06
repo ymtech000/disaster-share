@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 use App\Alertcomment;
 use App\Alert;
 use App\User;
+use App\Http\Requests\StoreAlertcomment;
 
 class AlertcommentsController extends Controller
 {
-    public function store(Request $request)
+    public function store(StoreAlertcomment $request)
     {
         if($request->parent_id == null){
             $params = $request->validate([
@@ -36,16 +37,6 @@ class AlertcommentsController extends Controller
             'time' => $now,
         ]);
         return back();
-    }
-    
-     public function show($id)
-    {
-        $alertcomment = Alertcomment::find($id);
-
-        return view('alerts.comment_show', [
-            'alertcomment' => $alertcomment,
-            
-        ]);
     }
     
     // deleteでalerts/idにアクセスされた場合の「削除処理」

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Alert;
+use App\Alertcomment;
 use Storage;
 use App\Http\Requests\StoreAlert;
 
@@ -73,11 +74,13 @@ class AlertsController extends Controller
         $alert = Alert::find($id);
         $user = \Auth::user();
         $alerts = Alert::find($id);
+        $alertcomment = Alertcomment::find($id);
        
         $data = [
             'alert' => $alert,
             'user' => $user,
             'maps' => $alerts,
+            'alertcomment' => $alertcomment
         ];
 
         return view('alerts.show', $data);
@@ -101,14 +104,7 @@ class AlertsController extends Controller
         //時間のセット
         date_default_timezone_set('Asia/Tokyo');
         $now = date("Y/m/d H:i");
-        
-        // if($request->lat == null　&& $request->lng == null){
-        //     return back()->with('error', '指定された場所が存在しません。');
-        // }
-        // else{
-            // $lat = $location['lat']; // latを取得
-            // $lng = $location['lng']; // lngを取得
-            
+
             $alert = Alert::find($id);
             
             $alert->content = $request->content;

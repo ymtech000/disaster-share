@@ -16,9 +16,9 @@ class CreateAlertcommentsTable extends Migration
         Schema::create('alertcomments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('parent_id')->unsigned()->nullable();
-            $table->unsignedInteger('alert_id');
+            $table->unsignedInteger('alert_id')->nullable();
             $table->integer('user_id')->unsigned()->index();
-            $table->string('comment');
+            $table->string('comment')->nullable();
             $table->string('time')->nullable();
             $table->timestamps();
             $table->foreign('alert_id')->references('id')->on('alerts')->onDelete('cascade');

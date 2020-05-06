@@ -46,7 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('post_searches', 'Post_SearchesController', ['only' => ['index']]);
     Route::resource('area_searches', 'Area_SearchesController', ['only' => ['index']]);
     Route::resource('unsubscribe', 'UnsubscribesController', ['only' => ['index']]);
-    Route::resource('alertcomments', 'AlertcommentsController', ['only' => ['show', 'store', 'destroy']]);
+    Route::resource('alertcomments', 'AlertcommentsController', ['only' => ['store', 'destroy']]);
     Route::group(['prefix' => 'users/{id}'], function () {
         Route::post('follow', 'UserFollowController@store')->name('user.follow');
         Route::delete('unfollow', 'UserFollowController@destroy')->name('user.unfollow');
