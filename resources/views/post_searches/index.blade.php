@@ -6,7 +6,7 @@
         <ul>
             <li>{!! Form::text('search' ,'', ['class' => 'form-control', 'placeholder' => '検索はこちらから'] ) !!}</li>
             <button type="submit" name="button">
-                <li style="color:black" class="fas fa-search"></li>
+                <span style="color:black" class="fas fa-search"></span>
             </button>
         </ul>
     {!! Form::close() !!}

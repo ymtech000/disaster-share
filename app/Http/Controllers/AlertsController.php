@@ -105,20 +105,20 @@ class AlertsController extends Controller
         date_default_timezone_set('Asia/Tokyo');
         $now = date("Y/m/d H:i");
 
-            $alert = Alert::find($id);
-            
-            $alert->content = $request->content;
-            $alert->title = $request->title;
-            $alert->area = $request->area;
-            $alert->location = $request->location;
-            $alert->time = $now;
-            $alert->image = $url;
-            $alert->lat = $request->lat;
-            $alert->lng = $request->lng;
-            
-            $alert->save();
-            
-            return redirect('/alerts');
+        $alert = Alert::find($id);
+        
+        $alert->content = $request->content;
+        $alert->title = $request->title;
+        $alert->area = $request->area;
+        $alert->location = $request->location;
+        $alert->time = $now;
+        $alert->image = $url;
+        $alert->lat = $request->lat;
+        $alert->lng = $request->lng;
+        
+        $alert->save();
+        
+        return redirect('/alerts');
     }
     
     // getでalerts/id/editにアクセスされた場合の「更新画面表示処理」

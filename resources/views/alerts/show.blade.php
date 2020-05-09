@@ -2,6 +2,7 @@
 
 @section('content')
     <h1 class="text-center font-weight-bold font-family-Tahoma">DETAILS</h1>
+    
     <div class='form-row'>
         <div class="card border-0 col-6 col-md-4 post-cards">
             @if($alert->user->image == null)
@@ -19,13 +20,12 @@
                 <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>
                 <ul class="dropdown-menu" style="list-style: none;">
                     <li class="dropdown-item">
-                        {!! link_to_route('alerts.edit', '編集', ['id' => $alert->id]) !!}
+                        <a href="{{ route('alerts.edit', ['id' => $alert->id]) }}"><span class="fa fa-edit" style="color:black;"></span></a>
+                        {!! link_to_route('alerts.edit', '編集', ['id' => $alert->id], ['class' => 'btn btn-default']) !!}
                     </li>
                     <li class="dropdown-item">
-                        {!! Form::model($alert, ['route' => ['alerts.destroy', $alert->id], 'method' => 'delete']) !!}
-                            <span class="fa fa-trash delete-btn" style="cursor:pointer"></span>
-                            <input class="btn btn-default" type="submit" value="削除">
-                        {!! Form::close() !!}
+                        <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alert-delete"><span class="fa fa-trash delete-btn" style="cursor:pointer; color:black;"></span></a>
+                        <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alert-delete">削除</a>
                     </li>
                 </ul>
             @endif
@@ -45,7 +45,7 @@
             </div>
         </div>
     </div>
-   <div class='form-row'>
+    <div class='form-row'>
         <div class='col-md-7'>
             <table class="table table-bordered">
                 <tr>
@@ -71,7 +71,6 @@
             </table>
         </div>
     </div>
-    <div class="back">{!! link_to_route('alerts.index', '戻る', ['id' => $alert->id], ['class' => 'btn btn-primary']) !!}</div>
     
     {!! Form::open(['route' => 'alertcomments.store']) !!}
         <div class="form-group">
@@ -82,7 +81,7 @@
         {!! Form::submit('コメントする', ['class' => 'btn btn-primary']) !!}
     {!! Form::close() !!}
     
-    <div><span class="far fa-comment"></span>{{count($alert->alertcomments)}}</div>
+    <div class="comment"><span class="far fa-comment"></span>{{count($alert->alertcomments)}}</div>
     <div align="left">
         @if(count($alert->alertcomments)>0)
                 <div class="card card-body">
@@ -98,31 +97,51 @@
                                     <td>{{$alertcomment->user->name}}</td>
                                     <td>{{$alertcomment->comment}}</td>
                                     <td>{{$alertcomment->time}}</td>
+                                    <td><input type="button" id="button" value="{{$alertcomment->id}}"/></td>
                                     <td>
                                         <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>
                                         <ul class="dropdown-menu" style="list-style: none;">
                                             <li class="dropdown-item">
-                                                <span class="far fa-comment"></span>
+                                                <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alertcomment-comment"><span class="far fa-comment" style=" color:black;"></span></a>
                                                 <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alertcomment-comment">コメント</a>
                                             </li>
                                             <li class="dropdown-item">
-                                                {!! Form::model($alertcomment, ['route' => ['alertcomments.destroy', $alertcomment->id], 'method' => 'delete']) !!}
-                                                    <span class="fa fa-trash delete-btn"></span>
-                                                    <input class="btn btn-default" type="submit" value="削除">
-                                                {!! Form::close() !!}
+                                                <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alertcomment-delete"><span class="fa fa-trash delete-btn" style=" color:black;"></span></a>
+                                                <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alertcomment-delete">削除</a>
+                                            </li>
+                                            <li class="dropdown-item">
+                                                <a href="{{ route('alertcomments.edit', ['id' => $alertcomment->id]) }}"><span class="fa fa-edit" style=" color:black;"></span></a>
+                                                {!! link_to_route('alertcomments.edit', '編集', ['id' => $alertcomment->id], ['class' => 'btn btn-default']) !!}
                                             </li>
                                         </ul>
                                     </td>
-                                  
                                 </thread>
-                                </a>
-                            
+                            </a>
                         </table>
                     @endforeach
                 </div>
             </div>
         @endif
     </div>
+    <!--ボタン・リンククリック後に表示される画面の内容 -->
+    <div class="modal fade" id="alert-delete" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4><class="modal-title" id="myModalLabel">投稿削除確認画面</h4></h4>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
+                    </div>
+                    <div class="modal-body">
+                        <label>本当に削除しますか？（この操作は取り消しできません。）</label>
+                    </div>
+                    <div class="modal-footer">
+                        {!! Form::model($alert, ['route' => ['alerts.destroy', $alert->id], 'method' => 'delete']) !!}
+                            <input class="btn btn-danger" type="submit" value="削除">
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
      <!--ボタン・リンククリック後に表示される画面の内容 -->
     @if($alertcomment !== null)
         <div class="modal fade" id="alertcomment-comment" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
@@ -130,6 +149,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4><class="modal-title" id="myModalLabel">コメント</h4>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
                     </div>
                     <div class="modal-body">
                         @include('commons.error_messages')
@@ -151,25 +171,80 @@
                 </div>
             </div>
         </div>
+    <!--ボタン・リンククリック後に表示される画面の内容 -->
+    <div class="modal fade" id="alertcomment-delete" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4><class="modal-title" id="myModalLabel">投稿削除確認画面</h4>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
+                    </div>
+                    <div class="modal-body">
+                        <label>本当に削除しますか？（この操作は取り消しできません。）</label>
+                    </div>
+                    <div class="modal-footer">
+                        {!! Form::model($alertcomment, ['route' => ['alertcomments.destroy', $alertcomment->id], 'method' => 'delete']) !!}
+                            <input class="btn btn-danger" type="submit" value="削除">
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>   
+    <script>
+        var alertcomment_id = [];
+        var alertcomment = @json($alertcomment);
+       
+        for (var i = 0; i < alertcomment.length; i++){
+            alertcomment_id.push({
+                id: Number(alertcomment[i].id),
+            });
+        }
+        console.log(alertcomment);
+        $(function() {
+            $('#button').click(
+              function() {
+                $.ajax({
+                  url: 'add.blade.php/' + alertcomment_id[i]["id"],
+                  dataType: 'html',
+                  data: {'alertcomment_id': alertcomment_id[i]["id"]},        
+                  success: function(data) {
+                    $('#text').html(data);
+                  },
+                  error: function(data) {
+                    alert('error');
+                  }
+                 });
+              }
+            );
+        });
+    </script>
+    <div id="text"></div>
+        
+        
     @endif
         </div>
          <!--ボタン・リンククリック後に表示される画面の内容 -->
-        <div class="modal fade" id="alertcomment-comment-thread" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        @if(count($alert->alertcomments)>0)
-                                <div class="card card-body">
-                                    @foreach($alert->alertcomments->where('parent_id', null) as $alertcomment)
-                                        <table>
-                                            <thread>
-                                                <tr>
-                                                    <td>{{$alertcomment->user->name}}</td>
-                                                    <td>{{$alertcomment->comment}}</td>
-                                                    <td>{{$alertcomment->time}}</td>
-                                                </tr>
-                                            </thread>
-                                        </table>
+        <!--<div class="modal fade" id="alertcomment-comment-thread" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">-->
+        <!--    <div class="modal-dialog">-->
+        <!--        <div class="modal-content">-->
+        <!--            <div class="modal-header">-->
+        <!--                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>-->
+        <!--            </div>-->
+        <!--            <div class="modal-body">-->
+        <!--                @if(count($alert->alertcomments)>0)-->
+        <!--                        <div class="card card-body">-->
+        <!--                            @foreach($alert->alertcomments->where('parent_id', null) as $alertcomment)-->
+        <!--                                <table>-->
+        <!--                                    <thread>-->
+        <!--                                        <tr>-->
+        <!--                                            <td>{{$alertcomment->user->name}}</td>-->
+        <!--                                            <td>{{$alertcomment->comment}}</td>-->
+        <!--                                            <td>{{$alertcomment->time}}</td>-->
+        <!--                                        </tr>-->
+        <!--                                    </thread>-->
+        <!--                                </table>-->
                                         <!--@foreach($alert->alertcomments->where('parent_id', $alertcomment->id) as $alertcomment)-->
                                         <!--    <table>-->
                                         <!--        <thread>-->
@@ -181,17 +256,19 @@
                                         <!--        </thread>-->
                                         <!--    </table>-->
                                         <!--@endforeach-->
-                                    @endforeach
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!--                            @endforeach-->
+        <!--                        </div>-->
+        <!--                    @endif-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--    </div>-->
                     </div>
                 </div>
             </div>
         </div>
+        
+        
 @endsection
 <style>
     
@@ -223,15 +300,8 @@
     .heart-button{
         margin-left:5px;
     }
-    .edit{
-        float:right;
-        padding-bottom:5px
-    }
-    .back{
-        float:right;
-    }
     .comment{
-        font-weight:bold;
+        font-size:35px;
     }
 </style>
 

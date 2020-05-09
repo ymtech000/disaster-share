@@ -18,7 +18,7 @@ var markerData = [
     ];
 var infoWindow = [];
 
-console.log(markerData);
+// console.log(markerData);
 
 function initMap(){
      
