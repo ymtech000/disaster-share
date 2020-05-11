@@ -2,13 +2,13 @@
 
 @section('content')
 <!--ボタン・リンククリック後に表示される画面の内容 -->
-    <div class="modal fade" id="alertcomment-comment-thread" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
-                </div>
-                <div class="modal-body">
+    <!--<div class="modal fade" id="alertcomment-comment-thread" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">-->
+    <!--    <div class="modal-dialog">-->
+    <!--        <div class="modal-content">-->
+    <!--            <div class="modal-header">-->
+    <!--                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>-->
+    <!--            </div>-->
+    <!--            <div class="modal-body">-->
                     <!--@if(count($alert->alertcomments)>0)-->
                         <div class="card card-body">
                             <!--@foreach($alert->alertcomments->where('parent_id', null) as $alertcomment)-->
@@ -36,8 +36,8 @@
                             @endforeach
                         </div>
                     <!--@endif-->
-                </div>
-            </div>
-        </div>
-    </div> 
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--</div> -->
 @endsection

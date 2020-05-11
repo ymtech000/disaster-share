@@ -1,26 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Alertcomment;
 use App\Alert;
 use App\User;
 use App\Http\Requests\StoreAlertcomment;
+use App\Http\Controllers\Controller;
 
 class AlertcommentsController extends Controller
 {
-    public function add($alertcomment_id)
-    {
-       
-        $alertcomments = Alertcomment::find($id);
-       
-        $data = [
-            'alertcomment' => $alertcomment
-        ];
-
-        return view('alertcomments.add', $data);
-        
+    public function add(Request $request){ 
+        $data = $request->data;
+        return response()->json([
+            'responseData' => $data.'送ります',
+        ]);
     }
     
     public function store(StoreAlertcomment $request)
@@ -82,16 +77,6 @@ class AlertcommentsController extends Controller
         $alertcomment->save();
         
         return redirect('/alerts');
-    }
-    
-    // getでalerts/id/editにアクセスされた場合の「更新画面表示処理」
-    public function edit($id)
-    {
-        $alertcomment = Alertcomment::find($id);
-
-        return view('alertcomments.edit', [
-            'alertcomment' => $alertcomment,
-        ]);
     }
     
     // deleteでalerts/idにアクセスされた場合の「削除処理」

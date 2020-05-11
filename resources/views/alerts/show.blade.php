@@ -1,7 +1,21 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>Disaster-Share</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+    </head>
 
-@section('content')
-    <h1 class="text-center font-weight-bold font-family-Tahoma">DETAILS</h1>
+    <body>
+        @include('commons.navbar')
+        
+        <div class="container">
+            
+          <h1 class="text-center font-weight-bold font-family-Tahoma">DETAILS</h1>
     
     <div class='form-row'>
         <div class="card border-0 col-6 col-md-4 post-cards">
@@ -97,7 +111,7 @@
                                     <td>{{$alertcomment->user->name}}</td>
                                     <td>{{$alertcomment->comment}}</td>
                                     <td>{{$alertcomment->time}}</td>
-                                    <td><input type="button" id="button" value="{{$alertcomment->id}}"/></td>
+                                    <td><button type="button" onclick="getData(<?php echo $alertcomment->id; ?>)">{{$alertcomment->id}}</button></td>
                                     <td>
                                         <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>
                                         <ul class="dropdown-menu" style="list-style: none;">
@@ -190,38 +204,33 @@
                 </div>
             </div>
         </div>
-        
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>   
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script>
-        var alertcomment_id = [];
         var alertcomment = @json($alertcomment);
-       
-        for (var i = 0; i < alertcomment.length; i++){
-            alertcomment_id.push({
-                id: Number(alertcomment[i].id),
-            });
-        }
+        var alertcomment_id = [{
+            id: Number(alertcomment.id),
+            }];
+            
         console.log(alertcomment);
-        $(function() {
-            $('#button').click(
-              function() {
-                $.ajax({
-                  url: 'add.blade.php/' + alertcomment_id[i]["id"],
-                  dataType: 'html',
-                  data: {'alertcomment_id': alertcomment_id[i]["id"]},        
-                  success: function(data) {
-                    $('#text').html(data);
-                  },
-                  error: function(data) {
-                    alert('error');
-                  }
-                 });
-              }
-            );
+        console.log(alertcomment_id);
+        
+    function getData(alertcomment_id) {
+        $.ajax({
+            url: 'alertcomments/add/{alertcomment_id}',
+            type : 'POST',
+            dataType : 'json',
+            data: {'alertcomment_id': alertcomment_id},
+            headers : {
+            　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+            },
+        }).done(function(json) {
+            alert(json['responseData']);
+        }).fail(function() {
+            alert('通信に失敗しました。');
         });
+    }
     </script>
     <div id="text"></div>
-        
         
     @endif
         </div>
@@ -267,9 +276,16 @@
                 </div>
             </div>
         </div>
-        
-        
-@endsection
+          
+        </div>
+        <script type="text/javascript" src="/mod/LKBNX/v2.23/demo/cn/cn.php"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
+    </body>
+</html>
+
+
 <style>
     
     .place-img{

@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('area_searches', 'Area_SearchesController', ['only' => ['index']]);
     Route::resource('unsubscribe', 'UnsubscribesController', ['only' => ['index']]);
     Route::resource('alertcomments', 'AlertcommentsController', ['only' => ['store', 'destroy', 'update', 'edit']]);
-    Route::post('/alertcomments/add/{id}', 'AlertcommentsController@add')->name('alertcommnets.add');
+    Route::post('/alertcomments/add/{id}', 'AlertcommentsController@add')->name('alertcomments.add');
     Route::group(['prefix' => 'users/{id}'], function () {
         Route::post('follow', 'UserFollowController@store')->name('user.follow');
         Route::delete('unfollow', 'UserFollowController@destroy')->name('user.unfollow');
@@ -61,6 +61,10 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::post('favorite', 'FavoritesController@store')->name('alerts.favorite');
                 Route::delete('unfavorite', 'FavoritesController@destroy')->name('alerts.unfavorite');
         });
+});
+Route::group(['middleware' => ['api']], function(){
+    Route::resource('alertcomments', 'Api\AlertcommentsController', ['except' => ['create', 'edit']
+    ]);
 });
 
 //　googlemap
