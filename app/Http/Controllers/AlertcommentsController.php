@@ -10,19 +10,6 @@ use App\Http\Requests\StoreAlertcomment;
 
 class AlertcommentsController extends Controller
 {
-    public function add($alertcomment_id)
-    {
-       
-        $alertcomments = Alertcomment::find($id);
-       
-        $data = [
-            'alertcomment' => $alertcomment
-        ];
-
-        return view('alertcomments.add', $data);
-        
-    }
-    
     public function store(StoreAlertcomment $request)
     {
         if($request->parent_id == null){
@@ -100,7 +87,7 @@ class AlertcommentsController extends Controller
         $alertcomment = Alertcomment::find($id);
         $alertcomment->delete();
 
-        return redirect('/alerts');
+        return back();
     }
 }
 

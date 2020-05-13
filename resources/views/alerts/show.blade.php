@@ -101,7 +101,7 @@
                 <div class="card card-body">
                     @foreach($alert->alertcomments as $alertcomment)
                         <table class="table table-bordered">
-                            <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alertcomment-comment-thread">
+                            
                                 <thread>
                                     <td>
                                         <div class="profile">
@@ -111,7 +111,8 @@
                                     <td>{{$alertcomment->user->name}}</td>
                                     <td>{{$alertcomment->comment}}</td>
                                     <td>{{$alertcomment->time}}</td>
-                                    <td><button type="button" onclick="getData(<?php echo $alertcomment->id; ?>)">{{$alertcomment->id}}</button></td>
+                                    <!--<td><button type="button" onclick="getData(<?php echo $alertcomment->id; ?>)">{{$alertcomment->id}}</button></td>-->
+                                    <td><a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alertcomment-comment-thread"><button type="button" id="{{$alertcomment->id}}" onclick="getData(this.id)">{{$alertcomment->id}}</a></button></td>
                                     <td>
                                         <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>
                                         <ul class="dropdown-menu" style="list-style: none;">
@@ -130,7 +131,7 @@
                                         </ul>
                                     </td>
                                 </thread>
-                            </a>
+                        
                         </table>
                     @endforeach
                 </div>
@@ -185,7 +186,7 @@
                 </div>
             </div>
         </div>
-    <!--ボタン・リンククリック後に表示される画面の内容 -->
+    <!--ボタン・リンククリック後に表示さ�����る画面の内容 -->
     <div class="modal fade" id="alertcomment-delete" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -206,54 +207,47 @@
         </div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script>
-        var alertcomment = @json($alertcomment);
-        var alertcomment_id = [{
-            id: Number(alertcomment.id),
-            }];
-            
-        console.log(alertcomment);
-        console.log(alertcomment_id);
-        
-    function getData(alertcomment_id) {
-        $.ajax({
-            url: 'alertcomments/add/{alertcomment_id}',
-            type : 'POST',
-            dataType : 'json',
-            data: {'alertcomment_id': alertcomment_id},
-            headers : {
-            　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-            },
-        }).done(function(json) {
-            alert(json['responseData']);
-        }).fail(function() {
-            alert('通信に失敗しました。');
-        });
-    }
+        function getData(id) {
+            $.ajax({
+                url: '/alertcomments/'+ id +'/ajax',
+                type : 'POST',
+                dataType : 'json',
+                data: {'id': id},
+                headers : {
+                　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                },
+            }).done(function(json) {
+                // alert(json['responseData']);
+                document.getElementById('alertcomment').value = json['responseData'];
+            }).fail(function() {
+                alert('通信に失敗しました。');
+            });
+        }
     </script>
-    <div id="text"></div>
+    <input type="text" name='alertcomment' id='alertcomment' class="form-control">
         
     @endif
         </div>
          <!--ボタン・リンククリック後に表示される画面の内容 -->
-        <!--<div class="modal fade" id="alertcomment-comment-thread" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">-->
-        <!--    <div class="modal-dialog">-->
-        <!--        <div class="modal-content">-->
-        <!--            <div class="modal-header">-->
-        <!--                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>-->
-        <!--            </div>-->
-        <!--            <div class="modal-body">-->
-        <!--                @if(count($alert->alertcomments)>0)-->
-        <!--                        <div class="card card-body">-->
-        <!--                            @foreach($alert->alertcomments->where('parent_id', null) as $alertcomment)-->
-        <!--                                <table>-->
-        <!--                                    <thread>-->
-        <!--                                        <tr>-->
-        <!--                                            <td>{{$alertcomment->user->name}}</td>-->
-        <!--                                            <td>{{$alertcomment->comment}}</td>-->
-        <!--                                            <td>{{$alertcomment->time}}</td>-->
-        <!--                                        </tr>-->
-        <!--                                    </thread>-->
-        <!--                                </table>-->
+        <div class="modal fade" id="alertcomment-comment-thread" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
+                    </div>
+                    <div class="modal-body">
+                        <!--@if(count($alert->alertcomments)>0)-->
+                                <div class="card card-body">
+                                    <!--@foreach($alert->alertcomments->where('parent_id', null) as $alertcomment)-->
+                                        <table>
+                                            <thread>
+                                                <tr>
+                                                    <td>{{$alertcomment->user->name}}</td>
+                                                    <td>{{$alertcomment->comment}}</td>
+                                                    <td>{{$alertcomment->time}}</td>
+                                                </tr>
+                                            </thread>
+                                        </table>
                                         <!--@foreach($alert->alertcomments->where('parent_id', $alertcomment->id) as $alertcomment)-->
                                         <!--    <table>-->
                                         <!--        <thread>-->
@@ -265,19 +259,20 @@
                                         <!--        </thread>-->
                                         <!--    </table>-->
                                         <!--@endforeach-->
-        <!--                            @endforeach-->
-        <!--                        </div>-->
-        <!--                    @endif-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
-        <!--    </div>-->
+                                    <!--@endforeach-->
+                                </div>
+                            <!--@endif-->
+                        </div>
+                    </div>
+                </div>
+            </div>
                     </div>
                 </div>
             </div>
         </div>
           
         </div>
+        
         <script type="text/javascript" src="/mod/LKBNX/v2.23/demo/cn/cn.php"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>

@@ -33,7 +33,7 @@
                                 <!--        </thread>-->
                                 <!--    </table>-->
                                 <!--@endforeach-->
-                            @endforeach
+                            <!--@endforeach-->
                         </div>
                     <!--@endif-->
     <!--            </div>-->

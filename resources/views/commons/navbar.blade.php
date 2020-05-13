@@ -33,7 +33,10 @@
                         </ul>
                     </li>
                 @else
-                    <li class="nav-item">{!! link_to_route('login', 'ログイン', [], ['class' => 'nav-link']) !!}</li>
+                    <li class="nav-item">
+                        <span class="fa fa-sign-in-alt" style="cursor:pointer; color:white;"></span>
+                        {!! link_to_route('login', 'ログイン', [], ['class' => 'nav-link']) !!}
+                    </li>
                 @endif
             </ul>
         </div>

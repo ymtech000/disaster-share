@@ -35,9 +35,18 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login')->name('login.post');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 Route::group(['middleware' => ['auth']], function () {
-Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
+    Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
 });
 Route::get('guest', 'Auth\LoginController@authenticate')->name('login.guest');
+
+
+Route::group(['middleware' => ['api']], function(){
+    Route::resource('alertcomments', 'AlertcommentsController', ['except' => ['create', 'edit']
+    ]);
+    Route::post('alertcomments/{id}/ajax', 'Api\AlertcommentsController@ajax')->name('alertcomments.ajax');
+});
+
+
 
 // ユーザ機能
 Route::group(['middleware' => 'auth'], function () {
@@ -47,7 +56,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('area_searches', 'Area_SearchesController', ['only' => ['index']]);
     Route::resource('unsubscribe', 'UnsubscribesController', ['only' => ['index']]);
     Route::resource('alertcomments', 'AlertcommentsController', ['only' => ['store', 'destroy', 'update', 'edit']]);
-    Route::post('/alertcomments/add/{id}', 'AlertcommentsController@add')->name('alertcomments.add');
     Route::group(['prefix' => 'users/{id}'], function () {
         Route::post('follow', 'UserFollowController@store')->name('user.follow');
         Route::delete('unfollow', 'UserFollowController@destroy')->name('user.unfollow');
@@ -58,13 +66,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('image_destroy', 'UsersController@image_destroy')->name('users.image_destroy');
         });
     Route::group(['prefix' => 'alerts/{id}'], function () {
-                Route::post('favorite', 'FavoritesController@store')->name('alerts.favorite');
-                Route::delete('unfavorite', 'FavoritesController@destroy')->name('alerts.unfavorite');
+        Route::post('favorite', 'FavoritesController@store')->name('alerts.favorite');
+        Route::delete('unfavorite', 'FavoritesController@destroy')->name('alerts.unfavorite');
         });
-});
-Route::group(['middleware' => ['api']], function(){
-    Route::resource('alertcomments', 'Api\AlertcommentsController', ['except' => ['create', 'edit']
-    ]);
 });
 
 //　googlemap

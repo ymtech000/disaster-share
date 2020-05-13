@@ -11,10 +11,11 @@ use App\Http\Controllers\Controller;
 
 class AlertcommentsController extends Controller
 {
-    public function add(Request $request){ 
-        $data = $request->data;
+    public function ajax(Request $request){
+        $alertcomment = Alertcomment::find($request->id);
+        
         return response()->json([
-            'responseData' => $data.'送ります',
+            'responseData' => $alertcomment.'',
         ]);
     }
     
