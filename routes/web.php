@@ -44,6 +44,8 @@ Route::group(['middleware' => ['api']], function(){
     Route::resource('alertcomments', 'AlertcommentsController', ['except' => ['create', 'edit']
     ]);
     Route::post('alertcomments/{id}/ajax', 'Api\AlertcommentsController@ajax')->name('alertcomments.ajax');
+    Route::post('alerts/{id}/favorite', 'Api\FavoritesController@ajax')->name('alerts.favorite');
+    Route::post('alerts/{id}/unfavorite', 'Api\FavoritesController@ajax')->name('alerts.unfavorite');
 });
 
 
@@ -63,7 +65,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('followers', 'UsersController@followers')->name('users.followers');
         Route::get('favoritings', 'UsersController@favoritings')->name('users.favoritings');
         Route::post('image', 'UsersController@image')->name('users.image');
-        Route::delete('image_destroy', 'UsersController@image_destroy')->name('users.image_destroy');
         });
     Route::group(['prefix' => 'alerts/{id}'], function () {
         Route::post('favorite', 'FavoritesController@store')->name('alerts.favorite');

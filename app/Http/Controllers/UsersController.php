@@ -24,6 +24,7 @@ class UsersController extends Controller
     public function show($id)
     {
         $user = User::find($id);
+       
         $alerts = $user->alerts()->orderBy('created_at', 'desc')->paginate(10);
 
         $data = [
@@ -49,6 +50,7 @@ class UsersController extends Controller
     
     public function followings($id)
     {
+        dd($id);
         $user = User::find($id);
         $followings = $user->followings()->paginate(10);
 
@@ -77,23 +79,9 @@ class UsersController extends Controller
         return view('users.followers', $data);
     }
     
-    public function favorites($id)
-    {
-        $user = User::find($id);
-        $favorites = $user->favorites()->paginate(10);
-
-        $data = [
-            'user' => $user,
-            'alerts' => $favorites,
-        ];
-
-        $data += $this->counts($user);
-
-        return view('users.favorites', $data);
-    }
-    
     public function favoritings($id)
     {
+        // dd($id);
         $user = User::find($id);
         $favoritings = $user->favorites()->paginate(10);
 
@@ -193,16 +181,6 @@ class UsersController extends Controller
             
             $user->save();
         }
-        return redirect()->route('users.show', ['id' => Auth::id()]);
-    }
-    
-    public function image_destroy($filename)
-    {
-        
-        // $user = User::find($id);
-        // dd(Auth::user()->image);
-        // Auth::user()->image->delete();
-
         return redirect()->route('users.show', ['id' => Auth::id()]);
     }
 }

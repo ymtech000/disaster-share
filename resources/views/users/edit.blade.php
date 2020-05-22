@@ -54,12 +54,6 @@
         {!! link_to_route('users.show', '戻る',['id' => Auth::id()], ['class' => 'btn btn-primary'])!!}
         
     {!! Form::close() !!}
-    
-    {!! Form::open(['route' => ['users.image_destroy', Auth::user()->image], 'method' => 'delete']) !!}
-            <button name="button" type="submit" class="delete-button">
-                <span class="fa fa-trash delete-btn"></span>
-            </button>
-{!! Form::close() !!}
 <li class="dropdown-item"><a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#testModal">退会</a></li>
 <!-- ボタン・リンククリック後に表示される画面の内容 -->
         <div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">

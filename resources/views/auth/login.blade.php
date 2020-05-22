@@ -23,7 +23,7 @@
             {!! Form::close() !!}
 
             <p class="mt-2">会員登録は {!! link_to_route('signup.get', 'こちら') !!}</p>
-            {!! link_to_route('login.guest', 'ゲストログイン', [], ['class' => 'btn btn-primary']) !!}
+            {!! link_to_route('login.guest', 'ゲストログイン', [], ['class' => 'btn btn-warning']) !!}
         </div>
     </div>
 @endsection

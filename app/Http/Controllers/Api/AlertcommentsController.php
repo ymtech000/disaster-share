@@ -13,10 +13,24 @@ class AlertcommentsController extends Controller
 {
     public function ajax(Request $request){
         $alertcomment = Alertcomment::find($request->id);
+        $user = User::find($alertcomment->user_id);
+            
+        if($alertcomment->parent_id !== null){
+            return response()->json([
+                'responseData' => $alertcomment,
+                'userData' => $user,
+            ]);
+        }else{
+            $undercomment = Alertcomment::where('parent_id' , $alertcomment->id);
         
-        return response()->json([
-            'responseData' => $alertcomment.'',
-        ]);
+            // $underuser = User::find($undercomment->user_id);
+            return response()->json([
+                'responseData' => $alertcomment,
+                'userData' => $user,
+                'underData' => $undercomment,
+                // 'underuserData' => $underuser,
+            ]);
+        }
     }
     
     public function store(StoreAlertcomment $request)

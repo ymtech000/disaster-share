@@ -9,11 +9,11 @@
 <script>
 var map;
 var marker = [];
-var maps = @json($maps);
+var map = @json($alert);
 var markerData = [
-      {  name: maps.content,
-        lat: Number(maps.lat),
-        lng: Number(maps.lng)
+      {  name: map.content,
+        lat: Number(map.lat),
+        lng: Number(map.lng)
       }
     ];
 var infoWindow = [];

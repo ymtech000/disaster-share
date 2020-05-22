@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alertcomment extends Model
 {
-    protected $fillable = [ 'parent_id', 'user_id', 'comment', 'alert_id', 'time'];
+    protected $fillable = ['parent_id', 'user_id', 'comment', 'alert_id', 'time'];
 
     public function user()
     {

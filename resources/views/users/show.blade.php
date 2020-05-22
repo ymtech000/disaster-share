@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(Auth::user()->id == $user->id)
-        <h1 class="text-center font-weight-bold font-family-Tahoma">YOUR PAGE</h1>
-    @else
-        <h1 class="text-center font-weight-bold font-family-Tahoma">USER PAGE</h1>
-    @endif
+    <!--@if(Auth::user()->id == $user->id)-->
+    <!--    <h1 class="text-center font-weight-bold font-family-Tahoma">YOUR PAGE</h1>-->
+    <!--@else-->
+    <!--    <h1 class="text-center font-weight-bold font-family-Tahoma">USER PAGE</h1>-->
+    <!--@endif-->
     <div>
         @if (\Session::has('error'))
             <div class="alert alert-error" id="error">

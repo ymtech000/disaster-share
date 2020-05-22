@@ -73,14 +73,10 @@ class AlertsController extends Controller
     {
         $alert = Alert::find($id);
         $user = \Auth::user();
-        $alerts = Alert::find($id);
-        $alertcomment = Alertcomment::find($id);
        
         $data = [
             'alert' => $alert,
             'user' => $user,
-            'maps' => $alerts,
-            'alertcomment' => $alertcomment
         ];
 
         return view('alerts.show', $data);

@@ -30,19 +30,19 @@
                             <div>
                                 <div class="col-md-4 title">{{$alert->title}}</div>
                                 <div class="col-md-6 heart-button">
-                                    <!--@include('favorites.favorite_button', ['alert' => $alert])-->
                                     @if (Auth::id() != $alert->id)
                                         @if (Auth::user()->is_favorite($alert->id))
                                             {!! Form::open(['route' => ['alerts.unfavorite', $alert->id], 'method' => 'delete']) !!}
                                                 <button name="button" type="submit" class="heart-button" style="cursor:pointer">
-                                                    <i class="fas fa-thumbs-up unfavorite-btn"></i>
+                                                <button type="submit"　class="unavorite-btn" id="unfavorite-btn" onclick="getData({{$alert->id}})" style="cursor:pointer;">
+                                                    <span class="fas fa-thumbs-up unfavorite-btn"></span>
                                                 </button>
                                             
                                             {!! Form::close() !!}
                                         @else
                                             {!! Form::open(['route' => ['alerts.favorite', $alert->id]]) !!}
-                                                <button type="submit"　class="heart-button" id="{{$alert->id}}" onclick="getData(this.id)">
-                                                    <i class="far fa-thumbs-up favorite-btn"></i>
+                                                <button type="submit"　class="favorite-btn" id="favorite-btn" onclick="getData({{$alert->id}})" style="cursor:pointer;">
+                                                    <span class="far fa-thumbs-up favorite-btn"></span>
                                                 </button> 
                                             {!! Form::close() !!}
                                         @endif
@@ -54,6 +54,7 @@
                                     </style>
                                 </div>
                             </div>
+                            
                         </div>
                     @endforeach
                 </table>
@@ -63,6 +64,49 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script>
+    // いいねボタン押下
+    $('#favorite-btn').click(function getData(id) {
+        console.log(id);
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/alerts/'+ id +'/favorite',
+            type: 'POST',
+            data: {'id': id},
+        })
+        // Ajaxリクエストが成功した場合
+        .done(function() {
+            alert('通信に成功しました。');
+        // Ajaxリクエストが失敗した場合
+        }).fail(function() {
+                alert('通信に失敗しました。');
+        });
+    });
+
+    
+    
+    $('#unfavorite-btn').click(function getData(id) {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/alerts/'+ id +'/unfavorite',
+            type: 'POST',
+            data: {'id': id},
+        })
+        .done(function() {
+                alert('通信に成功しました。');
+            // Ajaxリクエストが失敗した場合
+            }).fail(function() {
+                alert('通信に失敗しました。');
+            });
+    });
+        
+     
+</script>    
 
 
 
