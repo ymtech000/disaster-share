@@ -6,11 +6,74 @@ use Illuminate\Http\Request;
 use App\Alertcomment;
 use App\Alert;
 use App\User;
+use DB;
 use App\Http\Requests\StoreAlertcomment;
 
 class AlertcommentsController extends Controller
 {
-    public function store(StoreAlertcomment $request)
+    public function ajax(Request $request){
+        $alertcomment = Alertcomment::find($request->id);
+        $user = User::find($alertcomment->user_id);
+
+        if($alertcomment->parent_id == null){
+            if(DB::table('alertcomments')->where('parent_id', $request->id)->exists()){
+                $undercomment = Alertcomment::where('parent_id' , $request->id)->first();
+                $underuser = User::find($undercomment->user_id);
+             
+                return response()->json([
+                    'responseData' => $alertcomment,
+                    'userData' => $user,
+                    'underData' => $undercomment,
+                    'underuserData' => $underuser,
+                ]);
+            }else{
+                return response()->json([
+                    'responseData' => $alertcomment,
+                    'userData' => $user,
+                ]);
+            }
+        }else{
+            if(DB::table('alertcomments')->where('parent_id', $request->id)->exists()){
+                $upcomment = Alertcomment::find($alertcomment->parent_id);
+                $upuser = User::find($upcomment->user_id);
+                $undercomment = Alertcomment::where('parent_id' , $request->id)->first();
+                $underuser = User::find($undercomment->user_id);
+                
+                return response()->json([
+                    'responseData' => $alertcomment,
+                    'userData' => $user,
+                    'underData' => $undercomment,
+                    'underuserData' => $underuser,
+                    'upData' => $upcomment,
+                    'upuserData' => $upuser,
+                ]);
+            }else{
+                $upcomment = Alertcomment::find($alertcomment->parent_id);
+                $upuser = User::find($upcomment->user_id);
+                
+                return response()->json([
+                    'responseData' => $alertcomment,
+                    'userData' => $user,
+                    'upData' => $upcomment,
+                    'upuserData' => $upuser,
+                ]);
+            }
+        }
+    }    
+
+    public function ajaxindex($id)
+    {
+         // id順に取得
+        $alertcomments = Alertcomment::where('alert_id', $id)->orderBy('created_at', 'desc')->get();
+    
+        return response()->json([
+            "status" => "success",
+            "message" => "成功",
+            "comments" => $alertcomments
+        ]);
+    }
+    
+    public function ajaxstore(StoreAlertcomment $request)
     {
         if($request->parent_id == null){
             $params = $request->validate([
@@ -36,7 +99,7 @@ class AlertcommentsController extends Controller
             'parent_id' => $request->parent_id,
             'time' => $now,
         ]);
-        return back();
+        return redirect("/ajax/{$request->alert_id}");
     }
     
     public function update(StoreAlertcomment $request, $id)
@@ -85,8 +148,9 @@ class AlertcommentsController extends Controller
     public function destroy($id)
     {
         $alertcomment = Alertcomment::find($id);
-        $alertcomment->delete();
-
+        if (\Auth::id() === $alertcomment->user_id) {
+            $alertcomment->delete();
+        }
         return back();
     }
 }

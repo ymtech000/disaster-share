@@ -25,11 +25,12 @@
                 </div>
                 
                 <div class="form-group">
-                    <p>画像(任意)</p>
+                    {!! Form::label('thefile', '画像（任意）') !!}
                     <label>
-                        <span class="fa fa-file-image" style="cursor:pointer;"></span>
-                        <input type="file" style="display:none" name="thefile">
+                        <span class="fa fa-file-image inline-block" style="cursor: pointer;"></span>
+                        <input type="file" style="display:none;" name="thefile">
                     </label>
+                    <span id="fileimg" class="inline-block"></span>
                 </div>
 
                 <div class="form-group">
@@ -51,4 +52,33 @@
     .fa-file-image{
            font-size:70px;
         }
+    .inline-block{
+        display: inline-block;
+        vertical-align: top;
+    }
 </style>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script>
+    $(function() {
+        $('input[type=file]');
+        // アップロードするファイルを選択
+        $('input[type=file]').change(function() {
+            var file = $(this).prop('files')[0];
+            
+            // 画像以外は処理を停止
+            if (! file.type.match('image.*')) {
+                // クリア
+                $(this).val('');
+                $('#fileimg').html('');
+                return;
+            }
+            // 画像表示
+            var reader = new FileReader();
+            reader.onload = function() {
+                var img_src = $('<img width="100" height="100">').attr('src', reader.result);
+                $('#fileimg').html(img_src);
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+</script>

@@ -96,13 +96,12 @@ class User extends Authenticatable
     {
         // 既にいいねしているかの確認
         $exist = $this->is_favorite($alertId);
-       
     
         if ($exist) {
             // 既にいいねしていれば何もしない
             return false;
         } else {
-            // 未いいねであればフォローする
+            // 未いいねであればいいねする
             $this->favorites()->attach($alertId);
             return true;
         }

@@ -6,6 +6,7 @@ use App\Alert;
 use App\Alertcomment;
 use Storage;
 use App\Http\Requests\StoreAlert;
+use App\User;
 
 class AlertsController extends Controller
 {
@@ -68,15 +69,18 @@ class AlertsController extends Controller
             return redirect('/alerts');
     }
     
+    
    // getでalerts/idにアクセスされた場合の「取得表示処理」
     public function show($id)
     {
         $alert = Alert::find($id);
         $user = \Auth::user();
-       
+        $alertcomments = Alertcomment::where('alert_id', $id)->orderBy('created_at', 'desc')->paginate(9);
+        
         $data = [
             'alert' => $alert,
             'user' => $user,
+            'alertcomments' => $alertcomments,
         ];
 
         return view('alerts.show', $data);
@@ -135,7 +139,7 @@ class AlertsController extends Controller
             $alert->delete();
         }
         
-            return redirect('/alerts');
+            return back();
         
     }
 }

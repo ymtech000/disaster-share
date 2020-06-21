@@ -1,10 +1,6 @@
-<div id="map"></div>
-<style>
-#map {
-    width: 550px;
-    height: 350px;
-}
-</style>
+<div class="row align-items-center">
+    <div id="map" style="border:solid; border-width:thin; width: 550px; height: 350px;"></div>
+</div>
 
 <script>
 var map;
@@ -18,10 +14,7 @@ var markerData = [
     ];
 var infoWindow = [];
 
-// console.log(markerData);
-
 function initMap(){
-     
  // 地図の作成
         var mapLatLng = new google.maps.LatLng({lat: markerData[0]['lat'], lng: markerData[0]['lng']}); // 緯度経度のデータ作成
             map = new google.maps.Map(document.getElementById('map'), { // #mapに地図を埋め込む
@@ -39,15 +32,7 @@ function initMap(){
             infoWindow[i] = new google.maps.InfoWindow({ // 吹き出しの追加
                 content: '<div class="map">' + markerData[i]['name'] + '</div>' // 吹き出しに表示する内容
             });
-            markerEvent(i); // マーカーにクリックイベントを追加
         }
-}
-  
-// マーカーにクリックイベントを追加
-function markerEvent(i) {
-    marker[i].addListener('click', function() { // マーカーをクリックしたとき
-      infoWindow[i].open(map, marker[i]); // 吹き出しの表示
-  });
 }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoKnN8__KItXFDswfAfs_y3VHwfbX3_ms&callback=initMap"></script>

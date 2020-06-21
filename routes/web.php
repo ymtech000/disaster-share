@@ -39,17 +39,6 @@ Route::group(['middleware' => ['auth']], function () {
 });
 Route::get('guest', 'Auth\LoginController@authenticate')->name('login.guest');
 
-
-Route::group(['middleware' => ['api']], function(){
-    Route::resource('alertcomments', 'AlertcommentsController', ['except' => ['create', 'edit']
-    ]);
-    Route::post('alertcomments/{id}/ajax', 'Api\AlertcommentsController@ajax')->name('alertcomments.ajax');
-    Route::post('alerts/{id}/favorite', 'Api\FavoritesController@ajax')->name('alerts.favorite');
-    Route::post('alerts/{id}/unfavorite', 'Api\FavoritesController@ajax')->name('alerts.unfavorite');
-});
-
-
-
 // ユーザ機能
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'destroy', 'update', 'edit']]);
@@ -57,18 +46,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('post_searches', 'Post_SearchesController', ['only' => ['index']]);
     Route::resource('area_searches', 'Area_SearchesController', ['only' => ['index']]);
     Route::resource('unsubscribe', 'UnsubscribesController', ['only' => ['index']]);
-    Route::resource('alertcomments', 'AlertcommentsController', ['only' => ['store', 'destroy', 'update', 'edit']]);
+    Route::resource('alertcomments', 'AlertcommentsController', ['only' => ['destroy', 'update', 'edit']]);
+    Route::post('alertcomments/{id}/ajax', 'AlertcommentsController@ajax');
+    Route::get('ajax/{id}', 'AlertcommentsController@ajaxindex');
+    Route::post('ajax', 'AlertcommentsController@ajaxstore');
     Route::group(['prefix' => 'users/{id}'], function () {
         Route::post('follow', 'UserFollowController@store')->name('user.follow');
         Route::delete('unfollow', 'UserFollowController@destroy')->name('user.unfollow');
         Route::get('followings', 'UsersController@followings')->name('users.followings');
         Route::get('followers', 'UsersController@followers')->name('users.followers');
-        Route::get('favoritings', 'UsersController@favoritings')->name('users.favoritings');
+        Route::get('favorites', 'UsersController@favorites')->name('users.favorites');
         Route::post('image', 'UsersController@image')->name('users.image');
         });
     Route::group(['prefix' => 'alerts/{id}'], function () {
-        Route::post('favorite', 'FavoritesController@store')->name('alerts.favorite');
-        Route::delete('unfavorite', 'FavoritesController@destroy')->name('alerts.unfavorite');
+        Route::post('/favorite', 'FavoritesController@store')->name('alerts.favorite');
+        Route::delete('/unfavorite', 'FavoritesController@destroy')->name('alerts.unfavorite');
         });
 });
 

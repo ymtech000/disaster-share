@@ -50,7 +50,6 @@ class UsersController extends Controller
     
     public function followings($id)
     {
-        dd($id);
         $user = User::find($id);
         $followings = $user->followings()->paginate(10);
 
@@ -79,15 +78,14 @@ class UsersController extends Controller
         return view('users.followers', $data);
     }
     
-    public function favoritings($id)
+    public function favorites($id)
     {
-        // dd($id);
         $user = User::find($id);
-        $favoritings = $user->favorites()->paginate(10);
+        $favorites = $user->favorites()->paginate(10);
 
         $data = [
             'user' => $user,
-            'alerts' => $favoritings,
+            'alerts' => $favorites,
         ];
 
         $data += $this->counts($user);
@@ -97,11 +95,9 @@ class UsersController extends Controller
     
     public function edit($id)
      {
-    
         $user = Auth::user();
         
         return view('users.edit',[ 'user' => $user ]);
-    
      }
      
      public function update(StoreUser $request, $id)
@@ -135,13 +131,13 @@ class UsersController extends Controller
                 }
             }
             else if($request->password !== null){
-                return back()->with('error', 'ゲストユーザーは名前, メールアドレス, パスワードの変更ができません。');
+                return back()->with('error', 'ゲストユーザーは氏名, メールアドレス, パスワードの変更ができません。');
             }
             else if($user->name !== $request->name){
-                return back()->with('error', 'ゲストユーザーは名前, メールアドレス, パスワードの変更ができません。');
+                return back()->with('error', 'ゲストユーザーは氏名, メールアドレス, パスワードの変更ができません。');
             }
             else if($user->email !== $request->email){
-                return back()->with('error', 'ゲストユーザーは名前, メールアドレス, パスワードの変更ができません。');
+                return back()->with('error', 'ゲストユーザーは氏名, メールアドレス, パスワードの変更ができません。');
             }
             else{
                 $user->name = $request->name;
@@ -166,13 +162,13 @@ class UsersController extends Controller
                 }
             }
             else if($request->password !== null){
-                return back()->with('error', 'ゲストユーザーは名前, メールアドレス, パスワードの変更ができません。');
+                return back()->with('error', 'ゲストユーザーは氏名, メールアドレス, パスワードの変更ができません。');
             }
             else if($user->name !== $request->name){
-                return back()->with('error', 'ゲストユーザーは名前, メールアドレス, パスワードの変更ができません。');
+                return back()->with('error', 'ゲストユーザーは氏名, メールアドレス, パスワードの変更ができません。');
             }
             else if($user->email !== $request->email){
-                return back()->with('error', 'ゲストユーザーは名前, メールアドレス, パスワードの変更ができません。');
+                return back()->with('error', 'ゲストユーザーは氏名, メールアドレス, パスワードの変更ができません。');
             }
             else{
                 $user->name = $request->name;

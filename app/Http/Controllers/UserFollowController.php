@@ -6,15 +6,19 @@ use Illuminate\Http\Request;
 
 class UserFollowController extends Controller
 {
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
-        \Auth::user()->follow($id);
-        return back();
+        \Auth::user()->follow($request->id);
+        return response()->json([
+          'status' => 'success'
+        ]);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        \Auth::user()->unfollow($id);
-        return back();
+        \Auth::user()->unfollow($request->id);
+        return response()->json([
+          'status' => 'success'
+        ]);
     }
 }
