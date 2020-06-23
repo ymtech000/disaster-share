@@ -115,6 +115,7 @@ class AlertsController extends Controller
         $alert->image = $url;
         $alert->lat = $request->lat;
         $alert->lng = $request->lng;
+        $alert->edit = $request->edit;
         
         $alert->save();
         

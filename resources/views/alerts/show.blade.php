@@ -4,60 +4,55 @@
     <h1 class="text-center font-weight-bold font-family-Tahoma">DETAILS</h1>
     <div class='form-row'>
         <div class="col-md-6">
-                <div class="card-header" style="height: 70px; width:450px; border:solid; border-width:thin;">
-                    @if($alert->user->image == null)
-                        <a href="/users/{{$alert->user->id}}"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($alert->user->email, 500) }}" width="45" height="45" alt="" style="border-radius:50%; margin-right:10px; margin-bottom:10px;"></a>
-                        <div class="side">
-                            <h4><a href="/users/{{$alert->user->id}}" style="color:black; text-decoration: none;">{{$alert->user->name}}</a></h4>
-                            @if(Auth::id() == $alert->user_id)
-                                <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fas fa-chevron-down"></span></a>
-                                <ul class="dropdown-menu" style="list-style: none;">
-                                    <li class="dropdown-item">
-                                        <a href="{{ route('alerts.edit', ['id' => $alert->id]) }}"><span class="fa fa-edit" style="color:black;"></span></a>
-                                        {!! link_to_route('alerts.edit', '編集', ['id' => $alert->id], ['class' => 'btn btn-default']) !!}
-                                    </li>
-                                    <li class="dropdown-item">
-                                        <a href="#" type="button" data-toggle="modal" data-target="#alert-delete"><span class="fa fa-trash delete-btn" style="color:black;"></span></a>
-                                        <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alert-delete">削除</a>
-                                    </li>
-                                </ul>
-                            @endif
-                        </div>
+            <div class="card-header" style="height: 70px; width:450px; border:solid; border-width:thin;">
+                <a href="/users/{{$alert->user->id}}">
+                  @if($alert->user->image == null)
+                    <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alert->user->email, 500) }}" width="45" height="45" alt="" style="border-radius:50%; margin-right:10px; margin-bottom:10px;">
+                  @else
+                    <img class="float-left user-img" src="{{$alert->user->image}}" width="45" height="45" style="border-radius:50%; margin-right:10px; margin-bottom:10px;">
+                  @endif
+                </a>
+                <div class="side">
+                  <h4>
+                    <a href="/users/{{$alert->user->id}}" style="color:black; text-decoration: none;">{{$alert->user->name}}</a>
+                  </h4>
+                  @if(Auth::id() == $alert->user_id)
+                    <a href="#" class="nav-link" data-toggle="dropdown" style="color:black">
+                      <span class="fas fa-chevron-down"></span>
+                    </a>
+                    <ul class="dropdown-menu" style="list-style: none;">
+                      <li class="dropdown-item">
+                        <a href="{{ route('alerts.edit', ['id' => $alert->id]) }}">
+                          <span class="fa fa-edit" style="color:black;"></span>
+                        </a>
+                        {!! link_to_route('alerts.edit', '編集', ['id' => $alert->id], ['class' => 'btn btn-default']) !!}
+                      </li>
+                      <li class="dropdown-item">
+                        <a href="#" type="button" data-toggle="modal" data-target="#alert-delete">
+                          <span class="fa fa-trash delete-btn" style="color:black;"></span>
+                        </a>
+                        <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alert-delete">削除</a>
+                      </li>
+                    </ul>
+                  @endif
+                </div>
+                <p style="text-align:right;">{{$alert->edit}}</p>
+            </div>
+            <div class="img">
+                <img class="place-img" src="{{$alert->image}}" width="450" height="450" style="border-bottom:solid; border-right:solid; border-left:solid; border-width:thin;">
+            </div>
+            <div class="side" style="height: 70px; width:450px;">
+                <h2>{{$alert->title}}</h2>
+                <div>
+                    @if (Auth::user()->is_favorite($alert->id))
+                        <button onclick="toggleFavoriteText(this, {{ $alert->id }})" style="cursor:pointer;">いいね中</button>
                     @else
-                        <a href="/users/{{$alert->user->id}}"><img class="float-left user-img" src="{{$alert->user->image}}" width="45" height="45" style="border-radius:50%; margin-right:10px; margin-bottom:10px;"></a>
-                        <div class="side">
-                            <h4><a href="/users/{{$alert->user->id}}" style="color:black;">{{$alert->user->name}}</a></h4>
-                            @if(Auth::id() == $alert->user_id)
-                                <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>
-                                <ul class="dropdown-menu" style="list-style: none;">
-                                    <li class="dropdown-item">
-                                        <a href="{{ route('alerts.edit', ['id' => $alert->id]) }}"><span class="fa fa-edit" style="color:black;"></span></a>
-                                        {!! link_to_route('alerts.edit', '編集', ['id' => $alert->id], ['class' => 'btn btn-default']) !!}
-                                    </li>
-                                    <li class="dropdown-item">
-                                        <a href="#" type="button" data-toggle="modal" data-target="#alert-delete"><span class="fa fa-trash delete-btn" style="color:black;"></span></a>
-                                        <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alert-delete">削除</a>
-                                    </li>
-                                </ul>
-                            @endif
-                        </div>
+                        <button onclick="toggleFavoriteText(this, {{ $alert->id }})" style="cursor:pointer;">いいね</button>
                     @endif
                 </div>
-                <div class="img">
-                    <img class="place-img" src="{{$alert->image}}" width="450" height="450" style="border-bottom:solid; border-right:solid; border-left:solid; border-width:thin;">
-                </div>
-                <div class="side" style="height: 70px; width:450px;">
-                    <h2>{{$alert->title}}</h2>
-                    <div>
-                        @if (Auth::user()->is_favorite($alert->id))
-                            <button onclick="toggleText(this, {{ $alert->id }})" style="cursor:pointer;">いいね中</button>
-                        @else
-                            <button onclick="toggleText(this, {{ $alert->id }})" style="cursor:pointer;">いいね</button>
-                        @endif
-                    </div>
-                </div>
             </div>
-            @include('commons.map')
+        </div>
+        @include('commons.map')
     </div>
     <p style="font-weight:bold;">メッセージ</p>
     <div class='form-row'>
@@ -102,23 +97,19 @@
                 <div id="alertcomment-body" class="card card-body alertcomment-body-{{$alertcomment->id}}">
                     <table class="table table-bordered">
                         <thread>
-                            @if($alertcomment->user->image == null)
-                                <td>
-                                    <div class="profile">
+                            <td>
+                                <div class="profile">
+                                    @if($alertcomment->user->image == null)
                                         <a href="/users/{{$alertcomment->user->id}}"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt=""></a>
-                                    </div>
-                                </td>
-                            @else
-                                <td>
-                                    <div class="profile">
+                                    @else
                                         <a href="/users/{{$alertcomment->user->id}}"><img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35"></a>
-                                    </div>
-                                </td>
-                            @endif
+                                    @endif
+                                </div>
+                            </td>
                             <td><a href="/users/{{$alert->user->id}}" style="color:black; text-decoration: none;">{{$alertcomment->user->name}}</a></td>
                             <td>{{$alertcomment->comment}}</td>
                             <td>{{$alertcomment->time}}</td>
-                            <td><a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alertcomment-comment-thread{{$alertcomment->id}}"><button type="button" id="{{$alertcomment->id}}" onclick="getData(this.id)">{{$alertcomment->id}}</a></button></td>
+                            <td><a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alertcomment-comment-thread{{$alertcomment->id}}"><button type="button" id="{{$alertcomment->id}}" onclick="postData(this.id)">{{$alertcomment->id}}</a></button></td>
                             <td>
                                 <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fa fa-ellipsis-h"></span></a>
                                 <ul class="dropdown-menu" style="list-style: none;">
@@ -232,7 +223,7 @@
                                     <label>本当に削除しますか？（この操作は取り消しできません。）</label>
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-danger" id="{{$alertcomment->id}}" onclick="getDeletedata(this.id)" data-dismiss="modal">削除</button>
+                                    <button class="btn btn-danger" id="{{$alertcomment->id}}" onclick="postDeletedata(this.id)" data-dismiss="modal">削除</button>
                                 </div>
                             </div>
                         </div>
@@ -265,7 +256,7 @@
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script>
-    function getDeletedata(id){
+    function postDeletedata(id){
       $.ajax({
         url: '/alertcomments/'+id,
         type: 'POST',
@@ -282,8 +273,7 @@
      .fail(function() {
         alert('エラー');
       });
-  }
-
+    }
 
     $('#form').submit(function(event) {
         event.preventDefault();
@@ -300,11 +290,6 @@
             // ボタンを無効化し、二重送信を防止
           $button.attr('disabled', true);
         },
-        // 応答後
-          complete: function(xhr, textStatus) {
-            // ボタンを有効化し、再送信を許可
-          $button.attr('disabled', false);
-        }
         }).then(function (data){
           // 成功したとき
           // inputの中身を空にする
@@ -317,8 +302,11 @@
           data['comments'].forEach(comment => $results.append('<p>' + comment.comment + '</p>'));
         }, function () {
           // 失敗したとき
-          alert('失敗しました');
-        },);
+          alert('通信に失敗しました');
+        }).always(function(xhr, textStatus) {
+            // ボタンを有効化し、再送信を許可
+          $button.attr('disabled', false);
+        });
     });
 
     $('.comment-button').on('click', function(){
@@ -357,13 +345,16 @@
               data['comments'].forEach(comment => $results.append('<p>' + comment.comment + '</p>'));
             }, function () {
               // 失敗したとき
-              alert('失敗しました');
-            },);
+              alert('通信に失敗しました');
+            }).always(function(xhr, textStatus) {
+                // ボタンを有効化し、再送信を許可
+              $button.attr('disabled', false);
+            });
         });
     });
 
 
-    function getData(id){
+    function postData(id){
         console.log(id);
         $.ajax({
             url: '/alertcomments/'+ id +'/ajax',
@@ -413,7 +404,7 @@
         });
     }
  
- function toggleText(button,id) {
+    function toggleFavoriteText(button,id) {
         if (button.innerHTML === "いいね") {
             button.innerHTML = "いいね中";
             console.log(id);
@@ -452,7 +443,6 @@
             });
         }
     }
- 
  
 </script>
 <style>

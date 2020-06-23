@@ -50,6 +50,7 @@ class UsersController extends Controller
     
     public function followings($id)
     {
+        // dd($id);
         $user = User::find($id);
         $followings = $user->followings()->paginate(10);
 
@@ -100,7 +101,7 @@ class UsersController extends Controller
         return view('users.edit',[ 'user' => $user ]);
      }
      
-     public function update(StoreUser $request, $id)
+    public function update(StoreUser $request, $id)
     {
         $filename='';
         if( request()->hasFile('thefile')){
@@ -119,6 +120,9 @@ class UsersController extends Controller
             $user->introduction = $request->introduction;
             $user->image = $url;
             if(Auth::id() !==1){
+                // if(DB::table(users)->where(email, $request->email)->exists()){
+                //     return back()->with('error', 'そのメールアドレスは既に使用されています。');
+                // }
                 $user->name = $request->name;
                 $user->email = $request->email;
                 if($request->password !== null){

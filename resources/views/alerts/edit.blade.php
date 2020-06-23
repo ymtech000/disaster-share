@@ -23,6 +23,7 @@
                 {!! Form::text('title', null, ['class' => 'form-control']) !!}
                 {!! Form::label('content', 'メッセージ(140字以内):') !!}
                 {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
+                <input type="hidden" name='edit' id='edit' class="form-control" value="(編集済み)">
             </div>
             <div class='col-md-5'>
                 {!! Form::label('area', 'エリア') !!}

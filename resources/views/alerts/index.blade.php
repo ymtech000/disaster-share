@@ -17,9 +17,12 @@
                     @foreach ($alerts as $alert)
                         <div class="col-md-4">
                             <div class="card" style="border:solid; border-width:thin; margin-bottom:10px">
-                            @if($alert->user->image == null)
                                 <div class="card-header" style="height: 70px; border-bottom:solid; border-width:thin;">
-                                    <a href="/users/{{$alert->user->id}}"><img class="img-fluid float-left user-img" style="border-radius:50%; margin-bottom:10px; margin-right:10px;" src="{{ Gravatar::src($alert->user->email, 500) }}" width="35" height="35" alt=""></a>
+                                    @if($alert->user->image == null)
+                                        <a href="/users/{{$alert->user->id}}"><img class="img-fluid float-left user-img" style="border-radius:50%; margin-bottom:10px; margin-right:10px;" src="{{ Gravatar::src($alert->user->email, 500) }}" width="35" height="35" alt=""></a>
+                                    @else
+                                        <a href="/users/{{$alert->user->id}}"><img src="{{$alert->user->image}}" class="img-fluid float-left user-img" style="border-radius:50%; margin-bottom:10px; margin-right:10px;" width="35" height="35"></a>
+                                    @endif
                                     <div class="side">
                                         <a href="/users/{{$alert->user->id}}" style="color:black; text-decoration: none;">{{$alert->user->name}}</a>
                                         @if(Auth::id() == $alert->user_id)
@@ -30,59 +33,41 @@
                                                     {!! link_to_route('alerts.edit', '編集', ['id' => $alert->id], ['class' => 'btn btn-default']) !!}
                                                 </li>
                                                 <li class="dropdown-item">
-                                                    <a href="#" type="button" data-toggle="modal" data-target="#alert-delete"><span class="fa fa-trash delete-btn" style="color:black;"></span></a>
-                                                    <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alert-delete">削除</a>
+                                                    <a href="#" type="button" data-toggle="modal" data-target="#alert-delete{{$alert->id}}"><span class="fa fa-trash delete-btn" style="color:black;"></span></a>
+                                                    <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alert-delete{{$alert->id}}">削除</a>
                                                 </li>
                                             </ul>
                                         @endif
                                     </div>
-                                    <small><p style="text-align:right">{{$alert->time}}</p></small>
+                                    <small>
+                                        <ul class="edit" style="text-align:right">
+                                            <li>{{$alert->time}}</li>
+                                            <li>{{$alert->edit}}</li>
+                                        </ul>
+                                    </small>
                                 </div>
-                            @else
-                                <div class="card-header" style="height: 70px; border-bottom:solid; border-width:thin;">
-                                    <a href="/users/{{$alert->user->id}}"><img src="{{$alert->user->image}}" class="img-fluid float-left user-img" style="border-radius:50%; margin-bottom:10px; margin-right:10px;" width="35" height="35"></a>
+                                <div class="card-body">
+                                    <a href="alerts/{{$alert->id}}"><img src="{{$alert->image}}" width="300" height="300"></a>
+                                </div>
+                                <div class="card-footer" style="border-top:solid; border-width:thin;">
+                                    <div class="title" style="font-size:1.3em;">{{$alert->title}}</div>
                                     <div class="side">
-                                        <a href="/users/{{$alert->user->id}}" style="color:black;">{{$alert->user->name}}</a>
-                                        @if(Auth::id() == $alert->user_id)
-                                            <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fas fa-chevron-down"></span></a>
-                                            <ul class="dropdown-menu" style="list-style: none;">
-                                                <li class="dropdown-item">
-                                                    <a href="{{ route('alerts.edit', ['id' => $alert->id]) }}"><span class="fa fa-edit" style="color:black;"></span></a>
-                                                    {!! link_to_route('alerts.edit', '編集', ['id' => $alert->id], ['class' => 'btn btn-default']) !!}
-                                                </li>
-                                                <li class="dropdown-item">
-                                                    <a href="#" type="button" data-toggle="modal" data-target="#alert-delete"><span class="fa fa-trash delete-btn" style="color:black;"></span></a>
-                                                    <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alert-delete">削除</a>
-                                                </li>
-                                            </ul>
-                                        @endif
+                                        <p>地区：{{$alert->area}}</p>
+                                        <ul class="icons">
+                                            <li><span class="far fa-comment"></span>{{count($alert->alertcomments)}}</li>
+                                            @if (Auth::user()->is_favorite($alert->id))
+                                                <button onclick="toggleFavoriteText(this, {{ $alert->id }})" style="cursor:pointer;">いいね中</button>
+                                            @else
+                                                <button onclick="toggleFavoriteText(this, {{ $alert->id }})" style="cursor:pointer;">いいね</button>
+                                            @endif
+                                        </ul>
                                     </div>
-                                    <small><p style="text-align:right">{{$alert->time}}</p></small>
                                 </div>
-                            @endif
-                            <div class="card-body">
-                                <a href="alerts/{{$alert->id}}"><img src="{{$alert->image}}" width="300" height="300"></a>
-                            </div>
-                            <div class="card-footer" style="border-top:solid; border-width:thin;">
-                                <div class="title" style="font-size:1.3em;">{{$alert->title}}</div>
-                                <div class="side">
-                                    <p>地区：{{$alert->area}}</p>
-                                    <ul class="icons">
-                                        <li><span class="far fa-comment"></span>{{count($alert->alertcomments)}}</li>
-                                        @if (Auth::user()->is_favorite($alert->id))
-                                            <button onclick="toggleText(this, {{ $alert->id }})" style="cursor:pointer;">いいね中</button>
-                                        @else
-                                            <button onclick="toggleText(this, {{ $alert->id }})" style="cursor:pointer;">いいね</button>
-                                        @endif
-                                    </ul>
-                                </div>
-                            </div>
                             </div>
                         </div>
                  
-                        
                         <!--ボタン・リンククリック後に表示される画面の内容 -->
-                        <div class="modal fade" id="alert-delete" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                        <div class="modal fade" id="alert-delete{{$alert->id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -108,7 +93,7 @@
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script>
-    function toggleText(button,id) {
+    function toggleFavoriteText(button,id) {
         if (button.innerHTML === "いいね") {
             button.innerHTML = "いいね中";
             console.log(id);
@@ -165,6 +150,10 @@
     }
     
     .icons li{
+        display:inline-block;
+    }
+    
+    .edit li{
         display:inline-block;
     }
     
