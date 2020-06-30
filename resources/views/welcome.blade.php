@@ -50,9 +50,9 @@
             </div>
         </nav>
         <div class="full-image">
-            <div class="text-center">
+            <div class="text-center app-title">
                 <h1>DISASTER SHARE</h1>
-                <h3>災害時に情報とその場所を共有することのできるアプリです。</h3>
+                <h5>災害時に情報とその場所を共有することのできるアプリです。</h5>
                 <p>{!! link_to_route('signup.get', '新規登録はこちら', [], ['class' => 'btn btn-lg btn-primary']) !!}</p>
             </div>
         </div>
@@ -70,5 +70,17 @@
         background-repeat: no-repeat;
         background-size: cover;
         height: 100vh;
+    }
+    h1{
+        opacity:0.7;
+        color:white;
+    }
+    h5{
+        /*opacity:0.7;*/
+        
+        padding-top:160px;
+    }
+    .app-title{
+        padding-top:100px;
     }
 </style>

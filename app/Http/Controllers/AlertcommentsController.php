@@ -25,11 +25,17 @@ class AlertcommentsController extends Controller
                     'userData' => $user,
                     'underData' => $undercomment,
                     'underuserData' => $underuser,
+                    'upData' => '',
+                    'upuserData' => '',
                 ]);
             }else{
                 return response()->json([
                     'responseData' => $alertcomment,
                     'userData' => $user,
+                    'underData' => '',
+                    'underuserData' => '',
+                    'upData' => '',
+                    'upuserData' => '',
                 ]);
             }
         }else{
@@ -54,6 +60,8 @@ class AlertcommentsController extends Controller
                 return response()->json([
                     'responseData' => $alertcomment,
                     'userData' => $user,
+                    'underData' => '',
+                    'underuserData' => '',
                     'upData' => $upcomment,
                     'upuserData' => $upuser,
                 ]);

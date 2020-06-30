@@ -75,7 +75,7 @@ class AlertsController extends Controller
     {
         $alert = Alert::find($id);
         $user = \Auth::user();
-        $alertcomments = Alertcomment::where('alert_id', $id)->orderBy('created_at', 'desc')->paginate(9);
+        $alertcomments = Alertcomment::where('alert_id', $id)->orderBy('created_at', 'desc')->get();
         
         $data = [
             'alert' => $alert,

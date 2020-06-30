@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Storage;
 use Auth;
 use Hash;
+use DB;
 use App\Http\Requests\StoreUser;
 
 use App\User; // 追加
@@ -103,6 +104,11 @@ class UsersController extends Controller
      
     public function update(StoreUser $request, $id)
     {
+        if($request->email !== Auth::user()->email){
+            if(DB::table('users')->where('email', $request->email)->exists()){
+                return back()->with('error', 'そのメールアドレスは既に使用されています。');
+            }
+        }
         $filename='';
         if( request()->hasFile('thefile')){
             //画像ファイル受け取り処理
@@ -120,9 +126,6 @@ class UsersController extends Controller
             $user->introduction = $request->introduction;
             $user->image = $url;
             if(Auth::id() !==1){
-                // if(DB::table(users)->where(email, $request->email)->exists()){
-                //     return back()->with('error', 'そのメールアドレスは既に使用されています。');
-                // }
                 $user->name = $request->name;
                 $user->email = $request->email;
                 if($request->password !== null){

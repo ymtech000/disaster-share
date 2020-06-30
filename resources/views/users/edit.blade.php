@@ -34,7 +34,6 @@
         
             <div class="form-group">
                 {!! Form::label('introduction', '自己紹介（任意）') !!}
-                <!--{!! Form::textarea('introduction', old('introduction'), ['class' => 'form-control']) !!}-->
                 <textarea class="form-control" name="introduction" id="introduction" value = "{{ old('introduction') }}"></textarea>
             </div>
             

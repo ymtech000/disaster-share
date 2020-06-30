@@ -44,13 +44,11 @@
                                     <ul class="icons">
                                         <li><span class="far fa-comment"></span>{{count($alert->alertcomments)}}</li>
                                         <li>
-                                            <!--<small>-->
-                                                @if (Auth::user()->is_favorite($alert->id))
-                                                    <button onclick="toggleFavoriteText(this, {{ $alert->id }})" style="cursor:pointer;">いいね中</button>
-                                                @else
-                                                    <button onclick="toggleFavoriteText(this, {{ $alert->id }})" style="cursor:pointer;">いいね</button>
-                                                @endif
-                                            <!--</small>-->
+                                            @if (Auth::user()->is_favorite($alert->id))
+                                                <button onclick="toggleFavoriteText(this, {{ $alert->id }})" style="cursor:pointer;">いいね中</button>
+                                            @else
+                                                <button onclick="toggleFavoriteText(this, {{ $alert->id }})" style="cursor:pointer;">いいね</button>
+                                            @endif
                                         </li>
                                     </ul>
                                 </div>
@@ -159,6 +157,16 @@
     }
     .edit li{
         display:inline-block;
+    }
+    
+    .card-footer{
+        position: relative;
+    }
+    .icons{
+        position: absolute;
+          right: 0;
+          bottom: 0;
+          margin-right:8px;
     }
    
 </style>

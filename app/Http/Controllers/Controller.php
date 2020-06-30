@@ -25,19 +25,4 @@ class Controller extends BaseController
         ];
        
     }
-    
-    // public function getLocation($jump_location){
-    //     $jump_location = urlencode($jump_location);
-    //     $myKey = "AIzaSyDb06pxNwF1MLlR0iAJUDjMCHxnPO4BsRY";
-    //     $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $jump_location . "+CA&key=" . $myKey ;
-    //     $contents= file_get_contents($url);
-    //     $jsonData = json_decode($contents,true);
-        
-    //     if(count($jsonData["results"])>0){
-    //         return $jsonData["results"][0]["geometry"]["location"];
-    //     }
-    //     else{
-    //         return null;
-    //     }
-    // }
 }

@@ -34,7 +34,10 @@
         </div>
         <div class="col-md-3"></div>
     </div>
-        @include('users.navtabs', ['user' => $user])
+  
+        <div class="navtabs">
+            @include('users.navtabs', ['user' => $user])
+        </div>
         @include('users.users', ['users' => $users])
         
 
@@ -79,6 +82,11 @@
             });
         }
     }
-</script>            
+</script> 
+<style>
+    .name{
+        margin-top:30px;
+    }
+</style>
         
 @endsection

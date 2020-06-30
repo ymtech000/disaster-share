@@ -55,12 +55,12 @@ return [
             'visibility' => 'public',
         ],
 
-        's3' => [
+         's3' => [
             'driver' => 's3',
-            'key' => 'AKIAUVRIVAON27W525HL',
-            'secret' => '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',
-            'region' => 'us-east-1',
-            'bucket' => 'pogtor528',
+            'key'    => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION'),
+            'bucket' => env('AWS_BUCKET'),
         ],
 
     ],

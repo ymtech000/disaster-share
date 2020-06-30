@@ -36,4 +36,9 @@
     </div>
     @include('users.navtabs', ['user' => $user])
     @include('alerts.alerts', ['alerts' => $alerts])
+<style>
+    .name{
+        margin-top:30px;
+    }
+</style>
 @endsection
