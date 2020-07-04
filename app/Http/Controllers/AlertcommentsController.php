@@ -162,4 +162,3 @@ class AlertcommentsController extends Controller
         return back();
     }
 }
-

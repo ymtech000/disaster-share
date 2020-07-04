@@ -106,7 +106,7 @@
                                         @else
                                                 <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
                                         @endif
-                                        <span style="color:black;" onclick="location:href='/users/{{$alertcomment->user->id}}';">{{$alertcomment->user->name}}</span>
+                                        <span style="color:black;">{{$alertcomment->user->name}}</span>
                                     </div>
                                 </a>
                                 <small>
@@ -137,10 +137,10 @@
                                 <h4></h4>
                                 <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
                             </div>
-                            <div class="modal-body">
+                             <div class="modal-body">
                                 @if(count($alertcomments)>0)
                                     <div> 
-                                        @if($alertcomment->parent_id !== null)
+                                        @if($alertcomments->where('id', $alertcomment->parent_id)->first() !== null)
                                             <div class="card" style="height: 220px;">
                                                 <div class="card-body">
                                                     <div class="side" style="margin-left:8px; margin-top:8px;">
@@ -175,6 +175,7 @@
                                         </div>
                                         
                                         @if($alertcomments->where('parent_id', $alertcomment->id)->first() !== null)
+                                        
                                             <div class="card" style="height: 220px;">
                                                 <div class="card-body">
                                                     <div class="side" style="margin-left:8px; margin-top:8px;">
