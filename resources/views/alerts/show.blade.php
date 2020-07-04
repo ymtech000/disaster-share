@@ -99,11 +99,16 @@
                     <div class="col-sm-8 offset-sm-2">
                         <div id="{{$alertcomment->id}}" class="card alert-comment alertcomment-body-{{$alertcomment->id}}" style="height: 220px; cursor:pointer;" onclick="postData(this.id)">
                             <div class="side" style="margin-left:8px; margin-top:8px;">
-                                @if($alertcomment->user->image == null)
-                                    <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;"><span style="color:black;">{{$alertcomment->user->name}}</span></a>
-                                @else
-                                    <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;"><img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;"><span style="color:black;">{{$alertcomment->user->name}}</span></a>
-                                @endif
+                                <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;" onclick="event.stopPropagation();">
+                                    <div>
+                                        @if($alertcomment->user->image == null)
+                                                <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
+                                        @else
+                                                <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
+                                        @endif
+                                        <span style="color:black;" onclick="location:href='/users/{{$alertcomment->user->id}}';">{{$alertcomment->user->name}}</span>
+                                    </div>
+                                </a>
                                 <small>
                                     <span style="text-align:right; list-style: none; margin-right:8px;">{{$alertcomment->time}}</span>
                                 </small>
@@ -111,22 +116,19 @@
                             <p style="margin-top:10px; margin-left:60px;">{{$alertcomment->comment}}</p>
                             <ul class="icons" style="list-style: none;">
                                 <li>
-                                    <a href="#" type="button" id="jump-comment-{{$alertcomment->id}}" class="btn btn-default" data-toggle="modal" data-target="#alertcomment-comment{{$alertcomment->id}}">
-                                        <span class="far fa-comment icon" style="color:black;"></span>
-                                    </a>
-                                </li>
+                                    <input type="hidden" id="jump-comment-{{$alertcomment->id}}" onclick="$('#alertcomment-comment{{$alertcomment->id}}').modal('hide'); event.stopPropagation();">
+                                    <span class="far fa-comment icon" style="color:black;" onclick="$('#alertcomment-comment{{$alertcomment->id}}').modal('show'); event.stopPropagation();"></span> 
+                                 </li>
                                 <li>
                                     @if(Auth::id() == $alertcomment->user_id)
-                                        <a href="#" type="button" data-toggle="modal" data-target="#alertcomment-delete{{$alertcomment->id}}">
-                                            <span class="fa fa-trash fa-lg icon" style="color:black;"></span>
-                                        </a>
+                                        <span class="fa fa-trash fa-lg icon" style="color:black;" onclick="$('#alertcomment-delete{{$alertcomment->id}}').modal('show'); event.stopPropagation();"></span> 
                                     @endif
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                    
+                
                 <!--ボタン・リンククリック後に表示される画面の内容 -->
                 <div class="modal fade" id="alertcomment-comment-thread{{$alertcomment->id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                     <div class="modal-dialog">
@@ -173,22 +175,21 @@
                                         </div>
                                         
                                         @if($alertcomments->where('parent_id', $alertcomment->id)->first() !== null)
-                                        
-                                        <div class="card" style="height: 220px;">
-                                            <div class="card-body">
-                                                <div class="side" style="margin-left:8px; margin-top:8px;">
-                                                    @if($alertcomment->user->image == null)
-                                                        <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;"><span style="color:black; text-decoration: none;"><span id="modal-underuser_name{{$alertcomment->id}}"></span></span></a>
-                                                    @else
-                                                        <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;"><img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;"><span style="color:black; text-decoration: none;"><span id="modal-underuser_name{{$alertcomment->id}}"></span></span></a>
-                                                    @endif
-                                                    <small>
-                                                        <span style="text-align:right; list-style: none; margin-right:8px;"><span id="modal-undertime{{$alertcomment->id}}"></span></span>
-                                                    </small>
+                                            <div class="card" style="height: 220px;">
+                                                <div class="card-body">
+                                                    <div class="side" style="margin-left:8px; margin-top:8px;">
+                                                        @if($alertcomment->user->image == null)
+                                                            <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;"><span style="color:black; text-decoration: none;"><span id="modal-underuser_name{{$alertcomment->id}}"></span></span></a>
+                                                        @else
+                                                            <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;"><img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;"><span style="color:black; text-decoration: none;"><span id="modal-underuser_name{{$alertcomment->id}}"></span></span></a>
+                                                        @endif
+                                                        <small>
+                                                            <span style="text-align:right; list-style: none; margin-right:8px;"><span id="modal-undertime{{$alertcomment->id}}"></span></span>
+                                                        </small>
+                                                    </div>
+                                                    <p style="margin-top:10px; margin-left:60px;"><span id="modal-undercomment{{$alertcomment->id}}"></span></p>
                                                 </div>
-                                                <p style="margin-top:10px; margin-left:60px;"><span id="modal-undercomment{{$alertcomment->id}}"></span></p>
                                             </div>
-                                        </div>
                                         @endif
                                     </div>
                                 @endif
@@ -284,7 +285,7 @@
         $('.alertcomment-body-'+ id).remove();
       })
      .fail(function() {
-        alert('エラー');
+        alert('通信に失敗しました。');
       });
     }
 
@@ -347,6 +348,7 @@
               $button.attr('disabled', false);
             }
             }).then(function (data){
+                console.log(data);
               // 成功したとき
               // inputの中身を空にする
               $('#'+form_id+' [name="comment"]').val("");
@@ -368,7 +370,7 @@
     });
     
     function postData(id){
-        console.log(id);
+    
         $.ajax({
             url: '/alertcomments/'+ id +'/ajax',
             type : 'POST',
