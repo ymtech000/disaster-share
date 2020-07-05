@@ -380,7 +380,7 @@
             　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
             },
         }).done(function(json) {
-            console.log(json['responseData']);
+            console.log(json['upData']);
             document.getElementById("jump-modal"+id).click();
             
             var $modalUser_Name = $('#modal-user_name'+id);

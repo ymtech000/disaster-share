@@ -11,20 +11,7 @@
    <div class='form-row'>
         <div class="col-md-3"></div>
         <div class="col-md-3">
-            <div class="card-body"> 
-                @if($user->image == null)
-                    <img src="{{ Gravatar::src($user->email, 50) }}" alt="" width="200" height="200" style="border-radius:10px; margin-bottom:3px;">
-                @else
-                    <img src="{{$user->image}}" width="200" height="200" style="border-radius:10px;margin-bottom:3px;">
-                @endif
-                @if (Auth::id() !== $user->id)
-                    @if (Auth::user()->is_following($user->id))
-                        <button id="follow" class="btn btn-primary btn-black btn-follow" onclick="toggleFollowText(this, {{ $user->id }})" style=" width:200px; height:38px;">フォロー中</button>
-                    @else
-                        <button id="follow" class="btn btn-primary btn-black btn-follow" onclick="toggleFollowText(this, {{ $user->id }})" style=" width:200px; height:38px;">フォローする</button>
-                    @endif
-                @endif
-            </div>
+            @include('users.card', ['user'=>$user])
         </div>
         <div class="col-md-3">
             <div class="name">
@@ -45,9 +32,11 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script>
     function toggleFollowText(button,id) {
+        var element_follow = document.getElementById("follow_"+id);
         if (button.innerHTML === "フォローする") {
             button.innerHTML = "フォロー中";
-            console.log(id);
+            element_follow.className = "btn btn-danger";
+            
             $.ajax({
                 headers : {
                 　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
@@ -59,13 +48,13 @@
             })
             // Ajaxリクエストが成功した場合
             .done(function (results){
-                console.log(results);
+               
             }).fail(function(){
                 alert('通信に失敗しました');
             });
         } else {
             button.innerHTML = "フォローする";
-            
+            element_follow.className = "btn btn-primary";
             $.ajax({
                 headers : {
                 　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
@@ -77,7 +66,7 @@
             })
             // Ajaxリクエストが成功した場合
             .done(function (results){
-                console.log(results);
+               
             }).fail(function(){
                 alert('通信に失敗しました');
             });

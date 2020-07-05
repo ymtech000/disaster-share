@@ -40,8 +40,8 @@ class AlertcommentsController extends Controller
             }
         }else{
             if(DB::table('alertcomments')->where('parent_id', $request->id)->exists()){
-                $upcomment = Alertcomment::find($alertcomment->parent_id);
-                $upuser = User::find($upcomment->user_id);
+                $upcomment = optional(Alertcomment::find($alertcomment->parent_id));
+                $upuser = optional(User::find($upcomment->user_id));
                 $undercomment = Alertcomment::where('parent_id' , $request->id)->first();
                 $underuser = User::find($undercomment->user_id);
                 
@@ -54,8 +54,8 @@ class AlertcommentsController extends Controller
                     'upuserData' => $upuser,
                 ]);
             }else{
-                $upcomment = Alertcomment::find($alertcomment->parent_id);
-                $upuser = User::find($upcomment->user_id);
+                $upcomment = optional(Alertcomment::find($alertcomment->parent_id));
+                $upuser = optional(User::find($upcomment->user_id));
                 
                 return response()->json([
                     'responseData' => $alertcomment,
