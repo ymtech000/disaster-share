@@ -140,49 +140,89 @@
                              <div class="modal-body">
                                 @if(count($alertcomments)>0)
                                     <div> 
+                                    @if($alertcomment->parent_id !== null)
                                         @if($alertcomments->where('id', $alertcomment->parent_id)->first() !== null)
                                             <div class="card" style="height: 220px;">
                                                 <div class="card-body">
                                                     <div class="side" style="margin-left:8px; margin-top:8px;">
                                                         @if($alertcomment->user->image == null)
-                                                            <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;"><span style="color:black;"><span id="modal-upuser_name{{$alertcomment->id}}"></span></span></a>
+                                                            <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">
+                                                                <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;">
+                                                                <span style="color:black;">
+                                                                    <span id="modal-upuser_name{{$alertcomment->id}}"></span>
+                                                                </span>
+                                                            </a>
                                                         @else
-                                                            <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;"><img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;"><span style="color:black;"><span id="modal-upuser_name{{$alertcomment->id}}"></span></span></a>
+                                                            <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">
+                                                                <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;">
+                                                                <span style="color:black;">
+                                                                    <span id="modal-upuser_name{{$alertcomment->id}}"></span>
+                                                                </span>
+                                                            </a>
                                                         @endif
                                                         <small>
-                                                            <span style="text-align:right; list-style: none; margin-right:8px;"><span id="modal-uptime{{$alertcomment->id}}"></span></span>
+                                                            <span style="text-align:right; list-style: none; margin-right:8px;">
+                                                                <span id="modal-uptime{{$alertcomment->id}}"></span>
+                                                            </span>
                                                         </small>
                                                     </div>
-                                                    <p style="margin-top:10px; margin-left:60px;"><span id="modal-upcomment{{$alertcomment->id}}"></span></p>
+                                                    <p style="margin-top:10px; margin-left:60px;">
+                                                        <span id="modal-upcomment{{$alertcomment->id}}"></span>
+                                                    </p>
                                                 </div>
                                             </div>
+                                        @else
+                                            <p>元のコメントが存在しません。</p>
                                         @endif
-                                        
+                                    @endif
                                         <div class="card" style="height: 220px;">
                                             <div class="card-body">
                                                 <div class="side" style="margin-left:8px; margin-top:8px;">
                                                     @if($alertcomment->user->image == null)
-                                                        <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;"><span style="color:black; text-decoration: none;"><span id="modal-user_name{{$alertcomment->id}}"></span></span></a>
+                                                        <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">
+                                                            <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;">
+                                                            <span style="color:black; text-decoration: none;">
+                                                                <span id="modal-user_name{{$alertcomment->id}}"></span>
+                                                            </span>
+                                                        </a>
                                                     @else
-                                                        <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;"><img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;"><span style="color:black; text-decoration: none;"><span id="modal-user_name{{$alertcomment->id}}"></span></span></a>
+                                                        <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">
+                                                            <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;">
+                                                            <span style="color:black; text-decoration: none;">
+                                                                <span id="modal-user_name{{$alertcomment->id}}"></span>
+                                                            </span>
+                                                        </a>
                                                     @endif
                                                     <small>
-                                                        <span style="text-align:right; list-style: none; margin-right:8px;"><span id="modal-time{{$alertcomment->id}}"></span></span>
+                                                        <span style="text-align:right; list-style: none; margin-right:8px;">
+                                                            <span id="modal-time{{$alertcomment->id}}"></span>
+                                                        </span>
                                                     </small>
                                                 </div>
-                                                <p style="margin-top:10px; margin-left:60px;"><span id="modal-comment{{$alertcomment->id}}"></span></p>
+                                                <p style="margin-top:10px; margin-left:60px;">
+                                                    <span id="modal-comment{{$alertcomment->id}}"></span>
+                                                </p>
                                             </div>
                                         </div>
                                         
                                         @if($alertcomments->where('parent_id', $alertcomment->id)->first() !== null)
-                                        
                                             <div class="card" style="height: 220px;">
                                                 <div class="card-body">
                                                     <div class="side" style="margin-left:8px; margin-top:8px;">
-                                                        @if($alertcomment->user->image == null)
-                                                            <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;"><span style="color:black; text-decoration: none;"><span id="modal-underuser_name{{$alertcomment->id}}"></span></span></a>
+                                                        @if($alertcomment->user->image !== null)
+                                                            <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">
+                                                                <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;">
+                                                                <span style="color:black; text-decoration: none;">
+                                                                    <span id="modal-underuser_name{{$alertcomment->id}}"></span>
+                                                                </span>
+                                                            </a>
                                                         @else
-                                                            <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;"><img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;"><span style="color:black; text-decoration: none;"><span id="modal-underuser_name{{$alertcomment->id}}"></span></span></a>
+                                                            <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">
+                                                                <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;">
+                                                                <span style="color:black; text-decoration: none;">
+                                                                    <span id="modal-underuser_name{{$alertcomment->id}}"></span>
+                                                                </span>
+                                                            </a>
                                                         @endif
                                                         <small>
                                                             <span style="text-align:right; list-style: none; margin-right:8px;"><span id="modal-undertime{{$alertcomment->id}}"></span></span>
@@ -309,7 +349,7 @@
           // 成功したとき
           // inputの中身を空にする
           $('#form [name="comment"]').val("");
-          // すでにあるresultsの中身を空にする
+          // すでにあるresults���中身を空にする
           $results.empty();
           $('.alert-comment').hide();
           // dataの中身をループをつかってresultsにどんどんいれていく
@@ -380,7 +420,7 @@
             　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
             },
         }).done(function(json) {
-            console.log(json['upData']);
+            console.log(json['underData']);
             document.getElementById("jump-modal"+id).click();
             
             var $modalUser_Name = $('#modal-user_name'+id);
@@ -435,7 +475,7 @@
                 type: 'POST', 
                 data: {'id': id, _token: '{{ csrf_token() }}',},
             })
-            // Ajaxリクエストが成功した場合
+            // Ajaxリクエストが成功した���合
             .done(function (results){
                 console.log(results);
             }).fail(function(){
