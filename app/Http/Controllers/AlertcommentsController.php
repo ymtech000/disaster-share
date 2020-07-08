@@ -21,11 +21,11 @@ class AlertcommentsController extends Controller
             //クリックしたコメントに子コメントがあれば
             if(DB::table('alertcomments')->where('parent_id', $request->id)->exists()){
                 //$undercommentにクリックしたコメントの子コメントのデータを入れる。
-                $undercomments = DB::table('alertcomments')->join('users', 'users.id', '=', 'alertcomments.user_id')->where('parent_id' , $request->id)->orderBy('alertcomments.created_at', 'desc')->get();
+                $undercomments = DB::table('alertcomments')->join('users', 'users.id', '=', 'alertcomments.user_id')->where('parent_id' , $request->id)->orderBy('alertcomments.created_at', 'acs')->get();
                 return response()->json([
                     'responseData' => $alertcomment,
                     'userData' => $user,
-                    'underData' => $undercomments,
+                    'underDatas' => $undercomments,
                     'upData' => '',
                     'upuserData' => '',
                 ]);
@@ -35,7 +35,7 @@ class AlertcommentsController extends Controller
                 return response()->json([
                     'responseData' => $alertcomment,
                     'userData' => $user,
-                    'underData' => '',
+                    'underDatas' => '',
                     'upData' => '',
                     'upuserData' => '',
                 ]);
@@ -49,11 +49,11 @@ class AlertcommentsController extends Controller
                 //$upcommentにクリックしたコメントの親コメントのデータを入れる。
                 $upcomment = Alertcomment::find(optional($alertcomment)->parent_id);
                 $upuser = User::find(optional($upcomment)->user_id);
-                $undercomments = DB::table('alertcomments')->join('users', 'users.id', '=', 'alertcomments.user_id')->where('parent_id' , $request->id)->orderBy('alertcomments.created_at', 'desc')->get();
+                $undercomments = DB::table('alertcomments')->join('users', 'users.id', '=', 'alertcomments.user_id')->where('parent_id' , $request->id)->orderBy('alertcomments.created_at', 'acs')->get();
                 return response()->json([
                     'responseData' => $alertcomment,
                     'userData' => $user,
-                    'underData' => $undercomments,
+                    'underDatas' => $undercomments,
                     'upData' => $upcomment,
                     'upuserData' => $upuser,
                 ]);
@@ -65,7 +65,7 @@ class AlertcommentsController extends Controller
                 return response()->json([
                     'responseData' => $alertcomment,
                     'userData' => $user,
-                    'underData' => '',
+                    'underDatas' => '',
                     'upData' => $upcomment,
                     'upuserData' => $upuser,
                 ]);

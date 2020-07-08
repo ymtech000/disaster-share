@@ -6,35 +6,35 @@
         <div class="col-md-6">
             <div class="card-header" style="height: 70px; width:450px; border:solid; border-width:thin;">
                 <a href="/users/{{$alert->user->id}}">
-                  @if($alert->user->image == null)
-                    <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alert->user->email, 500) }}" width="45" height="45" alt="" style="border-radius:50%; margin-right:10px; margin-bottom:10px;">
-                  @else
-                    <img class="float-left user-img" src="{{$alert->user->image}}" width="45" height="45" style="border-radius:50%; margin-right:10px; margin-bottom:10px;">
-                  @endif
+                    @if($alert->user->image == null)
+                        <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alert->user->email, 500) }}" width="45" height="45" alt="" style="border-radius:50%; margin-right:10px; margin-bottom:10px;">
+                    @else
+                        <img class="float-left user-img" src="{{$alert->user->image}}" width="45" height="45" style="border-radius:50%; margin-right:10px; margin-bottom:10px;">
+                    @endif
                 </a>
                 <div class="side">
-                  <h4>
-                    <a href="/users/{{$alert->user->id}}" style="color:black; text-decoration: none;">{{$alert->user->name}}</a>
-                  </h4>
-                  @if(Auth::id() == $alert->user_id)
-                    <a href="#" class="nav-link" data-toggle="dropdown" style="color:black">
-                      <span class="fas fa-chevron-down"></span>
-                    </a>
-                    <ul class="dropdown-menu" style="list-style: none;">
-                      <li class="dropdown-item">
-                        <a href="{{ route('alerts.edit', ['id' => $alert->id]) }}">
-                          <span class="fa fa-edit" style="color:black;"></span>
+                    <h4>
+                        <a href="/users/{{$alert->user->id}}" style="color:black; text-decoration: none;">{{$alert->user->name}}</a>
+                    </h4>
+                    @if(Auth::id() == $alert->user_id)
+                        <a href="#" class="nav-link" data-toggle="dropdown" style="color:black">
+                            <span class="fas fa-chevron-down"></span>
                         </a>
-                        {!! link_to_route('alerts.edit', '編集', ['id' => $alert->id], ['class' => 'btn btn-default']) !!}
-                      </li>
-                      <li class="dropdown-item">
-                        <a href="#" type="button" data-toggle="modal" data-target="#alert-delete">
-                          <span class="fa fa-trash delete-btn" style="color:black;"></span>
-                        </a>
-                        <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alert-delete">削除</a>
-                      </li>
-                    </ul>
-                  @endif
+                        <ul class="dropdown-menu" style="list-style: none;">
+                            <li class="dropdown-item">
+                                <a href="{{ route('alerts.edit', ['id' => $alert->id]) }}">
+                                    <span class="fa fa-edit" style="color:black;"></span>
+                                </a>
+                                {!! link_to_route('alerts.edit', '編集', ['id' => $alert->id], ['class' => 'btn btn-default']) !!}
+                            </li>
+                            <li class="dropdown-item">
+                                <a href="#" type="button" data-toggle="modal" data-target="#alert-delete">
+                                    <span class="fa fa-trash delete-btn" style="color:black;"></span>
+                                </a>
+                                <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alert-delete">削除</a>
+                            </li>
+                        </ul>
+                    @endif
                 </div>
                 <p style="text-align:right;">{{$alert->edit}}</p>
             </div>
@@ -172,7 +172,7 @@
                                                 </div>
                                             </div>
                                         @else
-                                            <p>元のコメントが存在しません。</p>
+                                            <p>返信元のコメントが存在しません。</p>
                                         @endif
                                     @endif
                                         <div class="card" style="height: 220px;">
@@ -206,31 +206,32 @@
                                         </div>
                                         
                                         @if($alertcomments->where('parent_id', $alertcomment->id)->first() !== null)
-                                            <div class="card" style="height: 220px;">
-                                                <div class="card-body">
-                                                    <div class="side" style="margin-left:8px; margin-top:8px;">
-                                                        @if($alertcomment->user->image !== null)
-                                                            <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">
-                                                                <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;">
-                                                                <span style="color:black; text-decoration: none;">
-                                                                    <span id="modal-underuser_name{{$alertcomment->id}}"></span>
-                                                                </span>
-                                                            </a>
-                                                        @else
-                                                            <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">
-                                                                <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;">
-                                                                <span style="color:black; text-decoration: none;">
-                                                                    <span id="modal-underuser_name{{$alertcomment->id}}"></span>
-                                                                </span>
-                                                            </a>
-                                                        @endif
-                                                        <small>
-                                                            <span style="text-align:right; list-style: none; margin-right:8px;"><span id="modal-undertime{{$alertcomment->id}}"></span></span>
-                                                        </small>
-                                                    </div>
-                                                    <p style="margin-top:10px; margin-left:60px;"><span id="modal-undercomment{{$alertcomment->id}}"></span></p>
-                                                </div>
-                                            </div>
+                                            <!--<div class="card" style="height: 220px;">-->
+                                            <!--    <div class="card-body">-->
+                                            <!--        <div class="side" style="margin-left:8px; margin-top:8px;">-->
+                                            <!--            @if($alertcomment->user->image == null)-->
+                                            <!--                <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">-->
+                                            <!--                    <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;">-->
+                                            <!--                    <span style="color:black; text-decoration: none;">-->
+                                            <!--                        <span id="modal-underuser_name{{$alertcomment->id}}"></span>-->
+                                            <!--                    </span>-->
+                                            <!--                </a>-->
+                                            <!--            @else-->
+                                            <!--                <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">-->
+                                            <!--                    <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;">-->
+                                            <!--                    <span style="color:black; text-decoration: none;">-->
+                                            <!--                        <span id="modal-underuser_name{{$alertcomment->id}}"></span>-->
+                                            <!--                    </span>-->
+                                            <!--                </a>-->
+                                            <!--            @endif-->
+                                            <!--            <small>-->
+                                            <!--                <span style="text-align:right; list-style: none; margin-right:8px;"><span id="modal-undertime{{$alertcomment->id}}"></span></span>-->
+                                            <!--            </small>-->
+                                            <!--        </div>-->
+                                            <!--        <p style="margin-top:10px; margin-left:60px;"><span id="modal-undercomment{{$alertcomment->id}}"></span></p>-->
+                                            <!--    </div>-->
+                                            <!--</div>-->
+                                            <div id="underDatas"></div>
                                         @endif
                                     </div>
                                 @endif
@@ -411,7 +412,7 @@
     });
     
     function postData(id){
-    
+        var $underDatas =$('#underDatas');
         $.ajax({
             url: '/alertcomments/'+ id +'/ajax',
             type : 'POST',
@@ -420,7 +421,7 @@
             　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
             },
         }).done(function(json) {
-            console.log(json['underData']);
+            console.log(json['underDatas']);
             document.getElementById("jump-modal"+id).click();
             
             var $modalUser_Name = $('#modal-user_name'+id);
@@ -428,33 +429,38 @@
             var $modalUser_Image = $('#modal-user_image'+id);
             var $modalComment = $('#modal-comment'+id);
             var $modalTime = $('#modal-time'+id);
-            var $modalUndercomment = $('#modal-undercomment'+id);
-            var $modalUndertime = $('#modal-undertime'+id);
-            var $modalUnderuser_Name = $('#modal-underuser_name'+id);
+            // var $modalUndercomment = $('#modal-undercomment'+id);
+            // var $modalUndertime = $('#modal-undertime'+id);
+            // var $modalUnderuser_Name = $('#modal-underuser_name'+id);
             var $modalUpcomment = $('#modal-upcomment'+id);
             var $modalUptime = $('#modal-uptime'+id);
             var $modalUpuser_Name = $('#modal-upuser_name'+id);
             var $modalId = $('#modal-id'+id);
             var $modalParent_id = $('#modal-parent_id'+id);
             var $modalUpId = $('#modal-upid'+id);
-            var $modalUnderparent_id = $('#modal-underparent_id'+id);
-            
+            // var $modalUnderparent_id = $('#modal-underparent_id'+id);
             
             $modalUser_Name.text(json['userData'].name);
             $modalUser_Email.text(json['userData'].email);
             $modalUser_Image.text(json['userData'].image);
             $modalComment.text(json['responseData'].comment);
             $modalTime.text(json['responseData'].time);
-            $modalUndercomment.text(json['underData'].comment);
-            $modalUndertime.text(json['underData'].time);
-            $modalUnderuser_Name.text(json['underuserData'].name);
+            // $modalUndercomment.text(json['underData'].comment);
+            // $modalUndertime.text(json['underData'].time);
+            // $modalUnderuser_Name.text(json['underData'].name);
             $modalUpcomment.text(json['upData'].comment);
             $modalUptime.text(json['upData'].time);
             $modalUpuser_Name.text(json['upuserData'].name); 
             $modalId.text(json['responseData'].id);
             $modalParent_id.text(json['responseData'].parent_id);
             $modalUpId.text(json['upData'].parent_id); 
-            $modalUnderparent_id.text(json['underData'].parent_id);
+            // $modalUnderparent_id.text(json['underData'].parent_id);
+            
+            
+            $underDatas.empty();
+              // dataの中身をループをつかってunderDatasにどんどんいれていく
+              // comment.contentはご自身のデータベース構造、カラム名によって変わる
+              json['underDatas'].forEach(comment => $underDatas.append('<p>' + comment.comment + '</p>'));
             
         }).fail(function() {
             alert('通信に失敗しました。');
@@ -497,7 +503,7 @@
             .done(function (results){
                 console.log(results);
             }).fail(function(){
-                alert('通信に失敗しました');
+                alert('通信に失敗し��した');
             });
         }
     }
