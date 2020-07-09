@@ -102,9 +102,9 @@
                                 <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;" onclick="event.stopPropagation();">
                                     <div>
                                         @if($alertcomment->user->image == null)
-                                                <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
+                                            <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
                                         @else
-                                                <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
+                                            <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
                                         @endif
                                         <span style="color:black;">{{$alertcomment->user->name}}</span>
                                     </div>
@@ -144,31 +144,7 @@
                                         @if($alertcomments->where('id', $alertcomment->parent_id)->first() !== null)
                                             <div class="card" style="height: 220px;">
                                                 <div class="card-body">
-                                                    <div class="side" style="margin-left:8px; margin-top:8px;">
-                                                        @if($alertcomment->user->image == null)
-                                                            <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">
-                                                                <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;">
-                                                                <span style="color:black;">
-                                                                    <span id="modal-upuser_name{{$alertcomment->id}}"></span>
-                                                                </span>
-                                                            </a>
-                                                        @else
-                                                            <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">
-                                                                <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;">
-                                                                <span style="color:black;">
-                                                                    <span id="modal-upuser_name{{$alertcomment->id}}"></span>
-                                                                </span>
-                                                            </a>
-                                                        @endif
-                                                        <small>
-                                                            <span style="text-align:right; list-style: none; margin-right:8px;">
-                                                                <span id="modal-uptime{{$alertcomment->id}}"></span>
-                                                            </span>
-                                                        </small>
-                                                    </div>
-                                                    <p style="margin-top:10px; margin-left:60px;">
-                                                        <span id="modal-upcomment{{$alertcomment->id}}"></span>
-                                                    </p>
+                                                    <div id="upData"></div>
                                                 </div>
                                             </div>
                                         @else
@@ -178,21 +154,16 @@
                                         <div class="card" style="height: 220px;">
                                             <div class="card-body">
                                                 <div class="side" style="margin-left:8px; margin-top:8px;">
-                                                    @if($alertcomment->user->image == null)
-                                                        <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">
+                                                    <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">
+                                                        @if($alertcomment->user->image == null)
                                                             <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;">
-                                                            <span style="color:black; text-decoration: none;">
-                                                                <span id="modal-user_name{{$alertcomment->id}}"></span>
-                                                            </span>
-                                                        </a>
-                                                    @else
-                                                        <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">
+                                                        @else
                                                             <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;">
-                                                            <span style="color:black; text-decoration: none;">
-                                                                <span id="modal-user_name{{$alertcomment->id}}"></span>
-                                                            </span>
-                                                        </a>
-                                                    @endif
+                                                        @endif
+                                                        <span style="color:black; text-decoration: none;">
+                                                            <span id="modal-user_name{{$alertcomment->id}}"></span>
+                                                        </span>
+                                                    </a>
                                                     <small>
                                                         <span style="text-align:right; list-style: none; margin-right:8px;">
                                                             <span id="modal-time{{$alertcomment->id}}"></span>
@@ -205,7 +176,11 @@
                                             </div>
                                         </div>
                                         @if($alertcomments->where('parent_id', $alertcomment->id)->first() !== null)
-                                            <div id="underDatas"></div>
+                                            <div class="card" style="height: 220px;">
+                                                <div class="card-body">
+                                                    <div id="underDatas"></div>
+                                                </div>
+                                            </div>
                                         @endif
                                     </div>
                                 @endif
@@ -259,12 +234,106 @@
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
+                <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+                <script>
+                    function postData(id){
+                        var $upData =$('#upData');
+                        var $underDatas =$('#underDatas');
+                        $.ajax({
+                            url: '/alertcomments/'+ id +'/ajax',
+                            type : 'POST',
+                            data: {'id': id},
+                            headers : {
+                            　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                            },
+                        }).done(function(json) {
+                            console.log(json['upData']);
+                            document.getElementById("jump-modal"+id).click();
+                            
+                            var $modalUser_Name = $('#modal-user_name'+id);
+                            var $modalUser_Email = $('#modal-user_email'+id);
+                            var $modalUser_Image = $('#modal-user_image'+id);
+                            var $modalComment = $('#modal-comment'+id);
+                            var $modalTime = $('#modal-time'+id);
+                            // var $modalUpcomment = $('#modal-upcomment'+id);
+                            // var $modalUptime = $('#modal-uptime'+id);
+                            // var $modalUpuser_Name = $('#modal-upuser_name'+id);
+                            // var $modalUpuser_Email = $('#modal-upuser_email'+id);
+                            // var $modalUpuser_Image = $('#modal-upuser_image'+id);
+                            
+                            $modalUser_Name.text(json['userData'].name);
+                            $modalUser_Email.text(json['userData'].email);
+                            $modalUser_Image.text(json['userData'].image);
+                            $modalComment.text(json['responseData'].comment);
+                            $modalTime.text(json['responseData'].time);
+                            // $modalUpcomment.text(json['upData'].comment);
+                            // $modalUptime.text(json['upData'].time);
+                            // $modalUpuser_Name.text(json['upuserData'].name);
+                            // $modalUpuser_Email.text(json['upuserData'].email);
+                            // $modalUpuser_Image.text(json['upuserData'].image); 
+                            
+                            $upData.empty();
+                            $upData.append(
+                                '<div class="side" style="margin-left:8px; margin-top:8px;">' +
+                                    '<a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">' +
+                                        '@if($alertcomment->user->image == null)' +
+                                               '<img class="img-fluid float-left user-img" src="{{ Gravatar::src('+json["upuserData"].email+', 35) }}" alt="" style="margin-right:15px;">' +
+                                        '@else' +
+                                               '<img class="float-left user-img" src="'+json["upuserData"].image+'" width="35" height="35" style="margin-right:15px;">' +
+                                        '@endif' +
+                                        '<span style="color:black; text-decoration: none;">' +
+                                            json["upuserData"].name +
+                                        '</span>' +
+                                    '</a>'+
+                                    '<small>' +
+                                        '<span style="text-align:right; list-style: none; margin-right:8px;">' +
+                                            json["upData"].time +
+                                        '</span>' +
+                                    '</small>' +
+                                '</div>' +
+                                '<p style="margin-top:10px; margin-left:60px;">' +
+                                    json["upData"].comment +
+                                '</p>' 
+                            );
+                            
+                            $underDatas.empty();
+                              // dataの中身をループをつかってunderDatasにどんどんいれていく
+                              // comment.contentはご自身のデータベース構造、カラム名によって変わる
+                            json['underDatas'].forEach(comment => 
+                                $underDatas.append(
+                                    '<div class="side" style="margin-left:8px; margin-top:8px;">' +
+                                        '<a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">' +
+                                            '@if($alertcomment->user->image == null)' +
+                                                   '<img class="img-fluid float-left user-img" src="{{ Gravatar::src('+comment.email+', 35) }}" alt="" style="margin-right:15px;">' +
+                                            '@else' +
+                                                   '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px;">' +
+                                            '@endif' +
+                                            '<span style="color:black; text-decoration: none;">' +
+                                                comment.name +
+                                            '</span>' +
+                                        '</a>'+
+                                        '<small>' +
+                                            '<span style="text-align:right; list-style: none; margin-right:8px;">' +
+                                                comment.time +
+                                            '</span>' +
+                                        '</small>' +
+                                    '</div>' +
+                                    '<p style="margin-top:10px; margin-left:60px;">' +
+                                        comment.comment +
+                                    '</p>'
+                                )
+                            );
+                        }).fail(function() {
+                            alert('通信に失敗しました。');
+                        });
+                    }
+                </script>   
             @endforeach
         @endif
     </div>
     
-    <!--ボタン・���ンククリック後に表示される画面の内容 -->
+    <!--ボタン・リンククリック後に表示される画面の内容 -->
     <div class="modal fade" id="alert-delete" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -385,83 +454,6 @@
         });
     });
     
-    function postData(id){
-        var $underDatas =$('#underDatas');
-        $.ajax({
-            url: '/alertcomments/'+ id +'/ajax',
-            type : 'POST',
-            data: {'id': id},
-            headers : {
-            　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-            },
-        }).done(function(json) {
-            console.log(json['underDatas']);
-            document.getElementById("jump-modal"+id).click();
-            
-            var $modalUser_Name = $('#modal-user_name'+id);
-            var $modalUser_Email = $('#modal-user_email'+id);
-            var $modalUser_Image = $('#modal-user_image'+id);
-            var $modalComment = $('#modal-comment'+id);
-            var $modalTime = $('#modal-time'+id);
-            var $modalUpcomment = $('#modal-upcomment'+id);
-            var $modalUptime = $('#modal-uptime'+id);
-            var $modalUpuser_Name = $('#modal-upuser_name'+id);
-            var $modalId = $('#modal-id'+id);
-            var $modalParent_id = $('#modal-parent_id'+id);
-            var $modalUpId = $('#modal-upid'+id);
-            
-            $modalUser_Name.text(json['userData'].name);
-            $modalUser_Email.text(json['userData'].email);
-            $modalUser_Image.text(json['userData'].image);
-            $modalComment.text(json['responseData'].comment);
-            $modalTime.text(json['responseData'].time);
-            $modalUpcomment.text(json['upData'].comment);
-            $modalUptime.text(json['upData'].time);
-            $modalUpuser_Name.text(json['upuserData'].name); 
-            $modalId.text(json['responseData'].id);
-            $modalParent_id.text(json['responseData'].parent_id);
-            $modalUpId.text(json['upData'].parent_id); 
-            
-            $underDatas.empty();
-              // dataの中身をループをつかってunderDatasにどんどんいれていく
-              // comment.contentはご自身のデータベース構造、カラム名によって変わる
-              json['underDatas'].forEach(comment => 
-                $underDatas.append('<div class="card" style="height: 220px;">' + 
-                    '<div class="card-body">' +
-                        '<div class="side" style="margin-left:8px; margin-top:8px;">' +
-                            '@if($alertcomment->user->image == null)' +
-                                '<a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">' +
-                                   '<img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;">' +
-                                    '<span style="color:black; text-decoration: none;">' +
-                                        comment.name +
-                                    '</span>' +
-                                '</a>'+
-                            '@else' +
-                                '<a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">' +
-                                   '<img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;">' +
-                                    '<span style="color:black; text-decoration: none;">' +
-                                        comment.name +
-                                    '</span>' +
-                                '</a>'+
-                            '@endif' +
-                            '<small>' +
-                                '<span style="text-align:right; list-style: none; margin-right:8px;">' +
-                                    comment.time +
-                                '</span>' +
-                            '</small>' +
-                        '</div>' +
-                        '<p style="margin-top:10px; margin-left:60px;">' +
-                            comment.comment +
-                        '</p>' +
-                    '</div>' +
-                '</div>'
-                ));
-        }).fail(function() {
-            alert('通信に失敗しました。');
-        });
-    }
-    
-    
     function toggleFavoriteText(button,id) {
         if (button.innerHTML === "いいね") {
             button.innerHTML = "いいね中";
@@ -475,7 +467,7 @@
                 type: 'POST', 
                 data: {'id': id, _token: '{{ csrf_token() }}',},
             })
-            // Ajaxリクエストが成功した���合
+            // Ajaxリクエストが成功した場合
             .done(function (results){
                 console.log(results);
             }).fail(function(){
@@ -497,7 +489,7 @@
             .done(function (results){
                 console.log(results);
             }).fail(function(){
-                alert('通信に失敗し��した');
+                alert('通信に失敗しました');
             });
         }
     }
