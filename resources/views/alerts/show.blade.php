@@ -140,16 +140,15 @@
                             </div>
                              <div class="modal-body">
                                 @if(count($alertcomments)>0)
+                                    <p>
+                                        <div id="deleted{{$alertcomment->id}}"></div>
+                                    </p>
                                     <div> 
                                         @if($alertcomment->parent_id !== null)
                                             @if($alertcomments->where('id', $alertcomment->parent_id)->first() !== null)
-                                                <div class="card" style="height: 220px;">
-                                                    <div class="card-body">
-                                                        <div id="upData{{$alertcomment->id}}"></div>
-                                                    </div>
+                                                <div class="card card-body" style="height: 220px;">
+                                                    <div id="upData{{$alertcomment->id}}"></div>
                                                 </div>
-                                            @else
-                                                <p>返信元のコメントが存在しません。</p>
                                             @endif
                                         @endif
                                         <div class="card" style="height: 220px;">
@@ -173,10 +172,8 @@
                                             </div>
                                         </div>
                                         @if($alertcomments->where('parent_id', $alertcomment->id)->first() !== null)
-                                            <div class="card" style="height: 220px;">
-                                                <div class="card-body">
-                                                    <div id="underDatas{{$alertcomment->id}}"></div>
-                                                </div>
+                                            <div class="card card-body" style="height: 220px;">
+                                                <div id="underDatas{{$alertcomment->id}}"></div>
                                             </div>
                                         @endif
                                     </div>
@@ -260,58 +257,62 @@
                             $modalComment.text(json['responseData'].comment);
                             $modalTime.text(json['responseData'].time);
                             
-                           $upData.empty();
-                           console.log(json["upuserData"].email);
-                            if(json["upData"] !==null){
-                                $upData.append(
-                                    '<div class="side" style="margin-left:8px; margin-top:8px;">' +
-                                        '<a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">' +
-                                            '@if($alertcomment->user->image == null)' +
-                                                   '<img class="img-fluid float-left user-img" src="{{ Gravatar::src('+json["upuserData"].email+', 35) }}" alt="" style="margin-right:15px;">' +
-                                            '@else' +
-                                                   '<img class="float-left user-img" src="'+json["upuserData"].image+'" width="35" height="35" style="margin-right:15px;">' +
-                                            '@endif' +
-                                            '<span style="color:black; text-decoration: none;">' +
-                                                json["upuserData"].name +
-                                            '</span>' +
-                                        '</a>'+
-                                        '<small>' +
-                                            '<span style="text-align:right; list-style: none; margin-right:8px;">' +
-                                                json["upData"].time +
-                                            '</span>' +
-                                        '</small>' +
-                                    '</div>' +
-                                    '<p style="margin-top:10px; margin-left:60px;">' +
-                                        json["upData"].comment +
-                                    '</p>' 
-                                );
-                            }
+                            $upData.empty();
+                            console.log(json["upuserData"]);
+                             if(json["upData"] ==null){
+                                 var $deleted = $('#deleted'+id);
+                                $deleted.text("返信元のコメントが存在しません。");
+                                $upData.parent().remove();
+                            }else{
+                                upData = '<div class="side" style="margin-left:8px; margin-top:8px;">' +
+                                            '<a href="/users/'+json["upuserData"].id+'" style="text-decoration: none; cursor:pointer">';
+                                                if (json["upuserData"].image == null) {
+                                                    upData += '<img class="img-fluid float-left user-img" src="{{ Gravatar::src('+json["upuserData"].email+', 35) }}" alt="" style="margin-right:15px;">';
+                                                } else {
+                                                    upData += '<img class="float-left user-img" src="'+json["upuserData"].image+'" width="35" height="35" style="margin-right:15px;">';
+                                                }
+                                                upData += '<span style="color:black; text-decoration: none;">' +
+                                                                json["upuserData"].name +
+                                                            '</span>' +
+                                            '</a>'+
+                                            '<small>' +
+                                                '<span style="text-align:right; list-style: none; margin-right:8px;">' +
+                                                    json["upData"].time +
+                                                '</span>' +
+                                            '</small>' +
+                                        '</div>' +
+                                        '<p style="margin-top:10px; margin-left:60px;">' +
+                                            json["upData"].comment +
+                                        '</p>';
+                                $upData.append(upData);
+                                }
                             
                             $underDatas.empty();
                               // dataの中身をループをつかってunderDatasにいれていく
-                            
-                            if(json["underDatas"] !==''){
-                            json['underDatas'].forEach(function(comment) { 
-                                underData = '<div class="side" style="margin-left:8px; margin-top:8px;">' +
-                                                '<a href="/users/'+comment.id+'" style="text-decoration: none; cursor:pointer">';
-                                                    if (comment.image == null) {
-                                                        underData += '<img class="img-fluid float-left user-img" src="{{ Gravatar::src('+comment.email+', 35) }}" alt="" style="margin-right:15px;">';
-                                                    } else {
-                                                        underData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px;">';
-                                                    }
-                                                    underData +='<span style="color:black; text-decoration: none;">' +
-                                                                    comment.name +
-                                                                '</span>' +
-                                                '</a>'+
-                                                '<small>' +
-                                                    '<span style="text-align:right; list-style: none; margin-right:8px;">' +
-                                                        comment.time +
-                                                    '</span>' +
-                                                '</small>' +
-                                            '</div>' +
-                                            '<p style="margin-top:10px; margin-left:60px;">' +
-                                                comment.comment +
-                                            '</p>';
+                            if(json["underDatas"] ==''){
+                                $underDatas.parent().remove();
+                            }else{
+                                json['underDatas'].forEach(function(comment) { 
+                                    underData = '<div class="side" style="margin-left:8px; margin-top:8px;">' +
+                                                    '<a href="/users/'+comment.id+'" style="text-decoration: none; cursor:pointer">';
+                                                        if (comment.image == null) {
+                                                            underData += '<img class="img-fluid float-left user-img" src="{{ Gravatar::src('+comment.email+', 35) }}" alt="" style="margin-right:15px;">';
+                                                        } else {
+                                                            underData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px;">';
+                                                        }
+                                                        underData +='<span style="color:black; text-decoration: none;">' +
+                                                                        comment.name +
+                                                                    '</span>' +
+                                                    '</a>'+
+                                                    '<small>' +
+                                                        '<span style="text-align:right; list-style: none; margin-right:8px;">' +
+                                                            comment.time +
+                                                        '</span>' +
+                                                    '</small>' +
+                                                '</div>' +
+                                                '<p style="margin-top:10px; margin-left:60px;">' +
+                                                    comment.comment +
+                                                '</p>';
                                 $underDatas.append(underData);
                             });
                         }
