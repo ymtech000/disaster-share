@@ -77,12 +77,14 @@ class AlertcommentsController extends Controller
     public function ajaxindex($id)
     {
          // id順に取得
-        $alertcomments = Alertcomment::where('alert_id', $id)->orderBy('created_at', 'desc')->get();
-    
+        $alertcomments = DB::table('alertcomments')->join('users', 'users.id', '=', 'alertcomments.user_id')->orderBy('alertcomments.created_at', 'decs')->get();
+        $AuthId = Alertcomment::where('alert_id' , $id)->orderBy('alertcomments.created_at', 'acs')->first()->user_id;
+        
         return response()->json([
             "status" => "success",
             "message" => "成功",
-            "comments" => $alertcomments
+            "comments" => $alertcomments,
+            "AuthId" => $AuthId,
         ]);
     }
     
