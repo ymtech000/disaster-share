@@ -25,6 +25,7 @@
 <script>
     function toggleFollowText(button,id) {
         var element_follow = document.getElementById("follow_"+id);
+        console.log(element_follow.className);
         if (button.innerHTML === "フォローする") {
             button.innerHTML = "フォロー中";
             element_follow.className = "btn btn-danger";

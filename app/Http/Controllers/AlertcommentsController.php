@@ -22,6 +22,7 @@ class AlertcommentsController extends Controller
             if(DB::table('alertcomments')->where('parent_id', $request->id)->exists()){
                 //$undercommentにクリックしたコメントの子コメントのデータを入れる。
                 $undercomments = DB::table('alertcomments')->join('users', 'users.id', '=', 'alertcomments.user_id')->where('parent_id' , $request->id)->orderBy('alertcomments.created_at', 'acs')->get();
+                
                 return response()->json([
                     'responseData' => $alertcomment,
                     'userData' => $user,

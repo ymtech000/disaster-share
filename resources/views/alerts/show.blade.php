@@ -109,7 +109,6 @@
                                         <span style="color:black;">{{$alertcomment->user->name}}</span>
                                     </div>
                                 </a>
-                                <!--<p>{{$alertcomment->user->email}}</p>-->
                                 <small>
                                     <span style="text-align:right; list-style: none; margin-right:8px;">{{$alertcomment->time}}</span>
                                 </small>
@@ -229,6 +228,7 @@
                         </div>
                     </div>
                 </div>
+                <script src="{{ asset('/js/md5.js') }}"></script>
                 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
                 <script>
                     function postData(id){
@@ -258,7 +258,7 @@
                             $modalTime.text(json['responseData'].time);
                             
                             $upData.empty();
-                            console.log(json["upuserData"]);
+                           
                              if(json["upData"] ==null){
                                  var $deleted = $('#deleted'+id);
                                 $deleted.text("返信元のコメントが存在しません。");
@@ -292,11 +292,15 @@
                             if(json["underDatas"] ==''){
                                 $underDatas.parent().remove();
                             }else{
+                               
                                 json['underDatas'].forEach(function(comment) { 
+                                   
+                                  var mailhash = CybozuLabs.MD5.calc(comment.email);
+                                  console.log(mailhash);
                                     underData = '<div class="side" style="margin-left:8px; margin-top:8px;">' +
                                                     '<a href="/users/'+comment.id+'" style="text-decoration: none; cursor:pointer">';
                                                         if (comment.image == null) {
-                                                            underData += '<img class="img-fluid float-left user-img" src="{{ Gravatar::src('+comment.email+', 35) }}" alt="" style="margin-right:15px;">';
+                                                            underData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mailhash+'" alt="" style="margin-right:15px;">';
                                                         } else {
                                                             underData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px;">';
                                                         }
@@ -345,7 +349,7 @@
             </div>
         </div>
     </div>
-
+<script src="{{ asset('/js/md5.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script>
     function postDeletedata(id){
@@ -359,7 +363,6 @@
                '_method': 'DELETE'} 
       })
      .done(function() {
-        // $('.modal').hide();
         $('.alertcomment-body-'+ id).remove();
       })
      .fail(function() {
