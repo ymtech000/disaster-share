@@ -6,35 +6,35 @@
         <div class="col-md-6">
             <div class="card-header" style="height: 70px; width:450px; border:solid; border-width:thin;">
                 <a href="/users/{{$alert->user->id}}">
-                  @if($alert->user->image == null)
-                    <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alert->user->email, 500) }}" width="45" height="45" alt="" style="border-radius:50%; margin-right:10px; margin-bottom:10px;">
-                  @else
-                    <img class="float-left user-img" src="{{$alert->user->image}}" width="45" height="45" style="border-radius:50%; margin-right:10px; margin-bottom:10px;">
-                  @endif
+                    @if($alert->user->image == null)
+                        <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alert->user->email, 45) }}" alt="" style="border-radius:50%; margin-right:10px; margin-bottom:10px;">
+                    @else
+                        <img class="float-left user-img" src="{{$alert->user->image}}" width="45" height="45" style="border-radius:50%; margin-right:10px; margin-bottom:10px;">
+                    @endif
                 </a>
                 <div class="side">
-                  <h4>
-                    <a href="/users/{{$alert->user->id}}" style="color:black; text-decoration: none;">{{$alert->user->name}}</a>
-                  </h4>
-                  @if(Auth::id() == $alert->user_id)
-                    <a href="#" class="nav-link" data-toggle="dropdown" style="color:black">
-                      <span class="fas fa-chevron-down"></span>
-                    </a>
-                    <ul class="dropdown-menu" style="list-style: none;">
-                      <li class="dropdown-item">
-                        <a href="{{ route('alerts.edit', ['id' => $alert->id]) }}">
-                          <span class="fa fa-edit" style="color:black;"></span>
+                    <h4>
+                        <a href="/users/{{$alert->user->id}}" style="color:black; text-decoration: none;">{{$alert->user->name}}</a>
+                    </h4>
+                    @if(Auth::id() == $alert->user_id)
+                        <a href="#" class="nav-link" data-toggle="dropdown" style="color:black">
+                            <span class="fas fa-chevron-down"></span>
                         </a>
-                        {!! link_to_route('alerts.edit', '編集', ['id' => $alert->id], ['class' => 'btn btn-default']) !!}
-                      </li>
-                      <li class="dropdown-item">
-                        <a href="#" type="button" data-toggle="modal" data-target="#alert-delete">
-                          <span class="fa fa-trash delete-btn" style="color:black;"></span>
-                        </a>
-                        <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alert-delete">削除</a>
-                      </li>
-                    </ul>
-                  @endif
+                        <ul class="dropdown-menu" style="list-style: none;">
+                            <li class="dropdown-item">
+                                <a href="{{ route('alerts.edit', ['id' => $alert->id]) }}">
+                                    <span class="fa fa-edit" style="color:black;"></span>
+                                </a>
+                                {!! link_to_route('alerts.edit', '編集', ['id' => $alert->id], ['class' => 'btn btn-default']) !!}
+                            </li>
+                            <li class="dropdown-item">
+                                <a href="#" type="button" data-toggle="modal" data-target="#alert-delete">
+                                    <span class="fa fa-trash delete-btn" style="color:black;"></span>
+                                </a>
+                                <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alert-delete">削除</a>
+                            </li>
+                        </ul>
+                    @endif
                 </div>
                 <p style="text-align:right;">{{$alert->edit}}</p>
             </div>
@@ -102,11 +102,11 @@
                                 <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;" onclick="event.stopPropagation();">
                                     <div>
                                         @if($alertcomment->user->image == null)
-                                                <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
+                                            <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 35) }}" alt="" style="margin-right:15px;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
                                         @else
-                                                <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
+                                            <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
                                         @endif
-                                        <span style="color:black;" onclick="location:href='/users/{{$alertcomment->user->id}}';">{{$alertcomment->user->name}}</span>
+                                        <span style="color:black;">{{$alertcomment->user->name}}</span>
                                     </div>
                                 </a>
                                 <small>
@@ -135,60 +135,44 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4></h4>
-                                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times" style="cursor:pointer;"></span></button>
                             </div>
-                            <div class="modal-body">
+                             <div class="modal-body">
                                 @if(count($alertcomments)>0)
+                                    <p>
+                                        <div id="deleted{{$alertcomment->id}}"></div>
+                                    </p>
                                     <div> 
                                         @if($alertcomment->parent_id !== null)
-                                            <div class="card" style="height: 220px;">
-                                                <div class="card-body">
-                                                    <div class="side" style="margin-left:8px; margin-top:8px;">
-                                                        @if($alertcomment->user->image == null)
-                                                            <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;"><span style="color:black;"><span id="modal-upuser_name{{$alertcomment->id}}"></span></span></a>
-                                                        @else
-                                                            <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;"><img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;"><span style="color:black;"><span id="modal-upuser_name{{$alertcomment->id}}"></span></span></a>
-                                                        @endif
-                                                        <small>
-                                                            <span style="text-align:right; list-style: none; margin-right:8px;"><span id="modal-uptime{{$alertcomment->id}}"></span></span>
-                                                        </small>
-                                                    </div>
-                                                    <p style="margin-top:10px; margin-left:60px;"><span id="modal-upcomment{{$alertcomment->id}}"></span></p>
+                                            @if($alertcomments->where('id', $alertcomment->parent_id)->first() !== null)
+                                                <div class="card card-body" style="height: 220px;">
+                                                    <div id="upData{{$alertcomment->id}}"></div>
                                                 </div>
-                                            </div>
+                                            @endif
                                         @endif
-                                        
                                         <div class="card" style="height: 220px;">
                                             <div class="card-body">
                                                 <div class="side" style="margin-left:8px; margin-top:8px;">
-                                                    @if($alertcomment->user->image == null)
-                                                        <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;"><span style="color:black; text-decoration: none;"><span id="modal-user_name{{$alertcomment->id}}"></span></span></a>
-                                                    @else
-                                                        <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;"><img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;"><span style="color:black; text-decoration: none;"><span id="modal-user_name{{$alertcomment->id}}"></span></span></a>
-                                                    @endif
+                                                    <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">
+                                                        @if($alertcomment->user->image == null)
+                                                            <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 35) }}" alt="" style="margin-right:15px;">
+                                                        @else
+                                                            <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;">
+                                                        @endif
+                                                        <span id="modal-user_name{{$alertcomment->id}}" style="color:black; text-decoration: none;"></span>
+                                                    </a>
                                                     <small>
-                                                        <span style="text-align:right; list-style: none; margin-right:8px;"><span id="modal-time{{$alertcomment->id}}"></span></span>
+                                                        <span id="modal-time{{$alertcomment->id}}" style="text-align:right; list-style: none; margin-right:8px;"></span>
                                                     </small>
                                                 </div>
-                                                <p style="margin-top:10px; margin-left:60px;"><span id="modal-comment{{$alertcomment->id}}"></span></p>
+                                                <p style="margin-top:10px; margin-left:60px;">
+                                                    <span id="modal-comment{{$alertcomment->id}}"></span>
+                                                </p>
                                             </div>
                                         </div>
-                                        
                                         @if($alertcomments->where('parent_id', $alertcomment->id)->first() !== null)
-                                            <div class="card" style="height: 220px;">
-                                                <div class="card-body">
-                                                    <div class="side" style="margin-left:8px; margin-top:8px;">
-                                                        @if($alertcomment->user->image == null)
-                                                            <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;"><img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 500) }}" width="35" height="35" alt="" style="margin-right:15px;"><span style="color:black; text-decoration: none;"><span id="modal-underuser_name{{$alertcomment->id}}"></span></span></a>
-                                                        @else
-                                                            <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;"><img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;"><span style="color:black; text-decoration: none;"><span id="modal-underuser_name{{$alertcomment->id}}"></span></span></a>
-                                                        @endif
-                                                        <small>
-                                                            <span style="text-align:right; list-style: none; margin-right:8px;"><span id="modal-undertime{{$alertcomment->id}}"></span></span>
-                                                        </small>
-                                                    </div>
-                                                    <p style="margin-top:10px; margin-left:60px;"><span id="modal-undercomment{{$alertcomment->id}}"></span></p>
-                                                </div>
+                                            <div class="card card-body" style="height: 220px;">
+                                                <div id="underDatas{{$alertcomment->id}}"></div>
                                             </div>
                                         @endif
                                     </div>
@@ -243,7 +227,106 @@
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
+                <script src="{{ asset('/js/md5.js') }}"></script>
+                <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+                <script>
+                    function postData(id){
+                        var $upData =$('#upData'+id);
+                        var $underDatas =$('#underDatas'+id);
+                        $.ajax({
+                            url: '/alertcomments/'+ id +'/ajax',
+                            type : 'POST',
+                            data: {'id': id},
+                            headers : {
+                            　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                            },
+                        }).done(function(json) {
+                            
+                            document.getElementById("jump-modal"+id).click();
+                            
+                            var $modalUser_Name = $('#modal-user_name'+id);
+                            var $modalUser_Email = $('#modal-user_email'+id);
+                            var $modalUser_Image = $('#modal-user_image'+id);
+                            var $modalComment = $('#modal-comment'+id);
+                            var $modalTime = $('#modal-time'+id);
+                            
+                            $modalUser_Name.text(json['userData'].name);
+                            $modalUser_Email.text(json['userData'].email);
+                            $modalUser_Image.text(json['userData'].image);
+                            $modalComment.text(json['responseData'].comment);
+                            $modalTime.text(json['responseData'].time);
+                            
+                            $upData.empty();
+                           
+                             if(json["upData"] ==null){
+                                 var $deleted = $('#deleted'+id);
+                                $deleted.text("返信元のコメントが存在しません。");
+                                $upData.parent().remove();
+                            }else{
+                                var up_mail_hash = CybozuLabs.MD5.calc(json["upuserData"].email);
+                                upData = '<div class="side" style="margin-left:8px; margin-top:8px;">' +
+                                            '<a href="/users/'+json["upuserData"].id+'" style="text-decoration: none; cursor:pointer">';
+                                                if (json["upuserData"].image == null) {
+                                                    upData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+up_mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;">';
+                                                } else {
+                                                    upData += '<img class="float-left user-img" src="'+json["upuserData"].image+'" width="35" height="35" style="margin-right:15px;">';
+                                                }
+                                                upData += '<span style="color:black; text-decoration: none;">' +
+                                                                json["upuserData"].name +
+                                                            '</span>' +
+                                            '</a>'+
+                                            '<small>' +
+                                                '<span style="text-align:right; list-style: none; margin-right:8px;">' +
+                                                    json["upData"].time +
+                                                '</span>' +
+                                            '</small>' +
+                                        '</div>' +
+                                        '<p style="margin-top:10px; margin-left:60px;">' +
+                                            json["upData"].comment +
+                                        '</p>';
+                                $upData.append(upData);
+                                }
+                            
+                            $underDatas.empty();
+                              // dataの中身をループをつかってunderDatasにいれていく
+                            if(json["underDatas"] ==''){
+                                $underDatas.parent().remove();
+                            }else{
+                               
+                                json['underDatas'].forEach(function(comment) { 
+                                   
+                                  var under_mail_hash = CybozuLabs.MD5.calc(comment.email);
+                                  
+                                    underData = '<div class="side" style="margin-left:8px; margin-top:8px;">' +
+                                                    '<a href="/users/'+comment.id+'" style="text-decoration: none; cursor:pointer">';
+                                                        if (comment.image == null) {
+                                                            underData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+under_mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;">';
+                                                        } else {
+                                                            underData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px;">';
+                                                        }
+                                                        underData +='<span style="color:black; text-decoration: none;">' +
+                                                                        comment.name +
+                                                                    '</span>' +
+                                                    '</a>'+
+                                                    '<small>' +
+                                                        '<span style="text-align:right; list-style: none; margin-right:8px;">' +
+                                                            comment.time +
+                                                        '</span>' +
+                                                    '</small>' +
+                                                '</div>' +
+                                                '<p style="margin-top:10px; margin-left:60px;">' +
+                                                    comment.comment +
+                                                '</p>';
+                                $underDatas.append(underData);
+                            });
+                        }
+                          
+                        }).fail(function() {
+                            alert('通信に失敗しました。');
+                        });
+                    }
+                </script>   
             @endforeach
         @endif
     </div>
@@ -267,7 +350,7 @@
             </div>
         </div>
     </div>
-
+<script src="{{ asset('/js/md5.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script>
     function postDeletedata(id){
@@ -281,14 +364,12 @@
                '_method': 'DELETE'} 
       })
      .done(function() {
-        $('.modal').hide();
         $('.alertcomment-body-'+ id).remove();
       })
      .fail(function() {
         alert('通信に失敗しました。');
       });
     }
-
     $('#form').submit(function(event) {
         event.preventDefault();
         let $form = $(this);
@@ -312,7 +393,7 @@
           $results.empty();
           $('.alert-comment').hide();
           // dataの中身をループをつかってresultsにどんどんいれていく
-          // comment.contentはご自身のデータベース構造、カラム名によって変わる
+          // comment.contentは自身のデータベース構造、カラム名によって変わる
           data['comments'].forEach(comment => $results.append('<p>' + comment.comment + '</p>'));
         }, function () {
           // 失敗したとき
@@ -357,7 +438,6 @@
               $('.alert-comment').hide();
             document.getElementById("jump-"+form_id).click();
               // dataの中身をループをつかってresultsにどんどんいれていく
-              // comment.contentはご自身のデータベース構造、カラム名によって変わる
               data['comments'].forEach(comment => $results.append('<p>' + comment.comment + '</p>'));
             }, function () {
               // 失敗したとき
@@ -368,58 +448,6 @@
             });
         });
     });
-    
-    function postData(id){
-    
-        $.ajax({
-            url: '/alertcomments/'+ id +'/ajax',
-            type : 'POST',
-            data: {'id': id},
-            headers : {
-            　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-            },
-        }).done(function(json) {
-            console.log(json['responseData']);
-            document.getElementById("jump-modal"+id).click();
-            
-            var $modalUser_Name = $('#modal-user_name'+id);
-            var $modalUser_Email = $('#modal-user_email'+id);
-            var $modalUser_Image = $('#modal-user_image'+id);
-            var $modalComment = $('#modal-comment'+id);
-            var $modalTime = $('#modal-time'+id);
-            var $modalUndercomment = $('#modal-undercomment'+id);
-            var $modalUndertime = $('#modal-undertime'+id);
-            var $modalUnderuser_Name = $('#modal-underuser_name'+id);
-            var $modalUpcomment = $('#modal-upcomment'+id);
-            var $modalUptime = $('#modal-uptime'+id);
-            var $modalUpuser_Name = $('#modal-upuser_name'+id);
-            var $modalId = $('#modal-id'+id);
-            var $modalParent_id = $('#modal-parent_id'+id);
-            var $modalUpId = $('#modal-upid'+id);
-            var $modalUnderparent_id = $('#modal-underparent_id'+id);
-            
-            
-            $modalUser_Name.text(json['userData'].name);
-            $modalUser_Email.text(json['userData'].email);
-            $modalUser_Image.text(json['userData'].image);
-            $modalComment.text(json['responseData'].comment);
-            $modalTime.text(json['responseData'].time);
-            $modalUndercomment.text(json['underData'].comment);
-            $modalUndertime.text(json['underData'].time);
-            $modalUnderuser_Name.text(json['underuserData'].name);
-            $modalUpcomment.text(json['upData'].comment);
-            $modalUptime.text(json['upData'].time);
-            $modalUpuser_Name.text(json['upuserData'].name); 
-            $modalId.text(json['responseData'].id);
-            $modalParent_id.text(json['responseData'].parent_id);
-            $modalUpId.text(json['upData'].parent_id); 
-            $modalUnderparent_id.text(json['underData'].parent_id);
-            
-        }).fail(function() {
-            alert('通信に失敗しました。');
-        });
-    }
-    
     
     function toggleFavoriteText(button,id) {
         if (button.innerHTML === "いいね") {

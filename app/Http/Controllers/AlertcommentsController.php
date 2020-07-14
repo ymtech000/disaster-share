@@ -12,56 +12,61 @@ use App\Http\Requests\StoreAlertcomment;
 class AlertcommentsController extends Controller
 {
     public function ajax(Request $request){
+        //$alertcommentにクリックしたコメントのデータを入れる。
         $alertcomment = Alertcomment::find($request->id);
         $user = User::find($alertcomment->user_id);
-
+        
+        //クリックしたコメントに親コメントがなければ
         if($alertcomment->parent_id == null){
+            //クリックしたコメントに子コメントがあれば
             if(DB::table('alertcomments')->where('parent_id', $request->id)->exists()){
-                $undercomment = Alertcomment::where('parent_id' , $request->id)->first();
-                $underuser = User::find($undercomment->user_id);
-             
+                //$undercommentにクリックしたコメントの子コメントのデータを入れる。
+                $undercomments = DB::table('alertcomments')->join('users', 'users.id', '=', 'alertcomments.user_id')->where('parent_id' , $request->id)->orderBy('alertcomments.created_at', 'acs')->get();
+                
                 return response()->json([
                     'responseData' => $alertcomment,
                     'userData' => $user,
-                    'underData' => $undercomment,
-                    'underuserData' => $underuser,
+                    'underDatas' => $undercomments,
                     'upData' => '',
                     'upuserData' => '',
                 ]);
+            
+            //クリックしたコメントに子コメントがなければ
             }else{
                 return response()->json([
                     'responseData' => $alertcomment,
                     'userData' => $user,
-                    'underData' => '',
-                    'underuserData' => '',
+                    'underDatas' => '',
                     'upData' => '',
                     'upuserData' => '',
                 ]);
             }
+        
+        //クリックしたコメントに親コメントがあれば    
         }else{
+            //クリックしたコメントに子コメントがあれば
             if(DB::table('alertcomments')->where('parent_id', $request->id)->exists()){
-                $upcomment = Alertcomment::find($alertcomment->parent_id);
-                $upuser = User::find($upcomment->user_id);
-                $undercomment = Alertcomment::where('parent_id' , $request->id)->first();
-                $underuser = User::find($undercomment->user_id);
                 
+                //$upcommentにクリックしたコメントの親コメントのデータを入れる。
+                $upcomment = Alertcomment::find(optional($alertcomment)->parent_id);
+                $upuser = User::find(optional($upcomment)->user_id);
+                $undercomments = DB::table('alertcomments')->join('users', 'users.id', '=', 'alertcomments.user_id')->where('parent_id' , $request->id)->orderBy('alertcomments.created_at', 'acs')->get();
                 return response()->json([
                     'responseData' => $alertcomment,
                     'userData' => $user,
-                    'underData' => $undercomment,
-                    'underuserData' => $underuser,
+                    'underDatas' => $undercomments,
                     'upData' => $upcomment,
                     'upuserData' => $upuser,
                 ]);
+            //クリックしたコメントに子コメントがなければ 
             }else{
-                $upcomment = Alertcomment::find($alertcomment->parent_id);
-                $upuser = User::find($upcomment->user_id);
+                $upcomment = Alertcomment::find(optional($alertcomment)->parent_id);
+                $upuser = User::find(optional($upcomment)->user_id);
                 
                 return response()->json([
                     'responseData' => $alertcomment,
                     'userData' => $user,
-                    'underData' => '',
-                    'underuserData' => '',
+                    'underDatas' => '',
                     'upData' => $upcomment,
                     'upuserData' => $upuser,
                 ]);
@@ -162,4 +167,3 @@ class AlertcommentsController extends Controller
         return back();
     }
 }
-
