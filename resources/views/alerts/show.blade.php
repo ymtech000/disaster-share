@@ -264,10 +264,11 @@
                                 $deleted.text("返信元のコメントが存在しません。");
                                 $upData.parent().remove();
                             }else{
+                                var up_mail_hash = CybozuLabs.MD5.calc(json["upuserData"].email);
                                 upData = '<div class="side" style="margin-left:8px; margin-top:8px;">' +
                                             '<a href="/users/'+json["upuserData"].id+'" style="text-decoration: none; cursor:pointer">';
                                                 if (json["upuserData"].image == null) {
-                                                    upData += '<img class="img-fluid float-left user-img" src="{{ Gravatar::src('+json["upuserData"].email+', 35) }}" alt="" style="margin-right:15px;">';
+                                                    upData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+up_mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;">';
                                                 } else {
                                                     upData += '<img class="float-left user-img" src="'+json["upuserData"].image+'" width="35" height="35" style="margin-right:15px;">';
                                                 }
@@ -295,12 +296,12 @@
                                
                                 json['underDatas'].forEach(function(comment) { 
                                    
-                                  var mailhash = CybozuLabs.MD5.calc(comment.email);
-                                  console.log(mailhash);
+                                  var under_mail_hash = CybozuLabs.MD5.calc(comment.email);
+                                  
                                     underData = '<div class="side" style="margin-left:8px; margin-top:8px;">' +
                                                     '<a href="/users/'+comment.id+'" style="text-decoration: none; cursor:pointer">';
                                                         if (comment.image == null) {
-                                                            underData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mailhash+'" alt="" style="margin-right:15px;">';
+                                                            underData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+under_mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;">';
                                                         } else {
                                                             underData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px;">';
                                                         }
