@@ -295,9 +295,7 @@
                             }else{
                                
                                 json['underDatas'].forEach(function(comment) { 
-                                   
                                   var under_mail_hash = CybozuLabs.MD5.calc(comment.email);
-                                  
                                     underData = '<div class="side" style="margin-left:8px; margin-top:8px;">' +
                                                     '<a href="/users/'+comment.id+'" style="text-decoration: none; cursor:pointer">';
                                                         if (comment.image == null) {
@@ -394,7 +392,54 @@
           $('.alert-comment').hide();
           // dataの中身をループをつかってresultsにどんどんいれていく
           // comment.contentは自身のデータベース構造、カラム名によって変わる
-          data['comments'].forEach(comment => $results.append('<p>' + comment.comment + '</p>'));
+          data['comments'].forEach(function(comment){ 
+                 var mail_hash = CybozuLabs.MD5.calc(comment.email);
+              // dataの中身をループをつかってresultsにどんどんいれていく
+                commentData = '<input type="hidden" id="jump-modal'+comment.id+'" class="card-body" data-toggle="modal" data-target="#alertcomment-comment-thread'+comment.id+'">'+
+                                    '<div class="form-row">'+
+                                        '<div class="col-sm-8 offset-sm-2">'+
+                                            '<div id="'+comment.id+'" class="card alert-comment alertcomment-body-'+comment.id+'" style="height: 220px; cursor:pointer;" onclick="postData(this.id)">'+
+                                                '<div class="side" style="margin-left:8px; margin-top:8px;">'+
+                                                    '<a href="/users/'+comment.user_id+'" style="text-decoration: none;" onclick="event.stopPropagation();">'+
+                                                        '<div>';
+                                                            if(comment.image == null){
+                                                                commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
+                                                            }else{
+                                                                commentData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
+                                                            }
+                                                            commentData += '<span style="color:black;">'+
+                                                                                comment.name+
+                                                                            '</span>'+
+                                                        '</div>'+
+                                                    '</a>'+
+                                                    '<small>'+
+                                                        '<span style="text-align:right; list-style: none; margin-right:8px;">'+
+                                                            comment.time+
+                                                        '</span>'+
+                                                    '</small>'+
+                                                '</div>'+
+                                                '<p style="margin-top:10px; margin-left:60px;">'+
+                                                    comment.comment+
+                                                '</p>'+
+                                                '<ul class="icons" style="list-style: none;">'+
+                                                    '<li>'+
+                                                        '<input type="hidden" id="jump-comment-'+comment.id+'" onclick="$("#alertcomment-comment'+comment.id+'").modal("hide"); event.stopPropagation();">'+
+                                                        '<span class="far fa-comment icon" style="color:black;" onclick="$("#alertcomment-comment'+comment.id+'").modal("show"); event.stopPropagation();">'+
+                                                        '</span>'+
+                                                    '<li>';
+                                                    
+                                                   // コメントした人のid=そのコメントをした人のid()
+                                                    if(data['AuthId'] === comment.user_id){
+                                                            commentData += '<span class="fa fa-trash fa-lg icon" style="color:black;" onclick="$("#alertcomment-delete'+comment.id+'").modal("show"); event.stopPropagation();">'+
+                                                            '</span>';
+                                                        }
+                                                    commentData += '</li>'+
+                                                '</ul>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>';
+                $results.append(commentData);
+                });
         }, function () {
           // 失敗したとき
           alert('通信に失敗しました');
@@ -432,13 +477,61 @@
                 console.log(data);
               // 成功したとき
               // inputの中身を空にする
-              $('#'+form_id+' [name="comment"]').val("");
+              $('#'+form_id+'[name="comment"]').val("");
               // すでにあるresultsの中身を空にする
               $results.empty();
               $('.alert-comment').hide();
             document.getElementById("jump-"+form_id).click();
+
+         console.log(data['comments']);               
+            data['comments'].forEach(function(comment){ 
+                 var mail_hash = CybozuLabs.MD5.calc(comment.email);
               // dataの中身をループをつかってresultsにどんどんいれていく
-              data['comments'].forEach(comment => $results.append('<p>' + comment.comment + '</p>'));
+                commentData = '<input type="hidden" id="jump-modal'+comment.id+'" class="card-body" data-toggle="modal" data-target="#alertcomment-comment-thread'+comment.id+'">'+
+                                    '<div class="form-row">'+
+                                        '<div class="col-sm-8 offset-sm-2">'+
+                                            '<div id="'+comment.id+'" class="card alert-comment alertcomment-body-'+comment.id+'" style="height: 220px; cursor:pointer;" onclick="postData(this.id)">'+
+                                                '<div class="side" style="margin-left:8px; margin-top:8px;">'+
+                                                    '<a href="/users/'+comment.user_id+'" style="text-decoration: none;" onclick="event.stopPropagation();">'+
+                                                        '<div>';
+                                                            if(comment.image == null){
+                                                                commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
+                                                            }else{
+                                                                commentData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
+                                                            }
+                                                            commentData += '<span style="color:black;">'+
+                                                                                comment.name+
+                                                                            '</span>'+
+                                                        '</div>'+
+                                                    '</a>'+
+                                                    '<small>'+
+                                                        '<span style="text-align:right; list-style: none; margin-right:8px;">'+
+                                                            comment.time+
+                                                        '</span>'+
+                                                    '</small>'+
+                                                '</div>'+
+                                                '<p style="margin-top:10px; margin-left:60px;">'+
+                                                    comment.comment+
+                                                '</p>'+
+                                                '<ul class="icons" style="list-style: none;">'+
+                                                    '<li>'+
+                                                        '<input type="hidden" id="jump-comment-'+comment.id+'" onclick="$("#alertcomment-comment'+comment.id+'").modal("hide"); event.stopPropagation();">'+
+                                                        '<span class="far fa-comment icon" style="color:black;" onclick="$("#alertcomment-comment'+comment.id+'").modal("show"); event.stopPropagation();">'+
+                                                        '</span>'+
+                                                    '<li>';
+                                                    
+                                                   // コメントした人のid=そのコメントをした人のid()
+                                                    if(data['AuthId'] === comment.user_id){
+                                                            commentData += '<span class="fa fa-trash fa-lg icon" style="color:black;" onclick="$("#alertcomment-delete'+comment.id+'").modal("show"); event.stopPropagation();">'+
+                                                            '</span>';
+                                                        }
+                                                    commentData += '</li>'+
+                                                '</ul>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>';
+                $results.append(commentData);
+                });
             }, function () {
               // 失敗したとき
               alert('通信に失敗しました');
