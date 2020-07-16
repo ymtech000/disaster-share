@@ -648,7 +648,7 @@ var CybozuLabs = {
 			this.b_ = 0xefcdab89;
 			this.c_ = 0x98badcfe;
 			this.d_ = 0x10325476;
-			console.log(msg);
+			
 			if(msg !== undefined){
 				this.main(msg, msg.length, "update_std", this, charSize);		
 			}

@@ -90,11 +90,11 @@
         </div>
         <input type="submit" class="btn btn-primary" value="コメントする" style="float:right;">
     </form>
-    <div id="results" ></div>
+    <div id="results"style=" margin-top:100px;"></div>
     <div align="left" style="margin-top:70px;">
         @if(count($alertcomments)>0)
             @foreach ($alertcomments as $alertcomment)
-                <input type="hidden" id="jump-modal{{$alertcomment->id}}" class="card-body" data-toggle="modal" data-target="#alertcomment-comment-thread{{$alertcomment->id}}"></a>
+                <input type="hidden" id="jump-modal{{$alertcomment->id}}" class="card-body" data-toggle="modal" data-target="#alertcomment-comment-thread{{$alertcomment->id}}">
                 <div class="form-row">
                     <div class="col-sm-8 offset-sm-2">
                         <div id="{{$alertcomment->id}}" class="card alert-comment alertcomment-body-{{$alertcomment->id}}" style="height: 220px; cursor:pointer;" onclick="postData(this.id)">
@@ -120,7 +120,7 @@
                                     <span class="far fa-comment icon" style="color:black;" onclick="$('#alertcomment-comment{{$alertcomment->id}}').modal('show'); event.stopPropagation();"></span> 
                                  </li>
                                 <li>
-                                    @if(Auth::id() == $alertcomment->user_id)
+                                    @if(Auth::id() === $alertcomment->user_id)
                                         <span class="fa fa-trash fa-lg icon" style="color:black;" onclick="$('#alertcomment-delete{{$alertcomment->id}}').modal('show'); event.stopPropagation();"></span> 
                                     @endif
                                 </li>
@@ -232,6 +232,8 @@
                 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
                 <script>
                     function postData(id){
+                        // console.log(id);
+                     
                         var $upData =$('#upData'+id);
                         var $underDatas =$('#underDatas'+id);
                         $.ajax({
@@ -242,8 +244,9 @@
                             　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                             },
                         }).done(function(json) {
-                            
+                            console.log(id);
                             document.getElementById("jump-modal"+id).click();
+                            // $('#jump-modal'+id).modal("show");
                             
                             var $modalUser_Name = $('#modal-user_name'+id);
                             var $modalUser_Email = $('#modal-user_email'+id);
@@ -260,10 +263,13 @@
                             $upData.empty();
                            
                              if(json["upData"] ==null){
+                                //  console.log(aaa);
                                  var $deleted = $('#deleted'+id);
                                 $deleted.text("返信元のコメントが存在しません。");
                                 $upData.parent().remove();
                             }else{
+                                 console.log('aaa');
+                                 console.log(json["responseData"]);
                                 var up_mail_hash = CybozuLabs.MD5.calc(json["upuserData"].email);
                                 upData = '<div class="side" style="margin-left:8px; margin-top:8px;">' +
                                             '<a href="/users/'+json["upuserData"].id+'" style="text-decoration: none; cursor:pointer">';
@@ -368,6 +374,7 @@
         alert('通信に失敗しました。');
       });
     }
+    
     $('#form').submit(function(event) {
         event.preventDefault();
         let $form = $(this);
@@ -384,6 +391,7 @@
           $button.attr('disabled', true);
         },
         }).then(function (data){
+        
           // 成功したとき
           // inputの中身を空にする
           $('#form [name="comment"]').val("");
@@ -393,51 +401,52 @@
           // dataの中身をループをつかってresultsにどんどんいれていく
           // comment.contentは自身のデータベース構造、カラム名によって変わる
           data['comments'].forEach(function(comment){ 
+              console.log(comment);
+              console.log('aaa');
                  var mail_hash = CybozuLabs.MD5.calc(comment.email);
               // dataの中身をループをつかってresultsにどんどんいれていく
-                commentData = '<input type="hidden" id="jump-modal'+comment.id+'" class="card-body" data-toggle="modal" data-target="#alertcomment-comment-thread'+comment.id+'">'+
-                                    '<div class="form-row">'+
-                                        '<div class="col-sm-8 offset-sm-2">'+
-                                            '<div id="'+comment.id+'" class="card alert-comment alertcomment-body-'+comment.id+'" style="height: 220px; cursor:pointer;" onclick="postData(this.id)">'+
-                                                '<div class="side" style="margin-left:8px; margin-top:8px;">'+
-                                                    '<a href="/users/'+comment.user_id+'" style="text-decoration: none;" onclick="event.stopPropagation();">'+
-                                                        '<div>';
-                                                            if(comment.image == null){
-                                                                commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
-                                                            }else{
-                                                                commentData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
-                                                            }
-                                                            commentData += '<span style="color:black;">'+
-                                                                                comment.name+
-                                                                            '</span>'+
-                                                        '</div>'+
-                                                    '</a>'+
-                                                    '<small>'+
-                                                        '<span style="text-align:right; list-style: none; margin-right:8px;">'+
-                                                            comment.time+
-                                                        '</span>'+
-                                                    '</small>'+
-                                                '</div>'+
-                                                '<p style="margin-top:10px; margin-left:60px;">'+
-                                                    comment.comment+
-                                                '</p>'+
-                                                '<ul class="icons" style="list-style: none;">'+
-                                                    '<li>'+
-                                                        '<input type="hidden" id="jump-comment-'+comment.id+'" onclick="$("#alertcomment-comment'+comment.id+'").modal("hide"); event.stopPropagation();">'+
-                                                        '<span class="far fa-comment icon" style="color:black;" onclick="$("#alertcomment-comment'+comment.id+'").modal("show"); event.stopPropagation();">'+
-                                                        '</span>'+
-                                                    '<li>';
-                                                    
-                                                   // コメントした人のid=そのコメントをした人のid()
-                                                    if(data['AuthId'] === comment.user_id){
-                                                            commentData += '<span class="fa fa-trash fa-lg icon" style="color:black;" onclick="$("#alertcomment-delete'+comment.id+'").modal("show"); event.stopPropagation();">'+
-                                                            '</span>';
+                commentData =   '<input type="hidden" id="jump-modal'+comment.id+'" class="card-body" data-toggle="modal" data-target="#alertcomment-comment-thread'+comment.id+'">'+
+                                '<div class="form-row">'+
+                                    '<div class="col-sm-8 offset-sm-2">'+
+                                        '<div id="'+comment.id+'" class="card alert-comment alertcomment-body-'+comment.id+'" style="height: 220px; cursor:pointer;" onclick="postData(this.id)">'+
+                                            '<div class="side" style="margin-left:8px; margin-top:8px;">'+
+                                                '<a href="/users/'+comment.user_id+'" style="text-decoration: none;" onclick="event.stopPropagation();">'+
+                                                    '<div>';
+                                                        if(comment.image == null){
+                                                            commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
+                                                        }else{
+                                                            commentData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
                                                         }
-                                                    commentData += '</li>'+
-                                                '</ul>'+
+                                                        commentData += '<span style="color:black;">'+
+                                                                            comment.name+
+                                                                        '</span>'+
+                                                    '</div>'+
+                                                '</a>'+
+                                                '<small>'+
+                                                    '<span style="text-align:right; list-style: none; margin-right:8px;">'+
+                                                        comment.time+
+                                                    '</span>'+
+                                                '</small>'+
                                             '</div>'+
+                                            '<p style="margin-top:10px; margin-left:60px;">'+
+                                                comment.comment+
+                                            '</p>'+
+                                            '<ul class="icons" style="list-style: none;">'+
+                                                '<li>'+
+                                                    '<input type="hidden" id="jump-comment-'+comment.id+'" onclick="$("#alertcomment-comment'+comment.id+'").modal("hide"); event.stopPropagation();">'+
+                                                    '<span class="far fa-comment icon" style="color:black;" onclick="$("#alertcomment-comment'+comment.id+'").modal("show"); event.stopPropagation();">'+
+                                                    '</span>'+
+                                                '<li>';
+                                                
+                                                if(data['AuthId'] === comment.user_id){
+                                                    commentData += '<span class="fa fa-trash fa-lg icon" style="color:black;" onclick="$("#alertcomment-delete'+comment.id+'").modal("show"); event.stopPropagation();">'+
+                                                                  '</span>';
+                                                }
+                                                commentData += '</li>'+
+                                            '</ul>'+
                                         '</div>'+
-                                    '</div>';
+                                    '</div>'+
+                                '</div>';
                 $results.append(commentData);
                 });
         }, function () {
@@ -453,7 +462,7 @@
     $('.comment-button').on('click', function(){
         var form_id =  $(this).parent().attr("id");
         console.log(form_id);
-        $('#'+form_id).submit(function(event) {
+        $('#'+form_id).submit(function(event){
             event.preventDefault();
             let $form = $(this);
              // 送信ボタンを取得
@@ -483,7 +492,6 @@
               $('.alert-comment').hide();
             document.getElementById("jump-"+form_id).click();
 
-         console.log(data['comments']);               
             data['comments'].forEach(function(comment){ 
                  var mail_hash = CybozuLabs.MD5.calc(comment.email);
               // dataの中身をループをつかってresultsにどんどんいれていく
@@ -519,12 +527,11 @@
                                                         '<span class="far fa-comment icon" style="color:black;" onclick="$("#alertcomment-comment'+comment.id+'").modal("show"); event.stopPropagation();">'+
                                                         '</span>'+
                                                     '<li>';
-                                                    
-                                                   // コメントした人のid=そのコメントをした人のid()
+                                                
                                                     if(data['AuthId'] === comment.user_id){
                                                             commentData += '<span class="fa fa-trash fa-lg icon" style="color:black;" onclick="$("#alertcomment-delete'+comment.id+'").modal("show"); event.stopPropagation();">'+
                                                             '</span>';
-                                                        }
+                                                    }
                                                     commentData += '</li>'+
                                                 '</ul>'+
                                             '</div>'+

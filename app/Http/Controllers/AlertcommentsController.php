@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Alertcomment;
 use App\Alert;
 use App\User;
 use DB;
 use App\Http\Requests\StoreAlertcomment;
+
 
 class AlertcommentsController extends Controller
 {
@@ -19,9 +21,9 @@ class AlertcommentsController extends Controller
         //クリックしたコメントに親コメントがなければ
         if($alertcomment->parent_id == null){
             //クリックしたコメントに子コメントがあれば
-            if(DB::table('alertcomments')->where('parent_id', $request->id)->exists()){
+            if(Alertcomment::where('parent_id', $request->id)->exists()){
                 //$undercommentにクリックしたコメントの子コメントのデータを入れる。
-                $undercomments = DB::table('alertcomments')->join('users', 'users.id', '=', 'alertcomments.user_id')->where('parent_id' , $request->id)->orderBy('alertcomments.created_at', 'acs')->get();
+                $undercomments = Alertcomment::join('users', 'users.id', '=', 'alertcomments.user_id')->where('parent_id' , $request->id)->orderBy('alertcomments.created_at', 'acs')->get();
                 
                 return response()->json([
                     'responseData' => $alertcomment,
@@ -45,12 +47,12 @@ class AlertcommentsController extends Controller
         //クリックしたコメントに親コメントがあれば    
         }else{
             //クリックしたコメントに子コメントがあれば
-            if(DB::table('alertcomments')->where('parent_id', $request->id)->exists()){
+            if(Alertcomment::where('parent_id', $request->id)->exists()){
                 
                 //$upcommentにクリックしたコメントの親コメントのデータを入れる。
                 $upcomment = Alertcomment::find(optional($alertcomment)->parent_id);
                 $upuser = User::find(optional($upcomment)->user_id);
-                $undercomments = DB::table('alertcomments')->join('users', 'users.id', '=', 'alertcomments.user_id')->where('parent_id' , $request->id)->orderBy('alertcomments.created_at', 'acs')->get();
+                $undercomments = Alertcomment::join('users', 'users.id', '=', 'alertcomments.user_id')->where('parent_id' , $request->id)->orderBy('alertcomments.created_at', 'acs')->get();
                 return response()->json([
                     'responseData' => $alertcomment,
                     'userData' => $user,
@@ -77,14 +79,15 @@ class AlertcommentsController extends Controller
     public function ajaxindex($id)
     {
          // id順に取得
-        $alertcomments = DB::table('alertcomments')->join('users', 'users.id', '=', 'alertcomments.user_id')->orderBy('alertcomments.created_at', 'decs')->get();
-        $AuthId = Alertcomment::where('alert_id' , $id)->orderBy('alertcomments.created_at', 'acs')->first()->user_id;
-        
+        $alertcomments = DB::table('alertcomments')->select('alertcomments.id','alertcomments.alert_id','users.id as users.userId','users.email','alertcomments.parent_id','alertcomments.time','users.name','users.image','alertcomments.comment','alertcomments.user_id')->where('alert_id', $id)->join('users','alertcomments.user_id', '=', 'users.id')->orderBy('alertcomments.created_at', 'desc')->get();
+        $AuthId = Auth::id();
+       
         return response()->json([
             "status" => "success",
             "message" => "成功",
             "comments" => $alertcomments,
             "AuthId" => $AuthId,
+           
         ]);
     }
     
