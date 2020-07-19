@@ -80,6 +80,8 @@ class AlertcommentsController extends Controller
     {
          // id順に取得
         $alertcomments = DB::table('alertcomments')->select('alertcomments.id','alertcomments.alert_id','users.id as users.userId','users.email','alertcomments.parent_id','alertcomments.time','users.name','users.image','alertcomments.comment','alertcomments.user_id')->where('alert_id', $id)->join('users','alertcomments.user_id', '=', 'users.id')->orderBy('alertcomments.created_at', 'desc')->get();
+        
+        // dd($alertcomments);
         $AuthId = Auth::id();
        
         return response()->json([
