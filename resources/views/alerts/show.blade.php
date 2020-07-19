@@ -187,7 +187,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4><class="modal-title" id="myModalLabel">コメント</h4>
+                                <h4 class="modal-title">コメント</h4>
                                 <button id="delete-modal{{$alertcomment->id}}" type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
                             </div>
                             <div class="modal-body">
@@ -216,7 +216,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4><class="modal-title" id="myModalLabel">投稿削除確認画面</h4>
+                                <h4 class="modal-title">投稿削除確認画面</h4>
                                 <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
                             </div>
                             <div class="modal-body">
@@ -232,8 +232,6 @@
                 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
                 <script>
                     function postData(id){
-                        // console.log(id);
-                     
                         var $upData =$('#upData'+id);
                         var $underDatas =$('#underDatas'+id);
                         $.ajax({
@@ -244,9 +242,8 @@
                             　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                             },
                         }).done(function(json) {
-                            console.log(id);
+                           
                             document.getElementById("jump-modal"+id).click();
-                            // $('#jump-modal'+id).modal("show");
                             
                             var $modalUser_Name = $('#modal-user_name'+id);
                             var $modalUser_Email = $('#modal-user_email'+id);
@@ -263,13 +260,10 @@
                             $upData.empty();
                            
                              if(json["upData"] ==null){
-                                //  console.log(aaa);
                                  var $deleted = $('#deleted'+id);
                                 $deleted.text("返信元のコメントが存在しません。");
                                 $upData.parent().remove();
                             }else{
-                                 console.log('aaa');
-                                 console.log(json["responseData"]);
                                 var up_mail_hash = CybozuLabs.MD5.calc(json["upuserData"].email);
                                 upData = '<div class="side" style="margin-left:8px; margin-top:8px;">' +
                                             '<a href="/users/'+json["upuserData"].id+'" style="text-decoration: none; cursor:pointer">';
@@ -340,7 +334,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4><class="modal-title" id="myModalLabel">投稿削除確認画面</h4>
+                    <h4 class="modal-title">投稿削除確認画面</h4>
                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
                 </div>
                 <div class="modal-body">
@@ -401,14 +395,118 @@
           // dataの中身をループをつかってresultsにどんどんいれていく
           // comment.contentは自身のデータベース構造、カラム名によって変わる
           data['comments'].forEach(function(comment){ 
-              console.log(comment);
-              console.log('aaa');
                  var mail_hash = CybozuLabs.MD5.calc(comment.email);
               // dataの中身をループをつかってresultsにどんどんいれていく
-                commentData =   '<input type="hidden" id="jump-modal'+comment.id+'" class="card-body" data-toggle="modal" data-target="#alertcomment-comment-thread'+comment.id+'">'+
+             commentData = 
+                '<div class="modal fade" id="alertcomment-comment'+comment.id+'" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">'+
+                    '<div class="modal-dialog">'+
+                        '<div class="modal-content">'+
+                            '<div class="modal-header">'+
+                                '<h4 class="modal-title">'+
+                                    'コメント'+
+                                '</h4>'+
+                                '<button id="delete-modal'+comment.id+'" type="button" class="btn btn-default" data-dismiss="modal">'+
+                                    '<span class="fa fa-times">'+
+                                    '</span>'+
+                                '</button>'+
+                            '</div>'+
+                            '<div class="modal-body">'+
+                                '<form id="comment-'+comment.id+'" method="POST" action="/ajax">'+
+                                    '<div class="form-group">'+
+                                        '{{ csrf_field() }}'+
+                                        '<input type="hidden" name="alert_id" value="'+comment.alert_id+'">'+
+                                        '<input type="hidden" name="parent_id" value="'+comment.id+'">'+
+                                        '<textarea class="form-control" name="comment" style="font-size:1.3em;">'+
+                                        '</textarea>'+
+                                    '</div>'+
+                                    '<button type="submit" class="comment-button btn btn-primary" style="float:right;">'+
+                                        'コメントする'+
+                                    '</button>'+
+                                '</form>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                
+                '<div class="modal fade" id="alertcomment-delete'+comment.id+'" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">'+
+                    '<div class="modal-dialog">'+
+                        '<div class="modal-content">'+
+                            '<div class="modal-header">'+
+                                '<h4>'+
+                                    '<class="modal-title">'+
+                                        '投稿削除確認画面'
+                                    +'</h4>'+
+                                '<button type="button" class="btn btn-default" data-dismiss="modal">'+
+                                    '<span class="fa fa-times">'+'</span>'+
+                                '</button>'+
+                            '</div>'+
+                            '<div class="modal-body">'+
+                                '<label>'+
+                                    '本当に削除しますか？（この操作は取り消しできません。）'
+                                +'</label>'+
+                            '</div>'+
+                            '<div class="modal-footer">'+
+                                '<button class="btn btn-danger" onclick="postDeletedata('+comment.id+')" data-dismiss="modal">'+
+                                    '削除'
+                                +'</button>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+
+               '<div class="modal fade" id="alertcomment-comment-thread'+comment.id+'" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">'+
+                            '<div class="modal-dialog">'+
+                                '<div class="modal-content">'+
+                                    '<div class="modal-header">'+
+                                        '<h4>'+'</h4>'+
+                                        '<button type="button" class="btn btn-default" data-dismiss="modal">'+
+                                            '<span class="fa fa-times" style="cursor:pointer;">'+'</span>'+
+                                        '</button>'+
+                                    '</div>'+
+                                    '<div class="modal-body">';
+                                        if(data['comments'].length>0){
+                                            commentData += '<p>' +
+                                                                '<div id="deleted'+comment.id+'">'+'</div>'+
+                                                            '</p>'+
+                                            '<div>';
+                                                if(comment.parent_id !== null){
+                                                    commentData += '<div class="card card-body" style="height: 220px;">'+
+                                                            '<div id="upData'+comment.id+'">'+'</div>'+
+                                                    '</div>';
+                                            }
+                                            commentData +=    '<div class="card" style="height: 220px;">'+
+                                                    '<div class="card-body">'+
+                                                        '<div class="side" style="margin-left:8px; margin-top:8px;">' +
+                                                            '<a href="/users/'+comment.userId+'" style="text-decoration: none;">';
+                                                                if(comment.image == null){
+                                                                    commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
+                                                                }else{
+                                                                    commentData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
+                                                                }
+                                                                commentData += '<span id="modal-user_name'+comment.id+'" style="color:black; text-decoration: none;">'+'</span>'+
+                                                            '</a>'+
+                                                            '<small>'+
+                                                                '<span id="modal-time'+comment.id+'" style="text-align:right; list-style: none; margin-right:8px;">'+'</span>'+
+                                                            '</small>'+
+                                                        '</div>'+
+                                                        '<p style="margin-top:10px; margin-left:60px;">'+
+                                                            '<span id="modal-comment'+comment.id+'">'+'</span>'+
+                                                        '</p>'+
+                                                    '</div>'+
+                                                '</div>'+
+                                                '<div class="card card-body" style="height: 220px;">'+
+                                                    '<div id="underDatas'+comment.id+'">'+'</div>'+
+                                                '</div>'+
+                                            '</div>';
+                                        }
+                                    commentData += '</div>'+
+                                '</div>'+
+                            '</div>'+
+                             '</div>'+
+                            '<input type="hidden" id="jump-modal'+comment.id+'" class="card-body" data-toggle="modal" data-target="#alertcomment-comment-thread'+comment.id+'">'+
                                 '<div class="form-row">'+
                                     '<div class="col-sm-8 offset-sm-2">'+
-                                        '<div id="'+comment.id+'" class="card alert-comment alertcomment-body-'+comment.id+'" style="height: 220px; cursor:pointer;" onclick="postData(this.id)">'+
+                                        '<div class="card alert-comment alertcomment-body-'+comment.id+'" style="height: 220px; cursor:pointer;" onclick="postData('+comment.id+')">'+
                                             '<div class="side" style="margin-left:8px; margin-top:8px;">'+
                                                 '<a href="/users/'+comment.user_id+'" style="text-decoration: none;" onclick="event.stopPropagation();">'+
                                                     '<div>';
@@ -433,14 +531,14 @@
                                             '</p>'+
                                             '<ul class="icons" style="list-style: none;">'+
                                                 '<li>'+
-                                                    '<input type="hidden" id="jump-comment-'+comment.id+'" onclick="$("#alertcomment-comment'+comment.id+'").modal("hide"); event.stopPropagation();">'+
-                                                    '<span class="far fa-comment icon" style="color:black;" onclick="$("#alertcomment-comment'+comment.id+'").modal("show"); event.stopPropagation();">'+
+                                                    '<input type="hidden" id="jump-comment-'+comment.id+'" onclick="closeCommentModal('+comment.id+'); event.stopPropagation();">'+
+                                                    '<span class="far fa-comment icon" style="color:black;" onclick="openCommentModal('+comment.id+'); event.stopPropagation();">'+
                                                     '</span>'+
                                                 '<li>';
                                                 
                                                 if(data['AuthId'] === comment.user_id){
-                                                    commentData += '<span class="fa fa-trash fa-lg icon" style="color:black;" onclick="$("#alertcomment-delete'+comment.id+'").modal("show"); event.stopPropagation();">'+
-                                                                  '</span>';
+                                                            commentData += '<span class="fa fa-trash fa-lg icon" style="color:black;" onclick="openDeleteModal('+comment.id+'); event.stopPropagation();">'+
+                                                            '</span>';
                                                 }
                                                 commentData += '</li>'+
                                             '</ul>'+
@@ -461,7 +559,6 @@
     
     $('.comment-button').on('click', function(){
         var form_id =  $(this).parent().attr("id");
-        console.log(form_id);
         $('#'+form_id).submit(function(event){
             event.preventDefault();
             let $form = $(this);
@@ -483,7 +580,6 @@
               $button.attr('disabled', false);
             }
             }).then(function (data){
-                console.log(data);
               // 成功したとき
               // inputの中身を空にする
               $('#'+form_id+'[name="comment"]').val("");
@@ -492,17 +588,96 @@
               $('.alert-comment').hide();
             document.getElementById("jump-"+form_id).click();
 
-            data['comments'].forEach(function(comment){ 
+             data['comments'].forEach(function(comment){ 
                  var mail_hash = CybozuLabs.MD5.calc(comment.email);
               // dataの中身をループをつかってresultsにどんどんいれていく
-                commentData = '<input type="hidden" id="jump-modal'+comment.id+'" class="card-body" data-toggle="modal" data-target="#alertcomment-comment-thread'+comment.id+'">'+
+             commentData = 
+                '<div class="modal fade" id="alertcomment-comment'+comment.id+'" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">'+
+                    '<div class="modal-dialog">'+
+                        '<div class="modal-content">'+
+                            '<div class="modal-header">'+
+                                '<h4 class="modal-title">'+
+                                    'コメント'+
+                                '</h4>'+
+                                '<button id="delete-modal'+comment.id+'" type="button" class="btn btn-default" data-dismiss="modal">'+
+                                    '<span class="fa fa-times">'+
+                                    '</span>'+
+                                '</button>'+
+                            '</div>'+
+                            '<div class="modal-body">'+
+                                '<form id="comment-'+comment.id+'" method="POST" action="/ajax">'+
+                                    '<div class="form-group">'+
+                                        '{{ csrf_field() }}'+
+                                        '<input type="hidden" name="alert_id" value="'+comment.alert_id+'">'+
+                                        '<input type="hidden" name="parent_id" value="'+comment.id+'">'+
+                                        '<textarea class="form-control" name="comment" style="font-size:1.3em;">'+
+                                        '</textarea>'+
+                                    '</div>'+
+                                    '<button type="submit" class="comment-button btn btn-primary" style="float:right;">'+
+                                        'コメントする'+
+                                    '</button>'+
+                                '</form>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="modal fade" id="alertcomment-comment-thread'+comment.id+'" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">'+
+                            '<div class="modal-dialog">'+
+                                '<div class="modal-content">'+
+                                    '<div class="modal-header">'+
+                                        '<h4>'+'</h4>'+
+                                        '<button type="button" class="btn btn-default" data-dismiss="modal">'+
+                                            '<span class="fa fa-times" style="cursor:pointer;">'+'</span>'+
+                                        '</button>'+
+                                    '</div>'+
+                                    '<div class="modal-body">';
+                                        if(data['comments'].length>0){
+                                            commentData += '<p>' +
+                                                                '<div id="deleted'+comment.id+'">'+'</div>'+
+                                                            '</p>'+
+                                            '<div>';
+                                                if(comment.parent_id !== null){
+                                                    commentData += '<div class="card card-body" style="height: 220px;">'+
+                                                            '<div id="upData'+comment.id+'">'+'</div>'+
+                                                    '</div>';
+                                                }
+                                            commentData +=    '<div class="card" style="height: 220px;">'+
+                                                    '<div class="card-body">'+
+                                                        '<div class="side" style="margin-left:8px; margin-top:8px;">' +
+                                                            '<a href="/users/'+comment.userId+'" style="text-decoration: none;">';
+                                                                if(comment.image === null){
+                                                                    commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
+                                                                }else{
+                                                                    commentData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
+                                                                }
+                                                                commentData += '<span id="modal-user_name'+comment.id+'" style="color:black; text-decoration: none;">'+'</span>'+
+                                                            '</a>'+
+                                                            '<small>'+
+                                                                '<span id="modal-time'+comment.id+'" style="text-align:right; list-style: none; margin-right:8px;">'+'</span>'+
+                                                            '</small>'+
+                                                        '</div>'+
+                                                        '<p style="margin-top:10px; margin-left:60px;">'+
+                                                            '<span id="modal-comment'+comment.id+'">'+'</span>'+
+                                                        '</p>'+
+                                                    '</div>'+
+                                                '</div>'+
+                                                '<div class="card card-body" style="height: 220px;">'+
+                                                    '<div id="underDatas'+comment.id+'">'+'</div>'+
+                                                '</div>'+
+                                            '</div>';
+                                        }
+                                    commentData += '</div>'+
+                                '</div>'+
+                            '</div>'+
+                             '</div>'+
+                            '<input type="hidden" id="jump-modal'+comment.id+'" class="card-body" data-toggle="modal" data-target="#alertcomment-comment-thread'+comment.id+'">'+
                                     '<div class="form-row">'+
                                         '<div class="col-sm-8 offset-sm-2">'+
-                                            '<div id="'+comment.id+'" class="card alert-comment alertcomment-body-'+comment.id+'" style="height: 220px; cursor:pointer;" onclick="postData(this.id)">'+
+                                            '<div class="card alert-comment alertcomment-body-'+comment.id+'" style="height: 220px; cursor:pointer;" onclick="postData('+comment.id+')">'+
                                                 '<div class="side" style="margin-left:8px; margin-top:8px;">'+
                                                     '<a href="/users/'+comment.user_id+'" style="text-decoration: none;" onclick="event.stopPropagation();">'+
                                                         '<div>';
-                                                            if(comment.image == null){
+                                                            if(comment.image === null){
                                                                 commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
                                                             }else{
                                                                 commentData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
@@ -523,13 +698,13 @@
                                                 '</p>'+
                                                 '<ul class="icons" style="list-style: none;">'+
                                                     '<li>'+
-                                                        '<input type="hidden" id="jump-comment-'+comment.id+'" onclick="$("#alertcomment-comment'+comment.id+'").modal("hide"); event.stopPropagation();">'+
-                                                        '<span class="far fa-comment icon" style="color:black;" onclick="$("#alertcomment-comment'+comment.id+'").modal("show"); event.stopPropagation();">'+
+                                                        '<input type="hidden" id="jump-comment-'+comment.id+'" onclick="closeCommentModal('+comment.id+'); event.stopPropagation();">'+
+                                                        '<span class="far fa-comment icon" style="color:black;" onclick="openCommentModal('+comment.id+'); event.stopPropagation();">'+
                                                         '</span>'+
                                                     '<li>';
                                                 
                                                     if(data['AuthId'] === comment.user_id){
-                                                            commentData += '<span class="fa fa-trash fa-lg icon" style="color:black;" onclick="$("#alertcomment-delete'+comment.id+'").modal("show"); event.stopPropagation();">'+
+                                                            commentData += '<span class="fa fa-trash fa-lg icon" style="color:black;" onclick="openDeleteModal('+comment.id+'); event.stopPropagation();">'+
                                                             '</span>';
                                                     }
                                                     commentData += '</li>'+
@@ -538,6 +713,7 @@
                                         '</div>'+
                                     '</div>';
                 $results.append(commentData);
+        
                 });
             }, function () {
               // 失敗したとき
@@ -549,10 +725,23 @@
         });
     });
     
+    function openDeleteModal(id){
+        $("#alertcomment-delete"+id).modal("show"); 
+        
+    }
+    function openCommentModal(id){
+        $("#alertcomment-comment"+id).modal("show"); 
+        
+    }
+    function closeCommentModal(id){
+        $("#alertcomment-comment"+id).modal("hide");
+        
+    }
+    
+    
     function toggleFavoriteText(button,id) {
         if (button.innerHTML === "いいね") {
             button.innerHTML = "いいね中";
-            console.log(id);
             $.ajax({
                 headers : {
                 　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
@@ -564,7 +753,6 @@
             })
             // Ajaxリクエストが成功した場合
             .done(function (results){
-                console.log(results);
             }).fail(function(){
                 alert('通信に失敗しました');
             });
