@@ -14,7 +14,7 @@
                 </a>
                 <div class="side">
                     <h4>
-                        <a href="/users/{{$alert->user->id}}" style="color:black; text-decoration: none;">{{$alert->user->name}}</a>
+                        <a href="/users/{{$alert->user->id}}" style="color:black;">{{$alert->user->name}}</a>
                     </h4>
                     @if(Auth::id() == $alert->user_id)
                         <a href="#" class="nav-link" data-toggle="dropdown" style="color:black">
@@ -94,12 +94,12 @@
     <div align="left" style="margin-top:70px;">
         @if(count($alertcomments)>0)
             @foreach ($alertcomments as $alertcomment)
-                <input type="hidden" id="jump-modal{{$alertcomment->id}}" class="card-body" data-toggle="modal" data-target="#alertcomment-comment-thread{{$alertcomment->id}}">
+                <!--<input type="hidden" id="jump-modal{{$alertcomment->id}}" data-toggle="modal" data-target="#alertcomment-comment-thread{{$alertcomment->id}}">-->
                 <div class="form-row">
                     <div class="col-sm-8 offset-sm-2">
                         <div id="{{$alertcomment->id}}" class="card alert-comment alertcomment-body-{{$alertcomment->id}}" style="height: 220px; cursor:pointer;" onclick="postData(this.id)">
                             <div class="side" style="margin-left:8px; margin-top:8px;">
-                                <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;" onclick="event.stopPropagation();">
+                                <a href="/users/{{$alertcomment->user->id}}" onclick="event.stopPropagation();">
                                     <div>
                                         @if($alertcomment->user->image == null)
                                             <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 35) }}" alt="" style="margin-right:15px;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
@@ -116,7 +116,7 @@
                             <p style="margin-top:10px; margin-left:60px;">{{$alertcomment->comment}}</p>
                             <ul class="icons" style="list-style: none;">
                                 <li>
-                                    <input type="hidden" id="jump-comment-{{$alertcomment->id}}" onclick="$('#alertcomment-comment{{$alertcomment->id}}').modal('hide'); event.stopPropagation();">
+                                    <!--<input type="hidden" id="jump-comment-{{$alertcomment->id}}" onclick="$('#alertcomment-comment{{$alertcomment->id}}').modal('hide'); event.stopPropagation();">-->
                                     <span class="far fa-comment icon" style="color:black;" onclick="$('#alertcomment-comment{{$alertcomment->id}}').modal('show'); event.stopPropagation();"></span> 
                                  </li>
                                 <li>
@@ -153,13 +153,13 @@
                                         <div class="card" style="height: 220px;">
                                             <div class="card-body">
                                                 <div class="side" style="margin-left:8px; margin-top:8px;">
-                                                    <a href="/users/{{$alertcomment->user->id}}" style="text-decoration: none;">
+                                                    <a href="/users/{{$alertcomment->user->id}}">
                                                         @if($alertcomment->user->image == null)
                                                             <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 35) }}" alt="" style="margin-right:15px;">
                                                         @else
                                                             <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;">
                                                         @endif
-                                                        <span id="modal-user_name{{$alertcomment->id}}" style="color:black; text-decoration: none;"></span>
+                                                        <span id="modal-user_name{{$alertcomment->id}}" style="color:black;"></span>
                                                     </a>
                                                     <small>
                                                         <span id="modal-time{{$alertcomment->id}}" style="text-align:right; list-style: none; margin-right:8px;"></span>
@@ -192,14 +192,14 @@
                             </div>
                             <div class="modal-body">
                                 @include('commons.error_messages')
-                                <form id="comment-{{$alertcomment->id}}" method="POST" action="/ajax">
+                                <form id="comment{{$alertcomment->id}}" method="POST" action="/ajax">
                                     <div class="form-group">
                                         {{ csrf_field() }}
                                         <input type="hidden" name="alert_id" value="{{$alert->id}}">
                                         <input type="hidden" name="parent_id" value="{{$alertcomment->id}}">
                                         <textarea class="form-control" name="comment" style="font-size:1.3em;"></textarea>
                                     </div>
-                                    <button type="submit" class="comment-button btn btn-primary" style="float:right;">コメントする</button>
+                                    <button type="button" class="comment-button btn btn-primary" style="float:right;">コメントする</button>
                                 </form>
                             </div>
                         </div>
@@ -243,7 +243,9 @@
                             },
                         }).done(function(json) {
                            
-                            document.getElementById("jump-modal"+id).click();
+                            // document.getElementById("jump-modal"+id).click();
+                            
+                            $("#alertcomment-comment-thread"+id).modal("show");
                             
                             var $modalUser_Name = $('#modal-user_name'+id);
                             var $modalUser_Email = $('#modal-user_email'+id);
@@ -266,13 +268,13 @@
                             }else{
                                 var up_mail_hash = CybozuLabs.MD5.calc(json["upuserData"].email);
                                 upData = '<div class="side" style="margin-left:8px; margin-top:8px;">' +
-                                            '<a href="/users/'+json["upuserData"].id+'" style="text-decoration: none; cursor:pointer">';
+                                            '<a href="/users/'+json["upuserData"].id+'" style="cursor:pointer">';
                                                 if (json["upuserData"].image == null) {
                                                     upData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+up_mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;">';
                                                 } else {
                                                     upData += '<img class="float-left user-img" src="'+json["upuserData"].image+'" width="35" height="35" style="margin-right:15px;">';
                                                 }
-                                                upData += '<span style="color:black; text-decoration: none;">' +
+                                                upData += '<span style="color:black;">' +
                                                                 json["upuserData"].name +
                                                             '</span>' +
                                             '</a>'+
@@ -297,13 +299,13 @@
                                 json['underDatas'].forEach(function(comment) { 
                                   var under_mail_hash = CybozuLabs.MD5.calc(comment.email);
                                     underData = '<div class="side" style="margin-left:8px; margin-top:8px;">' +
-                                                    '<a href="/users/'+comment.id+'" style="text-decoration: none; cursor:pointer">';
+                                                    '<a href="/users/'+comment.id+'" style="cursor:pointer">';
                                                         if (comment.image == null) {
                                                             underData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+under_mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;">';
                                                         } else {
                                                             underData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px;">';
                                                         }
-                                                        underData +='<span style="color:black; text-decoration: none;">' +
+                                                        underData +='<span style="color:black;">' +
                                                                         comment.name +
                                                                     '</span>' +
                                                     '</a>'+
@@ -411,7 +413,7 @@
                                 '</button>'+
                             '</div>'+
                             '<div class="modal-body">'+
-                                '<form id="comment-'+comment.id+'" method="POST" action="/ajax">'+
+                                '<form id="comment'+comment.id+'" method="POST" action="/ajax">'+
                                     '<div class="form-group">'+
                                         '{{ csrf_field() }}'+
                                         '<input type="hidden" name="alert_id" value="'+comment.alert_id+'">'+
@@ -419,7 +421,7 @@
                                         '<textarea class="form-control" name="comment" style="font-size:1.3em;">'+
                                         '</textarea>'+
                                     '</div>'+
-                                    '<button type="submit" class="comment-button btn btn-primary" style="float:right;">'+
+                                    '<button type="button" class="comment-button btn btn-primary" style="float:right;">'+
                                         'コメントする'+
                                     '</button>'+
                                 '</form>'+
@@ -477,13 +479,13 @@
                                             commentData +=    '<div class="card" style="height: 220px;">'+
                                                     '<div class="card-body">'+
                                                         '<div class="side" style="margin-left:8px; margin-top:8px;">' +
-                                                            '<a href="/users/'+comment.userId+'" style="text-decoration: none;">';
+                                                            '<a href="/users/'+comment.userId+'">';
                                                                 if(comment.image == null){
                                                                     commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
                                                                 }else{
                                                                     commentData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
                                                                 }
-                                                                commentData += '<span id="modal-user_name'+comment.id+'" style="color:black; text-decoration: none;">'+'</span>'+
+                                                                commentData += '<span id="modal-user_name'+comment.id+'" style="color:black;">'+'</span>'+
                                                             '</a>'+
                                                             '<small>'+
                                                                 '<span id="modal-time'+comment.id+'" style="text-align:right; list-style: none; margin-right:8px;">'+'</span>'+
@@ -503,12 +505,12 @@
                                 '</div>'+
                             '</div>'+
                              '</div>'+
-                            '<input type="hidden" id="jump-modal'+comment.id+'" class="card-body" data-toggle="modal" data-target="#alertcomment-comment-thread'+comment.id+'">'+
+                            // '<input type="hidden" id="jump-modal'+comment.id+'" data-toggle="modal" data-target="#alertcomment-comment-thread'+comment.id+'">'+
                                 '<div class="form-row">'+
                                     '<div class="col-sm-8 offset-sm-2">'+
                                         '<div class="card alert-comment alertcomment-body-'+comment.id+'" style="height: 220px; cursor:pointer;" onclick="postData('+comment.id+')">'+
                                             '<div class="side" style="margin-left:8px; margin-top:8px;">'+
-                                                '<a href="/users/'+comment.user_id+'" style="text-decoration: none;" onclick="event.stopPropagation();">'+
+                                                '<a href="/users/'+comment.user_id+'" onclick="event.stopPropagation();">'+
                                                     '<div>';
                                                         if(comment.image == null){
                                                             commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
@@ -531,13 +533,13 @@
                                             '</p>'+
                                             '<ul class="icons" style="list-style: none;">'+
                                                 '<li>'+
-                                                    '<input type="hidden" id="jump-comment-'+comment.id+'" onclick="closeCommentModal('+comment.id+'); event.stopPropagation();">'+
                                                     '<span class="far fa-comment icon" style="color:black;" onclick="openCommentModal('+comment.id+'); event.stopPropagation();">'+
                                                     '</span>'+
                                                 '<li>';
                                                 
                                                 if(data['AuthId'] === comment.user_id){
-                                                            commentData += '<span class="fa fa-trash fa-lg icon" style="color:black;" onclick="openDeleteModal('+comment.id+'); event.stopPropagation();">'+
+                                                            commentData += '<li>'+
+                                                            '<span class="fa fa-trash fa-lg icon" style="color:black;" onclick="openDeleteModal('+comment.id+'); event.stopPropagation();">'+
                                                             '</span>';
                                                 }
                                                 commentData += '</li>'+
@@ -547,7 +549,7 @@
                                 '</div>';
                 $results.append(commentData);
                 });
-        }, function () {
+        }, function(){
           // 失敗したとき
           alert('通信に失敗しました');
         }).always(function(xhr, textStatus) {
@@ -556,15 +558,13 @@
         });
     });
     
-    
-    $('.comment-button').on('click', function(){
-        var form_id =  $(this).parent().attr("id");
-        $('#'+form_id).submit(function(event){
-            event.preventDefault();
-            let $form = $(this);
+        $(document).on('click', '.comment-button', function(){ 
+            var form_id =  $(this).parent().attr("id");
+            let $form = $(this).parent();
              // 送信ボタンを取得
             let $button = $form.find('button');
             let $results = $('#results');
+            
             $.ajax({
               url: $form.attr('action'),
               type: $form.attr('method'),
@@ -581,13 +581,15 @@
             }
             }).then(function (data){
               // 成功したとき
+              $("#alertcomment-"+form_id).modal("hide");
+              
               // inputの中身を空にする
               $('#'+form_id+'[name="comment"]').val("");
               // すでにあるresultsの中身を空にする
               $results.empty();
               $('.alert-comment').hide();
-            document.getElementById("jump-"+form_id).click();
-
+            
+            console.log(data['comments']);
              data['comments'].forEach(function(comment){ 
                  var mail_hash = CybozuLabs.MD5.calc(comment.email);
               // dataの中身をループをつかってresultsにどんどんいれていく
@@ -605,7 +607,7 @@
                                 '</button>'+
                             '</div>'+
                             '<div class="modal-body">'+
-                                '<form id="comment-'+comment.id+'" method="POST" action="/ajax">'+
+                                '<form id="comment'+comment.id+'" method="POST" action="/ajax">'+
                                     '<div class="form-group">'+
                                         '{{ csrf_field() }}'+
                                         '<input type="hidden" name="alert_id" value="'+comment.alert_id+'">'+
@@ -613,7 +615,7 @@
                                         '<textarea class="form-control" name="comment" style="font-size:1.3em;">'+
                                         '</textarea>'+
                                     '</div>'+
-                                    '<button type="submit" class="comment-button btn btn-primary" style="float:right;">'+
+                                    '<button type="button" class="comment-button btn btn-primary" style="float:right;">'+
                                         'コメントする'+
                                     '</button>'+
                                 '</form>'+
@@ -621,6 +623,7 @@
                         '</div>'+
                     '</div>'+
                 '</div>'+
+                
                 '<div class="modal fade" id="alertcomment-comment-thread'+comment.id+'" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">'+
                             '<div class="modal-dialog">'+
                                 '<div class="modal-content">'+
@@ -644,13 +647,13 @@
                                             commentData +=    '<div class="card" style="height: 220px;">'+
                                                     '<div class="card-body">'+
                                                         '<div class="side" style="margin-left:8px; margin-top:8px;">' +
-                                                            '<a href="/users/'+comment.userId+'" style="text-decoration: none;">';
+                                                            '<a href="/users/'+comment.userId+'">';
                                                                 if(comment.image === null){
                                                                     commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
                                                                 }else{
                                                                     commentData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
                                                                 }
-                                                                commentData += '<span id="modal-user_name'+comment.id+'" style="color:black; text-decoration: none;">'+'</span>'+
+                                                                commentData += '<span id="modal-user_name'+comment.id+'" style="color:black;">'+'</span>'+
                                                             '</a>'+
                                                             '<small>'+
                                                                 '<span id="modal-time'+comment.id+'" style="text-align:right; list-style: none; margin-right:8px;">'+'</span>'+
@@ -670,12 +673,12 @@
                                 '</div>'+
                             '</div>'+
                              '</div>'+
-                            '<input type="hidden" id="jump-modal'+comment.id+'" class="card-body" data-toggle="modal" data-target="#alertcomment-comment-thread'+comment.id+'">'+
+                            // '<input type="hidden" id="jump-modal'+comment.id+'" data-toggle="modal" data-target="#alertcomment-comment-thread'+comment.id+'">'+
                                     '<div class="form-row">'+
                                         '<div class="col-sm-8 offset-sm-2">'+
                                             '<div class="card alert-comment alertcomment-body-'+comment.id+'" style="height: 220px; cursor:pointer;" onclick="postData('+comment.id+')">'+
                                                 '<div class="side" style="margin-left:8px; margin-top:8px;">'+
-                                                    '<a href="/users/'+comment.user_id+'" style="text-decoration: none;" onclick="event.stopPropagation();">'+
+                                                    '<a href="/users/'+comment.user_id+'" onclick="event.stopPropagation();">'+
                                                         '<div>';
                                                             if(comment.image === null){
                                                                 commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
@@ -698,13 +701,13 @@
                                                 '</p>'+
                                                 '<ul class="icons" style="list-style: none;">'+
                                                     '<li>'+
-                                                        '<input type="hidden" id="jump-comment-'+comment.id+'" onclick="closeCommentModal('+comment.id+'); event.stopPropagation();">'+
                                                         '<span class="far fa-comment icon" style="color:black;" onclick="openCommentModal('+comment.id+'); event.stopPropagation();">'+
                                                         '</span>'+
                                                     '<li>';
                                                 
                                                     if(data['AuthId'] === comment.user_id){
-                                                            commentData += '<span class="fa fa-trash fa-lg icon" style="color:black;" onclick="openDeleteModal('+comment.id+'); event.stopPropagation();">'+
+                                                            commentData += '<li>'+
+                                                            '<span class="fa fa-trash fa-lg icon" style="color:black;" onclick="openDeleteModal('+comment.id+'); event.stopPropagation();">'+
                                                             '</span>';
                                                     }
                                                     commentData += '</li>'+
@@ -722,7 +725,6 @@
                 // ボタンを有効化し、再送信を許可
               $button.attr('disabled', false);
             });
-        });
     });
     
     function openDeleteModal(id){
@@ -733,11 +735,6 @@
         $("#alertcomment-comment"+id).modal("show"); 
         
     }
-    function closeCommentModal(id){
-        $("#alertcomment-comment"+id).modal("hide");
-        
-    }
-    
     
     function toggleFavoriteText(button,id) {
         if (button.innerHTML === "いいね") {
