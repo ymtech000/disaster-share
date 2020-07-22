@@ -11,7 +11,7 @@
             </div>
         </div>
     </div>
-    <div id="lists" class="row">
+    <div class="row">
         @if (count($alerts) > 0)
             <table class="table table-striped">
                 @foreach ($alerts as $alert)

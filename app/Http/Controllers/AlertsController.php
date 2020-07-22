@@ -13,6 +13,7 @@ class AlertsController extends Controller
     // getでalerts/にアクセスされた場合の「一覧表示処理」
     public function index()
     {
+        
         $data = [];
         if (\Auth::check()) {
             $user = \Auth::user();
