@@ -94,10 +94,9 @@
     <div align="left" style="margin-top:70px;">
         @if(count($alertcomments)>0)
             @foreach ($alertcomments as $alertcomment)
-                <!--<input type="hidden" id="jump-modal{{$alertcomment->id}}" data-toggle="modal" data-target="#alertcomment-comment-thread{{$alertcomment->id}}">-->
                 <div class="form-row">
                     <div class="col-sm-8 offset-sm-2">
-                        <div id="{{$alertcomment->id}}" class="card alert-comment alertcomment-body-{{$alertcomment->id}}" style="height: 220px; cursor:pointer;" onclick="postData(this.id)">
+                        <div class="card alert-comment alertcomment-body-{{$alertcomment->id}}" style="height: 220px; cursor:pointer; margin-top:10px;" onclick="postData({{$alertcomment->id}})">
                             <div class="side" style="margin-left:8px; margin-top:8px;">
                                 <a href="/users/{{$alertcomment->user->id}}" onclick="event.stopPropagation();">
                                     <div>
@@ -116,12 +115,11 @@
                             <p style="margin-top:10px; margin-left:60px;">{{$alertcomment->comment}}</p>
                             <ul class="icons" style="list-style: none;">
                                 <li>
-                                    <!--<input type="hidden" id="jump-comment-{{$alertcomment->id}}" onclick="$('#alertcomment-comment{{$alertcomment->id}}').modal('hide'); event.stopPropagation();">-->
-                                    <span class="far fa-comment icon" style="color:black;" onclick="$('#alertcomment-comment{{$alertcomment->id}}').modal('show'); event.stopPropagation();"></span> 
+                                    <span class="far fa-comment icon" style="color:black;" onclick="openCommentModal({{$alertcomment->id}}); event.stopPropagation();"></span> 
                                  </li>
                                 <li>
                                     @if(Auth::id() === $alertcomment->user_id)
-                                        <span class="fa fa-trash fa-lg icon" style="color:black;" onclick="$('#alertcomment-delete{{$alertcomment->id}}').modal('show'); event.stopPropagation();"></span> 
+                                        <span class="fa fa-trash fa-lg icon" style="color:black;" onclick="openDeleteModal({{$alertcomment->id}}); event.stopPropagation();"></span> 
                                     @endif
                                 </li>
                             </ul>
@@ -145,12 +143,12 @@
                                     <div> 
                                         @if($alertcomment->parent_id !== null)
                                             @if($alertcomments->where('id', $alertcomment->parent_id)->first() !== null)
-                                                <div class="card card-body" style="height: 220px;">
+                                                <div class="card card-body" style="height: 220px; margin-bottom:10px;">
                                                     <div id="upData{{$alertcomment->id}}"></div>
                                                 </div>
                                             @endif
                                         @endif
-                                        <div class="card" style="height: 220px;">
+                                        <div class="card" style="height: 220px; margin-bottom:10px;">
                                             <div class="card-body">
                                                 <div class="side" style="margin-left:8px; margin-top:8px;">
                                                     <a href="/users/{{$alertcomment->user->id}}">
@@ -223,15 +221,38 @@
                                 <label>本当に削除しますか？（この操作は取り消しできません。）</label>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-danger" id="{{$alertcomment->id}}" onclick="postDeletedata(this.id)" data-dismiss="modal">削除</button>
+                                <button class="btn btn-danger" onclick="postDeletedata({{$alertcomment->id}})" data-dismiss="modal">削除</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <script src="{{ asset('/js/md5.js') }}"></script>
-                <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-                <script>
-                    function postData(id){
+            @endforeach
+        @endif
+    </div>
+    
+    <!--ボタン・リンククリック後に表示される画面の内容 -->
+    <div class="modal fade" id="alert-delete" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">投稿削除確認画面</h4>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
+                </div>
+                <div class="modal-body">
+                    <label>本当に削除しますか？（この操作は取り消しできません。）</label>
+                </div>
+                <div class="modal-footer">
+                    {!! Form::model($alert, ['route' => ['alerts.destroy', $alert->id], 'method' => 'delete']) !!}
+                        <input class="btn btn-danger" type="submit" value="削除">
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="{{ asset('/js/md5.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script>
+ function postData(id){
                         var $upData =$('#upData'+id);
                         var $underDatas =$('#underDatas'+id);
                         $.ajax({
@@ -242,8 +263,6 @@
                             　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                             },
                         }).done(function(json) {
-                           
-                            // document.getElementById("jump-modal"+id).click();
                             
                             $("#alertcomment-comment-thread"+id).modal("show");
                             
@@ -326,33 +345,6 @@
                             alert('通信に失敗しました。');
                         });
                     }
-                </script>   
-            @endforeach
-        @endif
-    </div>
-    
-    <!--ボタン・リンククリック後に表示される画面の内容 -->
-    <div class="modal fade" id="alert-delete" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">投稿削除確認画面</h4>
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
-                </div>
-                <div class="modal-body">
-                    <label>本当に削除しますか？（この操作は取り消しできません。）</label>
-                </div>
-                <div class="modal-footer">
-                    {!! Form::model($alert, ['route' => ['alerts.destroy', $alert->id], 'method' => 'delete']) !!}
-                        <input class="btn btn-danger" type="submit" value="削除">
-                    {!! Form::close() !!}
-                </div>
-            </div>
-        </div>
-    </div>
-<script src="{{ asset('/js/md5.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script>
     function postDeletedata(id){
       $.ajax({
         url: '/alertcomments/'+id,
@@ -373,9 +365,9 @@
     
     $('#form').submit(function(event) {
         event.preventDefault();
-        let $form = $(this);
-        let $button = $form.find('button');
-        let $results = $('#results');
+        var $form = $(this);
+        var $button = $form.find('button');
+        var $results = $('#results');
         $.ajax({
           url: $form.attr('action'),
           type: $form.attr('method'),
@@ -472,11 +464,11 @@
                                                             '</p>'+
                                             '<div>';
                                                 if(comment.parent_id !== null){
-                                                    commentData += '<div class="card card-body" style="height: 220px;">'+
+                                                    commentData += '<div class="card card-body" style="height: 220px; margin-bottom:10px;">'+
                                                             '<div id="upData'+comment.id+'">'+'</div>'+
                                                     '</div>';
                                             }
-                                            commentData +=    '<div class="card" style="height: 220px;">'+
+                                            commentData +=    '<div class="card" style="height: 220px; margin-bottom:10px;">'+
                                                     '<div class="card-body">'+
                                                         '<div class="side" style="margin-left:8px; margin-top:8px;">' +
                                                             '<a href="/users/'+comment.userId+'">';
@@ -505,10 +497,9 @@
                                 '</div>'+
                             '</div>'+
                              '</div>'+
-                            // '<input type="hidden" id="jump-modal'+comment.id+'" data-toggle="modal" data-target="#alertcomment-comment-thread'+comment.id+'">'+
                                 '<div class="form-row">'+
                                     '<div class="col-sm-8 offset-sm-2">'+
-                                        '<div class="card alert-comment alertcomment-body-'+comment.id+'" style="height: 220px; cursor:pointer;" onclick="postData('+comment.id+')">'+
+                                        '<div class="card alert-comment alertcomment-body-'+comment.id+'" style="height: 220px; cursor:pointer; margin-top:10px;" onclick="postData('+comment.id+')">'+
                                             '<div class="side" style="margin-left:8px; margin-top:8px;">'+
                                                 '<a href="/users/'+comment.user_id+'" onclick="event.stopPropagation();">'+
                                                     '<div>';
@@ -539,7 +530,7 @@
                                                 
                                                 if(data['AuthId'] === comment.user_id){
                                                             commentData += '<li>'+
-                                                            '<span class="fa fa-trash fa-lg icon" style="color:black;" onclick="openDeleteModal('+comment.id+'); event.stopPropagation();">'+
+                                                            '<span class="fa fa-trash fa-lg icon" style="color:black; margin-left:5px;" onclick="openDeleteModal('+comment.id+'); event.stopPropagation();">'+
                                                             '</span>';
                                                 }
                                                 commentData += '</li>'+
@@ -560,10 +551,10 @@
     
         $(document).on('click', '.comment-button', function(){ 
             var form_id =  $(this).parent().attr("id");
-            let $form = $(this).parent();
+            var $form = $(this).parent();
              // 送信ボタンを取得
-            let $button = $form.find('button');
-            let $results = $('#results');
+            var $button = $form.find('button');
+            var $results = $('#results');
             
             $.ajax({
               url: $form.attr('action'),
@@ -582,14 +573,15 @@
             }).then(function (data){
               // 成功したとき
               $("#alertcomment-"+form_id).modal("hide");
+              $('.modal-backdrop').remove();
+              $('body').removeClass('modal-open');
               
               // inputの中身を空にする
               $('#'+form_id+'[name="comment"]').val("");
               // すでにあるresultsの中身を空にする
               $results.empty();
               $('.alert-comment').hide();
-            
-            console.log(data['comments']);
+
              data['comments'].forEach(function(comment){ 
                  var mail_hash = CybozuLabs.MD5.calc(comment.email);
               // dataの中身をループをつかってresultsにどんどんいれていく
@@ -624,6 +616,32 @@
                     '</div>'+
                 '</div>'+
                 
+                '<div class="modal fade" id="alertcomment-delete'+comment.id+'" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">'+
+                    '<div class="modal-dialog">'+
+                        '<div class="modal-content">'+
+                            '<div class="modal-header">'+
+                                '<h4>'+
+                                    '<class="modal-title">'+
+                                        '投稿削除確認画面'
+                                    +'</h4>'+
+                                '<button type="button" class="btn btn-default" data-dismiss="modal">'+
+                                    '<span class="fa fa-times">'+'</span>'+
+                                '</button>'+
+                            '</div>'+
+                            '<div class="modal-body">'+
+                                '<label>'+
+                                    '本当に削除しますか？（この操作は取り消しできません。）'
+                                +'</label>'+
+                            '</div>'+
+                            '<div class="modal-footer">'+
+                                '<button class="btn btn-danger" onclick="postDeletedata('+comment.id+')" data-dismiss="modal">'+
+                                    '削除'
+                                +'</button>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                
                 '<div class="modal fade" id="alertcomment-comment-thread'+comment.id+'" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">'+
                             '<div class="modal-dialog">'+
                                 '<div class="modal-content">'+
@@ -640,11 +658,11 @@
                                                             '</p>'+
                                             '<div>';
                                                 if(comment.parent_id !== null){
-                                                    commentData += '<div class="card card-body" style="height: 220px;">'+
+                                                    commentData += '<div class="card card-body" style="height: 220px; margin-bottom:10px;">'+
                                                             '<div id="upData'+comment.id+'">'+'</div>'+
                                                     '</div>';
                                                 }
-                                            commentData +=    '<div class="card" style="height: 220px;">'+
+                                            commentData +=    '<div class="card" style="height: 220px; margin-bottom:10px;">'+
                                                     '<div class="card-body">'+
                                                         '<div class="side" style="margin-left:8px; margin-top:8px;">' +
                                                             '<a href="/users/'+comment.userId+'">';
@@ -673,10 +691,9 @@
                                 '</div>'+
                             '</div>'+
                              '</div>'+
-                            // '<input type="hidden" id="jump-modal'+comment.id+'" data-toggle="modal" data-target="#alertcomment-comment-thread'+comment.id+'">'+
                                     '<div class="form-row">'+
                                         '<div class="col-sm-8 offset-sm-2">'+
-                                            '<div class="card alert-comment alertcomment-body-'+comment.id+'" style="height: 220px; cursor:pointer;" onclick="postData('+comment.id+')">'+
+                                            '<div class="card alert-comment alertcomment-body-'+comment.id+'" style="height: 220px; cursor:pointer; margin-top:10px;" onclick="postData('+comment.id+')">'+
                                                 '<div class="side" style="margin-left:8px; margin-top:8px;">'+
                                                     '<a href="/users/'+comment.user_id+'" onclick="event.stopPropagation();">'+
                                                         '<div>';
@@ -707,7 +724,7 @@
                                                 
                                                     if(data['AuthId'] === comment.user_id){
                                                             commentData += '<li>'+
-                                                            '<span class="fa fa-trash fa-lg icon" style="color:black;" onclick="openDeleteModal('+comment.id+'); event.stopPropagation();">'+
+                                                            '<span class="fa fa-trash fa-lg icon" style="color:black; margin-left:5px;" onclick="openDeleteModal('+comment.id+'); event.stopPropagation();">'+
                                                             '</span>';
                                                     }
                                                     commentData += '</li>'+
@@ -716,7 +733,6 @@
                                         '</div>'+
                                     '</div>';
                 $results.append(commentData);
-        
                 });
             }, function () {
               // 失敗したとき
@@ -808,6 +824,15 @@
           right: 0;
           bottom: 0;
           margin-right:8px;
+    }
+    
+    .fa-comment:hover {
+      border-bottom-color: transparent;
+      transform: translateY(0.1875em);
+    }
+    .fa-trash:hover {
+      border-bottom-color: transparent;
+      transform: translateY(0.1875em);
     }
     
 </style>
