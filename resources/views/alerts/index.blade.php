@@ -11,7 +11,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div id="lists" class="row">
         @if (count($alerts) > 0)
             <table class="table table-striped">
                 @foreach ($alerts as $alert)
@@ -39,6 +39,7 @@
                                         </ul>
                                     @endif
                                 </div>
+                                <!--<h1>{{$alert->favorites()->count()}}</h1>-->
                                 <small>
                                     <ul class="edit" style="text-align:right">
                                         <li>{{$alert->time}}</li>
@@ -55,11 +56,7 @@
                                     <p>地区：{{$alert->area}}</p>
                                     <ul class="icons">
                                         <li><span class="far fa-comment"></span>{{count($alert->alertcomments)}}</li>
-                                        @if (Auth::user()->is_favorite($alert->id))
-                                            <button onclick="toggleFavoriteText(this, {{ $alert->id }})" style="cursor:pointer;">いいね中</button>
-                                        @else
-                                            <button onclick="toggleFavoriteText(this, {{ $alert->id }})" style="cursor:pointer;">いいね</button>
-                                        @endif
+                                        @include('favorites.favorite_button', ['alert'=>$alert])
                                     </ul>
                                 </div>
                             </div>
@@ -93,10 +90,13 @@
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script>
-    function toggleFavoriteText(button,id) {
-        if (button.innerHTML === "いいね") {
-            button.innerHTML = "いいね中";
-            console.log(id);
+    function postFavorite(id) {
+        let favorite_class = $('#favorite'+id).parent().attr('class');
+        console.log(favorite_class);
+        if (favorite_class === 'favorite') {
+            let favorite_parent = document.getElementById("favorite_parent"+id);
+            favorite_parent.className = 'unfavorite';
+            
             $.ajax({
                 headers : {
                 　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
@@ -113,7 +113,8 @@
                 alert('通信に失敗しました');
             });
         } else {
-            button.innerHTML = "いいね";
+            let favorite_parent = document.getElementById("favorite_parent"+id);
+            favorite_parent.className = 'favorite';
             
             $.ajax({
                 headers : {
@@ -156,5 +157,18 @@
     .edit li{
         display:inline-block;
     }
-    
+    .fa-thumbs-up{
+        cursor:pointer;
+    }
+    .favorite:hover {
+      border-bottom-color: transparent;
+      transform: translateY(0.1875em);
+    }
+    .unfavorite:hover{
+        border-bottom-color: transparent;
+      transform: translateY(0.1875em);
+    }
+    .unfavorite{
+        color:red;
+    }
 </style>
