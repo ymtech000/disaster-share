@@ -35,10 +35,7 @@
         <div class="col-md-3"></div>
     </div>
     @include('users.navtabs', ['user' => $user])
-    @include('alerts.alerts', ['alerts' => $alerts])
-<style>
-    .name{
-        margin-top:30px;
-    }
-</style>
+    @if (count($alerts) > 0)
+        @include('alerts.alerts', ['alerts' => $alerts])
+    @endif
 @endsection
