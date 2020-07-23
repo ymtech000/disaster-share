@@ -43,12 +43,13 @@
             </div>
             <div class="side" style="height: 70px; width:450px;">
                 <h2>{{$alert->title}}</h2>
-                <div>
-                    @if (Auth::user()->is_favorite($alert->id))
-                        <button onclick="toggleFavoriteText(this, {{ $alert->id }})" style="cursor:pointer;">いいね中</button>
-                    @else
-                        <button onclick="toggleFavoriteText(this, {{ $alert->id }})" style="cursor:pointer;">いいね</button>
-                    @endif
+                <div class="fav-btn" style="font-size:x-large;">
+                    <!--<ul class="icons" style="list-style: none; font-size:x-large;">-->
+                        <span>
+                            @include('favorites.favorite_button', ['alert'=>$alert])
+                        </span>
+                        <span id="favorite_count{{$alert->id}}">{{count($alert->favorited)}}</span>
+                    <!--</ul>-->
                 </div>
             </div>
         </div>
@@ -252,6 +253,8 @@
 <script src="{{ asset('/js/md5.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script>
+
+
  function postData(id){
                         var $upData =$('#upData'+id);
                         var $underDatas =$('#underDatas'+id);
@@ -752,9 +755,16 @@
         
     }
     
-    function toggleFavoriteText(button,id) {
-        if (button.innerHTML === "いいね") {
-            button.innerHTML = "いいね中";
+    function postFavorite(id, favorite_count) {
+        let favorite_class = $('#favorite'+id).parent().attr('class');
+        console.log(favorite_class);
+        let favorite_button = document.getElementById("favorite_count"+id);
+        let favorite_parent = document.getElementById("favorite_parent"+id);
+        
+        if (favorite_class === 'favorite') {
+            favorite_parent.className = 'unfavorite';
+            favorite_button.innerHTML = Number(favorite_button.innerHTML)+1;
+            
             $.ajax({
                 headers : {
                 　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
@@ -766,11 +776,13 @@
             })
             // Ajaxリクエストが成功した場合
             .done(function (results){
+                console.log(results);
             }).fail(function(){
                 alert('通信に失敗しました');
             });
         } else {
-            button.innerHTML = "いいね";
+            favorite_parent.className = 'favorite';
+            favorite_button.innerHTML = Number(favorite_button.innerHTML)-1;
             
             $.ajax({
                 headers : {
@@ -810,6 +822,9 @@
     }
     
     .icons li{
+        display: inline-block;
+    }
+    .fav-btn span{
         display: inline-block;
     }
     

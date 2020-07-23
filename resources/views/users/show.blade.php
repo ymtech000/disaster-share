@@ -33,42 +33,44 @@
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script>
-    function toggleFollowText(button,id) {
-        var element_follow = document.getElementById("follow_"+id);
-        if (button.innerHTML === "フォローする") {
-            button.innerHTML = "フォロー中";
-            element_follow.className = "btn btn-danger";
+    function postFavorite(id) {
+        let favorite_class = $('#favorite'+id).parent().attr('class');
+        console.log(favorite_class);
+        if (favorite_class === 'favorite') {
+            let favorite_parent = document.getElementById("favorite_parent"+id);
+            favorite_parent.className = 'unfavorite';
             
             $.ajax({
                 headers : {
                 　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '/users/'+ id +'/follow',
+                url: '/alerts/'+ id +'/favorite',
                 dataType:'json',
                 type: 'POST', 
                 data: {'id': id, _token: '{{ csrf_token() }}',},
             })
             // Ajaxリクエストが成功した場合
             .done(function (results){
-               
+                console.log(results);
             }).fail(function(){
                 alert('通信に失敗しました');
             });
         } else {
-            button.innerHTML = "フォローする";
-            element_follow.className = "btn btn-primary";
+            let favorite_parent = document.getElementById("favorite_parent"+id);
+            favorite_parent.className = 'favorite';
+            
             $.ajax({
                 headers : {
                 　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '/users/'+ id +'/unfollow',
+                url: '/alerts/'+ id +'/unfavorite',
                 dataType:'json',
                 type: 'POST', 
                 data: {'id': id,'_method': 'DELETE'},  _token: '{{ csrf_token() }}',
             })
             // Ajaxリクエストが成功した場合
             .done(function (results){
-               
+                console.log(results);
             }).fail(function(){
                 alert('通信に失敗しました');
             });

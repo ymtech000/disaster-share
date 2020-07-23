@@ -24,7 +24,7 @@
                                     <a href="/users/{{$alert->user->id}}"><img src="{{$alert->user->image}}" class="img-fluid float-left user-img" style="border-radius:50%; margin-bottom:10px; margin-right:10px;" width="35" height="35"></a>
                                 @endif
                                 <div class="side">
-                                    <a href="/users/{{$alert->user->id}}" style="color:black; text-decoration: none;">{{$alert->user->name}}</a>
+                                    <a href="/users/{{$alert->user->id}}" style="color:black;">{{$alert->user->name}}</a>
                                     @if(Auth::id() == $alert->user_id)
                                         <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fas fa-chevron-down"></span></a>
                                         <ul class="dropdown-menu" style="list-style: none;">
@@ -39,7 +39,6 @@
                                         </ul>
                                     @endif
                                 </div>
-                                <!--<h1>{{$alert->favorites()->count()}}</h1>-->
                                 <small>
                                     <ul class="edit" style="text-align:right">
                                         <li>{{$alert->time}}</li>
@@ -55,8 +54,12 @@
                                 <div class="side">
                                     <p>地区：{{$alert->area}}</p>
                                     <ul class="icons">
-                                        <li><span class="far fa-comment"></span>{{count($alert->alertcomments)}}</li>
-                                        @include('favorites.favorite_button', ['alert'=>$alert])
+                                        <li><span class="far fa-comment"></span></li>
+                                        <li>{{count($alert->alertcomments)}}</li>
+                                        <li>
+                                            @include('favorites.favorite_button', ['alert'=>$alert])
+                                        </li>
+                                        <li id="favorite_count{{$alert->id}}">{{count($alert->favorited)}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -90,12 +93,15 @@
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script>
-    function postFavorite(id) {
+    function postFavorite(id, favorite_count) {
         let favorite_class = $('#favorite'+id).parent().attr('class');
         console.log(favorite_class);
+        let favorite_button = document.getElementById("favorite_count"+id);
+        let favorite_parent = document.getElementById("favorite_parent"+id);
+        
         if (favorite_class === 'favorite') {
-            let favorite_parent = document.getElementById("favorite_parent"+id);
             favorite_parent.className = 'unfavorite';
+            favorite_button.innerHTML = Number(favorite_button.innerHTML)+1;
             
             $.ajax({
                 headers : {
@@ -113,8 +119,8 @@
                 alert('通信に失敗しました');
             });
         } else {
-            let favorite_parent = document.getElementById("favorite_parent"+id);
             favorite_parent.className = 'favorite';
+            favorite_button.innerHTML = Number(favorite_button.innerHTML)-1;
             
             $.ajax({
                 headers : {
@@ -156,19 +162,5 @@
     
     .edit li{
         display:inline-block;
-    }
-    .fa-thumbs-up{
-        cursor:pointer;
-    }
-    .favorite:hover {
-      border-bottom-color: transparent;
-      transform: translateY(0.1875em);
-    }
-    .unfavorite:hover{
-        border-bottom-color: transparent;
-      transform: translateY(0.1875em);
-    }
-    .unfavorite{
-        color:red;
     }
 </style>

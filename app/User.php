@@ -89,7 +89,12 @@ class User extends Authenticatable
     
     public function favorites()
     {
-        return $this->belongsToMany(Alert::class, 'favorites', 'user_id', 'alerts_id')->withTimestamps();
+        return $this->belongsToMany(Alert::class, 'favorites', 'user_id', 'alert_id')->withTimestamps();
+    }
+    
+    public function favorited()
+    {
+        return $this->belongsToMany(User::class, 'favorites', 'alert_id', 'user_id')->withTimestamps();
     }
     
     public function favorite($alertId)
@@ -124,6 +129,6 @@ class User extends Authenticatable
     
     public function is_favorite($alertId)
     {
-        return $this->favorites()->where('alerts_id', $alertId)->exists();
+        return $this->favorites()->where('alert_id', $alertId)->exists();
     }
 }
