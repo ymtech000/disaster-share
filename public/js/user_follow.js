@@ -1,6 +1,6 @@
 function toggleFollowText(button,id) {
         var element_follow = document.getElementById("follow_"+id);
-        console.log(element_follow.className);
+        let csrf = document.getElementById('csrf-token').content;
         if (button.innerHTML === "フォローする") {
             button.innerHTML = "フォロー中";
             element_follow.className = "btn btn-danger";
@@ -12,7 +12,7 @@ function toggleFollowText(button,id) {
                 url: '/users/'+ id +'/follow',
                 dataType:'json',
                 type: 'POST', 
-                data: {'id': id, _token: '{{ csrf_token() }}',},
+                data: {'id': id, _token: csrf,},
             })
             // Ajaxリクエストが成功した場合
             .done(function (results){
@@ -30,7 +30,7 @@ function toggleFollowText(button,id) {
                 url: '/users/'+ id +'/unfollow',
                 dataType:'json',
                 type: 'POST', 
-                data: {'id': id,'_method': 'DELETE'},  _token: '{{ csrf_token() }}',
+                data: {'id': id,'_method': 'DELETE'},  _token: csrf,
             })
             // Ajaxリクエストが成功した場合
             .done(function (results){
