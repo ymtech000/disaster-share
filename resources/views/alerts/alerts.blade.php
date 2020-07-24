@@ -11,7 +11,7 @@
                                 <a href="/users/{{$alert->user->id}}"><img src="{{$alert->user->image}}" class="img-fluid float-left user-img" style="border-radius:50%; margin-bottom:10px; margin-right:10px;" width="35" height="35"></a>
                             @endif
                             <div class="side">
-                                <a href="/users/{{$alert->user->id}}" style="color:black; text-decoration: none;">{{$alert->user->name}}</a>
+                                <a href="/users/{{$alert->user->id}}" style="color:black;">{{$alert->user->name}}</a>
                                 @if(Auth::id() == $alert->user_id)
                                     <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fas fa-chevron-down"></span></a>
                                     <ul class="dropdown-menu" style="list-style: none;">
@@ -39,17 +39,23 @@
                         <div class="card-footer" style="border-top:solid; border-width:thin;">
                             <div class="title">{{$alert->title}}</div>
                             <div class="side">
-                                <div style="font-size:x-small;">
+                                <div style="font-size:small;">
                                     <span class="area">地区：{{$alert->area}}</span>
+                                    <!--<ul class="icons">-->
+                                    <!--    <li><span class="far fa-comment"></span></li>-->
+                                    <!--    <li>{{count($alert->alertcomments)}}</li>-->
+                                    <!--    <li>-->
+                                    <!--        @include('favorites.favorite_button', ['alert'=>$alert])-->
+                                    <!--    </li>-->
+                                    <!--    <li id="favorite_count{{$alert->id}}">{{count($alert->favorited)}}</li>-->
+                                    <!--</ul>-->
                                     <ul class="icons">
-                                        <li><span class="far fa-comment"></span>{{count($alert->alertcomments)}}</li>
+                                        <li><span class="far fa-comment"></span></li>
+                                        <li>{{count($alert->alertcomments)}}</li>
                                         <li>
-                                            @if (Auth::user()->is_favorite($alert->id))
-                                                <button onclick="toggleFavoriteText(this, {{ $alert->id }})" style="cursor:pointer;">いいね中</button>
-                                            @else
-                                                <button onclick="toggleFavoriteText(this, {{ $alert->id }})" style="cursor:pointer;">いいね</button>
-                                            @endif
+                                            @include('favorites.favorite_button', ['alert'=>$alert])
                                         </li>
+                                        <li id="favorite_count{{$alert->id}}">{{count($alert->favorited)}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -81,48 +87,6 @@
         {{ $alerts->links('pagination::bootstrap-4') }}
     @endif
 </div>
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script>
-    function toggleFavoriteText(button,id) {
-        if (button.innerHTML === "いいね") {
-            button.innerHTML = "いいね中";
-            console.log(id);
-            $.ajax({
-                headers : {
-                　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-                },
-                url: '/alerts/'+ id +'/favorite',
-                dataType:'json',
-                type: 'POST', 
-                data: {'id': id, _token: '{{ csrf_token() }}',},
-            })
-            // Ajaxリクエストが成功した場合
-            .done(function (results){
-                console.log(results);
-            }).fail(function(){
-                alert('通信に失敗しました');
-            });
-        } else {
-            button.innerHTML = "いいね";
-            
-            $.ajax({
-                headers : {
-                　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-                },
-                url: '/alerts/'+ id +'/unfavorite',
-                dataType:'json',
-                type: 'POST', 
-                data: {'id': id,'_method': 'DELETE'},  _token: '{{ csrf_token() }}',
-            })
-            // Ajaxリクエストが成功した場合
-            .done(function (results){
-                console.log(results);
-            }).fail(function(){
-                alert('通信に失敗しました');
-            });
-        }
-    }
-</script>    
 <style>
     .user-img{
         border-radius:50%;
