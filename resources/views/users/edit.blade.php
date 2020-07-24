@@ -65,65 +65,41 @@
         
     {!! Form::close() !!}
 
-<!-- ボタン・リンククリック後に表示さ���る画面の内容 -->
-        <div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4><class="modal-title" id="myModalLabel">アカウント削除確認画面</h4>
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
-                    </div>
-                    <div class="modal-body">
-                        <label>本当に退会しますか？（この操作は取り消しできません。）</label>
-                    </div>
-                    <div class="modal-footer">
-                        {!! Form::open(['route' => ['users.destroy', Auth::id()], 'method' => 'delete']) !!}
-                        {!! Form::submit('退会', ['class' => 'btn btn-danger']) !!}
-                        {!! Form::close() !!}
-                    </div>
+    <!-- ボタン・リンククリック後に表示さ���る画面の内容 -->
+    <div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4><class="modal-title" id="myModalLabel">アカウント削除確認画面</h4>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
+                </div>
+                <div class="modal-body">
+                    <label>本当に退会しますか？（この操作は取り消しできません。）</label>
+                </div>
+                <div class="modal-footer">
+                    {!! Form::open(['route' => ['users.destroy', Auth::id()], 'method' => 'delete']) !!}
+                    {!! Form::submit('退会', ['class' => 'btn btn-danger']) !!}
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
-@endsection
-
-<style>
-    .fa-file-image{
-           font-size:70px;
-        }
-    #error{
-        color:red;
-    }
-    .side{
-      display: flex;
-      justify-content:space-between;
-    }
-    .inline-block{
-        display: inline-block;
-        vertical-align: top;
-    }
-</style>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script>
-    $(function() {
-        $('input[type=file]');
-        // アップロードするファイルを選択
-        $('input[type=file]').change(function() {
-            var file = $(this).prop('files')[0];
-            
-            // 画像以外は処理を停止
-            if (! file.type.match('image.*')) {
-                // クリア
-                $(this).val('');
-                $('#fileimg').html('');
-                return;
+    </div>
+    <style>
+        .fa-file-image{
+               font-size:70px;
             }
-            // 画像表示
-            var reader = new FileReader();
-            reader.onload = function() {
-                var img_src = $('<img width="100" height="100">').attr('src', reader.result);
-                $('#fileimg').html(img_src);
-            };
-            reader.readAsDataURL(file);
-        });
-    });
-</script>
+        #error{
+            color:red;
+        }
+        .side{
+          display: flex;
+          justify-content:space-between;
+        }
+        .inline-block{
+            display: inline-block;
+            vertical-align: top;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="{{ asset('/js/file_upload.js') }}"></script>
+@endsection

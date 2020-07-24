@@ -8,7 +8,7 @@
             </div>
         @endif
     </div>
-   <div class='form-row'>
+    <div class='form-row'>
         <div class="col-md-3"></div>
         <div class="col-md-3">
             @include('users.card', ['user'=>$user])
@@ -22,61 +22,13 @@
         <div class="col-md-3"></div>
     </div>
   
-        <div class="navtabs">
-            @include('users.navtabs', ['user' => $user])
-        </div>
-        @include('users.users', ['users' => $users])
+    <div class="navtabs">
+        @include('users.navtabs', ['user' => $user])
     </div>
-    
-    
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script>
-    function toggleFollowText(button,id) {
-        var element_follow = document.getElementById("follow_"+id);
-        if (button.innerHTML === "フォローする") {
-            button.innerHTML = "フォロー中";
-            element_follow.className = "btn btn-danger";
-            
-            $.ajax({
-                headers : {
-                　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-                },
-                url: '/users/'+ id +'/follow',
-                dataType:'json',
-                type: 'POST', 
-                data: {'id': id, _token: '{{ csrf_token() }}',},
-            })
-            // Ajaxリクエストが成功した場合
-            .done(function (results){
-               
-            }).fail(function(){
-                alert('通信に失敗しました');
-            });
-        } else {
-            button.innerHTML = "フォローする";
-            element_follow.className = "btn btn-primary";
-            $.ajax({
-                headers : {
-                　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-                },
-                url: '/users/'+ id +'/unfollow',
-                dataType:'json',
-                type: 'POST', 
-                data: {'id': id,'_method': 'DELETE'},  _token: '{{ csrf_token() }}',
-            })
-            // Ajaxリクエストが成功した場合
-            .done(function (results){
-               
-            }).fail(function(){
-                alert('通信に失敗しました');
-            });
+    @include('users.users', ['users' => $users])
+    <style>
+        .name{
+            margin-top:30px;
         }
-    }
-</script>    
-<style>
-    .name{
-        margin-top:30px;
-    }
-</style>
-    
+    </style>
 @endsection

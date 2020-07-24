@@ -42,71 +42,48 @@
         </div>
         <p class="submit">{!! Form::button('投稿', ['class' => 'btn btn-primary', 'onclick' => 'submit();']) !!}</p>
     {!! Form::close() !!}
-@include('commons.alertcreate_script')
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script>
-    $(function() {
-        $('input[type=file]');
-        // アップロードするファイルを選択
-        $('input[type=file]').change(function() {
-            var file = $(this).prop('files')[0];
-            
-            // 画像以外は処理を停止
-            if (! file.type.match('image.*')) {
-                // クリア
-                $(this).val('');
-                $('#fileimg').html('');
-                return;
-            }
-            // 画像表示
-            var reader = new FileReader();
-            reader.onload = function() {
-                var img_src = $('<img width="135" height="135">').attr('src', reader.result);
-                $('#fileimg').html(img_src);
-            };
-            reader.readAsDataURL(file);
-        });
-    });
-</script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoKnN8__KItXFDswfAfs_y3VHwfbX3_ms"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoKnN8__KItXFDswfAfs_y3VHwfbX3_ms"></script>
+    <script src="{{ asset('/js/file_upload.js') }}"></script>
+    <script src="{{ asset('/js/alert_create.js') }}"></script>
+    <style>
+        #error {
+            color: red;
+        }
+        
+        .file_upload {
+            border: 3px solid;
+            display: inline-block;
+            padding: 2px 1em;
+            position: relative;
+           
+        }
+        .form-group {
+            display:inline-block;
+        }
+        .submit{
+            position: absolute;
+            top:660;
+        }
+        #map { 
+            height: 250px
+        }
+        .search{
+            padding-top:20px;
+        }
+        .inline-block{
+            display: inline-block;
+            vertical-align: top;
+        }
+        .box {
+            padding-top:10px;
+            position: relative;
+        }
+        .search{
+            position: absolute;
+            top:0;
+            left: 200;
+            z-index: 1;
+        }
+    </style>
 @endsection
-<style>
-    #error {
-        color: red;
-    }
-    
-    .file_upload {
-        border: 3px solid;
-        display: inline-block;
-        padding: 2px 1em;
-        position: relative;
-       
-    }
-    .form-group {
-        display:inline-block;
-    }
-    .submit{
-        position: absolute;
-        top:660;
-    }
-    #map { 
-        height: 250px
-    }
-    .search{
-        padding-top:20px;
-    }
-    .inline-block{
-        display: inline-block;
-        vertical-align: top;
-    }
-    .box {
-        padding-top:10px;
-        position: relative;
-    }
-    .search{
-        position: absolute;
-        top:0;
-        left: 200;
-        z-index: 1;
-    }
-</style>

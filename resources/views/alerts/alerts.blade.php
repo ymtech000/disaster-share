@@ -132,7 +132,6 @@
           bottom: 0;
           margin-right:8px;
     }
-   
 </style>
             
             

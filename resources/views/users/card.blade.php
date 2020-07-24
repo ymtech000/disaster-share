@@ -6,7 +6,6 @@
     @endif
     @include('user_follow.follow_button', ['user'=>$user])
 </div>
-    
 <style>
     .user-img{
         border-radius:10px;

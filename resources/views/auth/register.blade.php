@@ -4,7 +4,7 @@
     <div class="text-center">
         <h1>会員登録</h1>
     </div>
-@include('commons.error_messages')
+    @include('commons.error_messages')
     <div class="row">
         <div class="col-sm-6 offset-sm-3">
             {!! Form::open(['route' => 'signup.post', 'files' => true]) !!}
@@ -47,38 +47,16 @@
             {!! Form::close() !!}
         </div>
     </div>
-@endsection
-<style>
-    .fa-file-image{
-           font-size:70px;
-        }
-    .inline-block{
-        display: inline-block;
-        vertical-align: top;
-    }
-</style>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script>
-    $(function() {
-        $('input[type=file]');
-        // アップロードするファイルを選択
-        $('input[type=file]').change(function() {
-            var file = $(this).prop('files')[0];
-            
-            // 画像以外は処理を停止
-            if (! file.type.match('image.*')) {
-                // クリア
-                $(this).val('');
-                $('#fileimg').html('');
-                return;
+    <style>
+        .fa-file-image{
+               font-size:70px;
             }
-            // 画像表示
-            var reader = new FileReader();
-            reader.onload = function() {
-                var img_src = $('<img width="100" height="100">').attr('src', reader.result);
-                $('#fileimg').html(img_src);
-            };
-            reader.readAsDataURL(file);
-        });
-    });
-</script>
+        .inline-block{
+            display: inline-block;
+            vertical-align: top;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="{{ asset('/js/file_upload.js') }}"></script>
+@endsection
+
