@@ -24,6 +24,8 @@
       // comment.contentは自身のデータベース構造、カラム名によって変わる
       data['comments'].forEach(function(comment){ 
         var mail_hash = CybozuLabs.MD5.calc(comment.email);
+        let csrf = document.getElementById('csrf-token').content;
+        console.log(csrf);
           // dataの中身をループをつかってresultsにどんどんいれていく
         commentData = 
             '<div class="modal fade" id="alertcomment-comment'+comment.id+'" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">'+
@@ -41,7 +43,7 @@
                         '<div class="modal-body">'+
                             '<form id="comment'+comment.id+'" method="POST" action="/ajax">'+
                                 '<div class="form-group">'+
-                                    '{{ csrf_field() }}'+
+                                    '<input type="hidden" name="_token" value="'+csrf+'">'+
                                     '<input type="hidden" name="alert_id" value="'+comment.alert_id+'">'+
                                     '<input type="hidden" name="parent_id" value="'+comment.id+'">'+
                                     '<textarea class="form-control" name="comment" style="font-size:1.3em;">'+
@@ -218,6 +220,8 @@
             
             data['comments'].forEach(function(comment){ 
             var mail_hash = CybozuLabs.MD5.calc(comment.email);
+            let csrf = document.getElementById('csrf-token').content;
+            console.log(csrf);
             // dataの中身をループをつかってresultsにどんどんいれていく
             commentData = 
             '<div class="modal fade" id="alertcomment-comment'+comment.id+'" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">'+
@@ -235,7 +239,7 @@
                         '<div class="modal-body">'+
                             '<form id="comment'+comment.id+'" method="POST" action="/ajax">'+
                                 '<div class="form-group">'+
-                                    '{{ csrf_field() }}'+
+                                    '<input type="hidden" name="_token" value="'+csrf+'">'+
                                     '<input type="hidden" name="alert_id" value="'+comment.alert_id+'">'+
                                     '<input type="hidden" name="parent_id" value="'+comment.id+'">'+
                                     '<textarea class="form-control" name="comment" style="font-size:1.3em;">'+

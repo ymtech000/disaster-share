@@ -3,7 +3,7 @@ function postFavorite(id, favorite_count) {
     console.log(favorite_class);
     let favorite_button = document.getElementById("favorite_count"+id);
     let favorite_parent = document.getElementById("favorite_parent"+id);
-    let csrf = document.getElementsByName('csrf-token').content;
+    let csrf = document.getElementById('csrf-token').content;
     
     if (favorite_class === 'favorite') {
         favorite_parent.className = 'unfavorite';

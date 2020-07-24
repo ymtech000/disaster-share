@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta id="csrf-token" content="{{ csrf_token() }}">
     </head>
 
     <body>
