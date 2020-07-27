@@ -47,7 +47,7 @@
                                 </small>
                             </div>
                             <div class="card-body">
-                                <a href="alerts/{{$alert->id}}"><img src="{{$alert->image}}" width="300" height="300"></a>
+                                <a href="alerts/{{$alert->id}}"><img src="{{$alert->image}}" style="width:100%;"></a>
                             </div>
                             <div class="card-footer" style="border-top:solid; border-width:thin;">
                                 <div class="title" style="font-size:1.3em;">{{$alert->title}}</div>
@@ -97,8 +97,9 @@
             margin-bottom:10px;
         }
         .submit-select{
-            width:170px;
+            width:100%;
             text-align: right;
+            margin-bottom:10px;
         }
         
         .side{

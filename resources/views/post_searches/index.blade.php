@@ -3,17 +3,19 @@
 @section('content')
     <h1 class="text-center font-weight-bold font-family-Tahoma">DISASTER  INFORMATION</h1>
     <div class='form-row'>
-        <div class="col-sm-4 offset-sm-8">
-            {!! Form::open(['route' => 'post_searches.index', 'method' => 'get']) !!}
-                <ul>
-                    <li><input type="text" name="search" placeholder="検索はこちらから" style="width:300px; height:38px;"></li>
-                    <li>
-                        <button type="submit" name="button" style="width:38px; height:38px; cursor:pointer; border-radius:2px;">
-                            <span style="color:black;" class="fas fa-search"></span>
-                        </button>
-                    </li>
-                </ul>
-            {!! Form::close() !!}
+        <div class="col-sm-3 offset-sm-9">
+            <div class="submit-form">
+                {!! Form::open(['route' => 'post_searches.index', 'method' => 'get']) !!}
+                    <ul>
+                        <li><input type="text" name="search" placeholder="検索はこちらから" style="height:38px;"></li>
+                        <li>
+                            <button type="submit" name="button" style="cursor:pointer; border-radius:2px; height:38px;">
+                                <span style="color:black;" class="fas fa-search"></span>
+                            </button>
+                        </li>
+                    </ul>
+                {!! Form::close() !!}
+            </div>
         </div>
     </div>
     <!--検索条件に一致した投稿を表示-->
@@ -114,15 +116,15 @@
         border-radius:50%;
         margin-bottom:10px;
     }
-    .submit-select{
-        width:170px;
-        text-align: right;
-    }
-    
     .side{
       display: flex;
       justify-content:space-between;
     }
+    .submit-form{
+        width:100%;
+        text-align: right;
+        margin-bottom:10px;
+        }
     
     .icons li{
         display:inline-block;

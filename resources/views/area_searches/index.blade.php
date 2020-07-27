@@ -111,8 +111,9 @@
             margin-bottom:10px;
         }
         .submit-select{
-            width:170px;
+            width:100%;
             text-align: right;
+            margin-bottom:10px;
         }
         
         .side{

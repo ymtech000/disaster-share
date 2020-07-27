@@ -34,21 +34,13 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <a href="/alerts/{{$alert->id}}"><img src="{{$alert->image}}" width="220" height="220"></a>
+                            <a href="/alerts/{{$alert->id}}"><img src="{{$alert->image}}" style="width:100%;"></a>
                         </div>
                         <div class="card-footer" style="border-top:solid; border-width:thin;">
                             <div class="title">{{$alert->title}}</div>
                             <div class="side">
                                 <div style="font-size:small;">
                                     <span class="area">地区：{{$alert->area}}</span>
-                                    <!--<ul class="icons">-->
-                                    <!--    <li><span class="far fa-comment"></span></li>-->
-                                    <!--    <li>{{count($alert->alertcomments)}}</li>-->
-                                    <!--    <li>-->
-                                    <!--        @include('favorites.favorite_button', ['alert'=>$alert])-->
-                                    <!--    </li>-->
-                                    <!--    <li id="favorite_count{{$alert->id}}">{{count($alert->favorited)}}</li>-->
-                                    <!--</ul>-->
                                     <ul class="icons">
                                         <li><span class="far fa-comment"></span></li>
                                         <li>{{count($alert->alertcomments)}}</li>

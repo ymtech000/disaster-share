@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="text-center font-weight-bold font-family-Tahoma">DETAILS</h1>
+    <div class="text-center font-weight-bold font-family-Tahoma" style="font-size:3.5rem;">DETAILS</div>
     <div class='form-row'>
-        <div class="col-md-6">
-            <div class="card-header" style="height: 70px; width:450px; border:solid; border-width:thin;">
+        <div class="col-md-6" style="text-align:center;">
+            <div class="card-header" style="height:70px; width:80%; border:solid; border-width:thin; display:inline-block;">
                 <a href="/users/{{$alert->user->id}}">
                     @if($alert->user->image == null)
                         <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alert->user->email, 45) }}" alt="" style="border-radius:50%; margin-right:10px; margin-bottom:10px;">
@@ -13,10 +13,8 @@
                     @endif
                 </a>
                 <div class="side">
-                    <h4>
-                        <a href="/users/{{$alert->user->id}}" style="color:black;">{{$alert->user->name}}</a>
-                    </h4>
-                    @if(Auth::id() == $alert->user_id)
+                    <a href="/users/{{$alert->user->id}}" style="color:black; font-size:1.2em;">{{$alert->user->name}}</a>
+                    @if(Auth::id() === $alert->user_id)
                         <a href="#" class="nav-link" data-toggle="dropdown" style="color:black">
                             <span class="fas fa-chevron-down"></span>
                         </a>
@@ -39,31 +37,40 @@
                 <p style="text-align:right;">{{$alert->edit}}</p>
             </div>
             <div class="img">
-                <img class="place-img" src="{{$alert->image}}" width="450" height="450" style="border-bottom:solid; border-right:solid; border-left:solid; border-width:thin;">
+                <img class="place-img" src="{{$alert->image}}" width="80%" height="auto" style="border-bottom:solid; border-right:solid; border-left:solid; border-width:thin;">
             </div>
-            <div class="side" style="height: 70px; width:450px;">
-                <h2>{{$alert->title}}</h2>
-                <div class="fav-btn" style="font-size:x-large;">
-                    <span>
-                        @include('favorites.favorite_button', ['alert'=>$alert])
-                    </span>
-                    <span id="favorite_count{{$alert->id}}">{{count($alert->favorited)}}</span>
+            <div style="width:80%; display:inline-block;">
+                <div class="side">
+                    <div style="font-size:3rem;">{{$alert->title}}</div>
+                    <div class="fav-btn" style="font-size:x-large;">
+                        <span>
+                            @include('favorites.favorite_button', ['alert'=>$alert])
+                        </span>
+                        <span id="favorite_count{{$alert->id}}">{{count($alert->favorited)}}</span>
+                    </div>
                 </div>
             </div>
         </div>
-        @include('commons.map')
+        <div class="col-md-6">
+            <span style="vertical-align:middle;">
+            <div class="row map">
+                <div id="map" style="border:solid; border-width:thin; width:80%; height:350px;"></div>
+            </div>
+            </span>
+            @include('commons.map')
+        </div>
     </div>
     <p style="font-weight:bold;">メッセージ</p>
     <div class='form-row'>
         <div class='col-md-7'>
-            <table class="table table-bordered">
-                <tr>
-                    <td height="147" style="font-size:1.3em;">{{ $alert->content }}</td>
+            <table class="table-bordered" style="display:flex; margin-top:5px;">
+                <tr class="message_parent">
+                    <td id="message" style="font-size:1.2em; text-align: justify; min-height:147px;">{{ $alert->content }}</td>
                 </tr>
             </table>
         </div>
         <div class='col-md-5'>
-            <table class="table table-bordered">
+            <table class="table table-bordered" height="147" style="margin-top:5px;">
                 <tr>
                     <th>エリア</th>
                     <td>{{ $alert->area }}</td>
@@ -79,30 +86,33 @@
             </table>
         </div>
     </div>
-    
-    <form id="form" method="POST" action="/ajax">
-        <div class="form-group">
-            {{ csrf_field() }}
-            <input type="hidden" name="alert_id" value="{{$alert->id}}">
-            <label for="comment" class="comment">コメント</label>
-            <textarea class="form-control" id="comment" name="comment" style="font-size:1.3em;"></textarea>
+    <div class='form-row'>
+        <div class="col-sm-8 offset-sm-2">
+            <form id="form" method="POST" action="/ajax">
+                <div class="form-group">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="alert_id" value="{{$alert->id}}">
+                    <label for="comment" class="comment"style="font-weight:bold;">コメント</label>
+                    <textarea class="form-control" id="comment" name="comment" style="font-size:1.3em;"></textarea>
+                </div>
+                <input type="submit" class="btn btn-primary" value="コメントする" style="float:right;">
+            </form>
         </div>
-        <input type="submit" class="btn btn-primary" value="コメントする" style="float:right;">
-    </form>
-    <div id="results"style=" margin-top:100px;"></div>
-    <div align="left" style="margin-top:70px;">
+    </div>
+    <div id="results"></div>
+    <div align="left">
         @if(count($alertcomments)>0)
             @foreach ($alertcomments as $alertcomment)
                 <div class="form-row">
                     <div class="col-sm-8 offset-sm-2">
-                        <div class="card alert-comment alertcomment-body-{{$alertcomment->id}}" style="height: 220px; cursor:pointer; margin-top:10px;" onclick="postData({{$alertcomment->id}})">
+                        <div class="card alert-comment alertcomment-body-{{$alertcomment->id}}" style="min-height: 150px; cursor:pointer; margin-top:10px;" onclick="postData({{$alertcomment->id}})">
                             <div class="side" style="margin-left:8px; margin-top:8px;">
                                 <a href="/users/{{$alertcomment->user->id}}" onclick="event.stopPropagation();">
                                     <div>
                                         @if($alertcomment->user->image == null)
-                                            <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 35) }}" alt="" style="margin-right:15px;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
+                                            <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 35) }}" alt="" style="margin-right:15px; border-radius:50%;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
                                         @else
-                                            <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
+                                            <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px; border-radius:50%;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
                                         @endif
                                         <span style="color:black;">{{$alertcomment->user->name}}</span>
                                     </div>
@@ -123,104 +133,104 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
-                </div>
-                
-                <!--ボタン・リンククリック後に表示される画面の内容 -->
-                <div class="modal fade" id="alertcomment-comment-thread{{$alertcomment->id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4></h4>
-                                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times" style="cursor:pointer;"></span></button>
+                        
+                        <!--ボタン・リンククリック後に表示される画面の内容 -->
+                        <div class="modal fade" id="alertcomment-comment-thread{{$alertcomment->id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4></h4>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times" style="cursor:pointer;"></span></button>
+                                    </div>
+                                     <div class="modal-body">
+                                        @if(count($alertcomments)>0)
+                                            <p>
+                                                <div id="deleted{{$alertcomment->id}}"></div>
+                                            </p>
+                                            <div> 
+                                                @if($alertcomment->parent_id !== null)
+                                                    @if($alertcomments->where('id', $alertcomment->parent_id)->first() !== null)
+                                                        <div class="card card-body" style="min-height: 150px; margin-bottom:10px;">
+                                                            <div id="upData{{$alertcomment->id}}"></div>
+                                                        </div>
+                                                    @endif
+                                                @endif
+                                                <div class="card" style="min-height:150px; margin-bottom:10px;">
+                                                    <div class="card-body">
+                                                        <div class="side" style="margin-left:8px; margin-top:8px;">
+                                                            <a href="/users/{{$alertcomment->user->id}}">
+                                                                @if($alertcomment->user->image == null)
+                                                                    <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 35) }}" alt="" style="margin-right:15px;">
+                                                                @else
+                                                                    <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;">
+                                                                @endif
+                                                                <span id="modal-user_name{{$alertcomment->id}}" style="color:black;"></span>
+                                                            </a>
+                                                            <small>
+                                                                <span id="modal-time{{$alertcomment->id}}" style="text-align:right; list-style: none; margin-right:8px;"></span>
+                                                            </small>
+                                                        </div>
+                                                        <p style="margin-top:10px; margin-left:60px;">
+                                                            <span id="modal-comment{{$alertcomment->id}}"></span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                @if($alertcomments->where('parent_id', $alertcomment->id)->first() !== null)
+                                                    <div class="card card-body" style="min-height: 150px;">
+                                                        <div id="underDatas{{$alertcomment->id}}"></div>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
-                             <div class="modal-body">
-                                @if(count($alertcomments)>0)
-                                    <p>
-                                        <div id="deleted{{$alertcomment->id}}"></div>
-                                    </p>
-                                    <div> 
-                                        @if($alertcomment->parent_id !== null)
-                                            @if($alertcomments->where('id', $alertcomment->parent_id)->first() !== null)
-                                                <div class="card card-body" style="height: 220px; margin-bottom:10px;">
-                                                    <div id="upData{{$alertcomment->id}}"></div>
-                                                </div>
-                                            @endif
-                                        @endif
-                                        <div class="card" style="height: 220px; margin-bottom:10px;">
-                                            <div class="card-body">
-                                                <div class="side" style="margin-left:8px; margin-top:8px;">
-                                                    <a href="/users/{{$alertcomment->user->id}}">
-                                                        @if($alertcomment->user->image == null)
-                                                            <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 35) }}" alt="" style="margin-right:15px;">
-                                                        @else
-                                                            <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;">
-                                                        @endif
-                                                        <span id="modal-user_name{{$alertcomment->id}}" style="color:black;"></span>
-                                                    </a>
-                                                    <small>
-                                                        <span id="modal-time{{$alertcomment->id}}" style="text-align:right; list-style: none; margin-right:8px;"></span>
-                                                    </small>
-                                                </div>
-                                                <p style="margin-top:10px; margin-left:60px;">
-                                                    <span id="modal-comment{{$alertcomment->id}}"></span>
-                                                </p>
+                        </div>
+                        
+                        <!--ボタン・リンククリック後に表示される画面の内容 -->
+                        <div class="modal fade" id="alertcomment-comment{{$alertcomment->id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">コメント</h4>
+                                        <button id="delete-modal{{$alertcomment->id}}" type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        @include('commons.error_messages')
+                                        <form id="comment{{$alertcomment->id}}" method="POST" action="/ajax">
+                                            <div class="form-group">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="alert_id" value="{{$alert->id}}">
+                                                <input type="hidden" name="parent_id" value="{{$alertcomment->id}}">
+                                                <textarea class="form-control" name="comment" style="font-size:1.3em;"></textarea>
                                             </div>
-                                        </div>
-                                        @if($alertcomments->where('parent_id', $alertcomment->id)->first() !== null)
-                                            <div class="card card-body" style="height: 220px;">
-                                                <div id="underDatas{{$alertcomment->id}}"></div>
-                                            </div>
-                                        @endif
+                                            <button type="button" class="comment-button btn btn-primary" style="float:right;">コメントする</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                @if ($errors->has('comment'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('comment') }}
                                     </div>
                                 @endif
                             </div>
                         </div>
-                    </div>
-                </div>
-                
-                <!--ボタン・リンククリック後に表示される画面の内容 -->
-                <div class="modal fade" id="alertcomment-comment{{$alertcomment->id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">コメント</h4>
-                                <button id="delete-modal{{$alertcomment->id}}" type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
-                            </div>
-                            <div class="modal-body">
-                                @include('commons.error_messages')
-                                <form id="comment{{$alertcomment->id}}" method="POST" action="/ajax">
-                                    <div class="form-group">
-                                        {{ csrf_field() }}
-                                        <input type="hidden" name="alert_id" value="{{$alert->id}}">
-                                        <input type="hidden" name="parent_id" value="{{$alertcomment->id}}">
-                                        <textarea class="form-control" name="comment" style="font-size:1.3em;"></textarea>
+                        
+                        <!--ボタン・リンククリック後に表示される画面の内容 -->
+                        <div class="modal fade" id="alertcomment-delete{{$alertcomment->id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">投稿削除確認画面</h4>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
                                     </div>
-                                    <button type="button" class="comment-button btn btn-primary" style="float:right;">コメントする</button>
-                                </form>
-                            </div>
-                        </div>
-                        @if ($errors->has('comment'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('comment') }}
-                            </div>
-                        @endif
-                    </div>
-                </div>
-                
-                <!--ボタン・リンククリック後に表示される画面の内容 -->
-                <div class="modal fade" id="alertcomment-delete{{$alertcomment->id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">投稿削除確認画面</h4>
-                                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
-                            </div>
-                            <div class="modal-body">
-                                <label>本当に削除しますか？（この操作は取り消しできません。）</label>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-danger" onclick="postDeletedata({{$alertcomment->id}})" data-dismiss="modal">削除</button>
+                                    <div class="modal-body">
+                                        <label>本当に削除しますか？（この操作は取り消しできません。）</label>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-danger" onclick="postDeletedata({{$alertcomment->id}})" data-dismiss="modal">削除</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -248,6 +258,7 @@
             </div>
         </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="{{ asset('/js/md5.js') }}"></script>
     <script src="{{ asset('/js/comments_display.js') }}"></script>
@@ -257,8 +268,97 @@
     <script src="{{asset('/js/favorite.js')}}"></script>
     <script src="{{asset('/js/comment_ajax.js')}}"></script>
     <style>
-        .comment{
-            font-size:35px;
+        #message{
+            word-wrap:break-word;
+        }
+        @media screen and (max-width:319px) {
+        /*横幅が320px以下の場合に適用するスタイル */
+            #message{
+               width:250px;
+            }
+        }
+        @media screen and (min-width:320px) and ( max-width:359px) {
+        /*横幅が320px以下の場合に適用するスタイル */
+            #message{
+               width:290px;
+            }
+        }
+       @media screen and (min-width:360px) and ( max-width:374px) {
+        /*横幅が320px以下の場合に適用するスタイル */
+            #message{
+               width:330px;
+            }
+        }
+        @media screen and (min-width:375px) and ( max-width:410px) {
+        /*横幅が320px以下の場合に適用するスタイル */
+            #message{
+               width:345px;
+            }
+        }
+       
+        
+        @media screen and (min-width:411px) and ( max-width:413px) {
+            #message{
+               width:381px;
+            }
+        }
+        
+        @media screen and (min-width:414px) and ( max-width:449px) {
+            #message{
+               width:383px;
+            }
+        }
+        
+        @media screen and (min-width:450px) and ( max-width:567px) {
+            #message{
+               width:420px;
+            }
+        }
+        
+        @media screen and (min-width:568px) and ( max-width:599px) {
+            #message{
+               width:538px;
+            }
+        }
+        
+        @media screen and (min-width:600px) and ( max-width:639px) {
+            #message{
+               width:510px;
+            }
+        }
+        
+        @media screen and (min-width:640px) and ( max-width:767px) {
+            #message{
+               width:510px;
+            }
+        }
+        
+        @media screen and (min-width:768px) and ( max-width:822px) {
+            #message{
+               width:398.33px;
+            }
+        }
+        
+        
+        @media screen and (min-width:823px) and ( max-width:1023px) {
+        /*横幅が320px以下の場合に適用するスタイル */
+            #message{
+               width:398.33px;
+            }
+        }
+        
+        @media screen and (min-width:1024px) and ( max-width:1030px) {
+        /*横幅が320px以下の場合に適用するスタイル */
+            #message{
+               width:538.33px;
+            }
+        }
+        
+        @media screen and (min-width:1031px) {
+        /*横幅が320px以下の場合に適用するスタイル */
+            #message{
+               width:642px;
+            }
         }
         .side{
           display: flex;
@@ -302,6 +402,22 @@
           border-bottom-color: transparent;
           transform: translateY(0.1875em);
         }
-        
-    </style>
+        #map {
+          margin: auto;
+        }
+        .map {
+          display: flex;
+        }
+       .message_parent{
+           display:flex;
+       }
+        html {
+             /*ルートのフォントサイズを10pxに設定しておく */
+        	font-size: 62.5%;
+        }
+        body {
+        	 /*ルートのフォントサイズを1.6em（16pxと同等のサイズ）に設定 */
+        	font-size: 1.6em;
+        }
+        </style>
 @endsection

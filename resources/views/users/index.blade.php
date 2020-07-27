@@ -5,23 +5,22 @@
     @if (count($users) > 0)
         <div class='form-row'>
             @foreach ($users as $user)
-                <div class="col-md-3">
+                <div class="col-sm-3" style="text-align:center;">
                     <div class="card-body">
                         <p style="font-weight:bold;"><a href="/users/{{$user->id}}" style="color:black;">{{$user->name}}</a></p>
                         @if($user->image == null)
-                            <a href="/users/{{$user->id}}"><img class=" user-img avatar-type-circle" src="{{ Gravatar::src($user->email, 50) }}" alt="" width="200" height="200"></a>
+                            <a href="/users/{{$user->id}}"><img class=" user-img avatar-type-circle" src="{{ Gravatar::src($user->email) }}" alt=""  style="width:90%;"></a>
                         @else
-                            <a href="/users/{{$user->id}}"><img class="user-img" src="{{$user->image}}" width="200" height="200"></a>
+                            <a href="/users/{{$user->id}}"><img class="user-img" src="{{$user->image}}" style="width:90%;"></a>
                         @endif
                         @include('user_follow.follow_button', ['user'=>$user])
                     </div>
                 </div>
             @endforeach
         </div>
-    {{ $users->links('pagination::bootstrap-4') }}
+        {{ $users->links('pagination::bootstrap-4') }}
     @endif
-@endsection
-<style>
+    <style>
     h1{
         text-align:center;
     }
@@ -30,3 +29,4 @@
         margin-bottom:3px;
     }
 </style>
+@endsection

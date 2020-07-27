@@ -1,6 +1,4 @@
-<div class="row align-items-center">
-    <div id="map" style="border:solid; border-width:thin; width: 550px; height: 350px;"></div>
-</div>
+
 
 <script>
 var map;

@@ -100,13 +100,13 @@
                                                         '</p>'+
                                         '<div>';
                                             if(comment.parent_id !== null){
-                                                commentData += '<div class="card card-body" style="height: 220px; margin-bottom:10px;">'+
+                                                commentData += '<div class="card card-body" style="min-height:150px; margin-bottom:10px;">'+
                                                         '<div id="upData'+comment.id+'">'+'</div>'+
                                                 '</div>';
                                         }
-                                        commentData +=    '<div class="card" style="height: 220px; margin-bottom:10px;">'+
+                                        commentData +=    '<div class="card" style="min-height:150px; margin-bottom:10px;">'+
                                                 '<div class="card-body">'+
-                                                    '<div class="side" style="margin-left:8px; margin-top:8px;">' +
+                                                    '<div class="side" style="margin-left:8px;">' +
                                                         '<a href="/users/'+comment.userId+'">';
                                                             if(comment.image == null){
                                                                 commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
@@ -124,7 +124,7 @@
                                                     '</p>'+
                                                 '</div>'+
                                             '</div>'+
-                                            '<div class="card card-body" style="height: 220px;">'+
+                                            '<div class="card card-body" style="min-height:150px;">'+
                                                 '<div id="underDatas'+comment.id+'">'+'</div>'+
                                             '</div>'+
                                         '</div>';
@@ -135,8 +135,8 @@
                          '</div>'+
                             '<div class="form-row">'+
                                 '<div class="col-sm-8 offset-sm-2">'+
-                                    '<div class="card alert-comment alertcomment-body-'+comment.id+'" style="height: 220px; cursor:pointer; margin-top:10px;" onclick="postData('+comment.id+')">'+
-                                        '<div class="side" style="margin-left:8px; margin-top:8px;">'+
+                                    '<div class="card alert-comment alertcomment-body-'+comment.id+'" style="min-height:150px; cursor:pointer; margin-top:10px;" onclick="postData('+comment.id+')">'+
+                                        '<div class="side" style="margin-left:8px;">'+
                                             '<a href="/users/'+comment.user_id+'" onclick="event.stopPropagation();">'+
                                                 '<div>';
                                                     if(comment.image == null){
@@ -296,13 +296,13 @@
                                                         '</p>'+
                                         '<div>';
                                             if(comment.parent_id !== null){
-                                                commentData += '<div class="card card-body" style="height: 220px; margin-bottom:10px;">'+
+                                                commentData += '<div class="card card-body" style="min-height:150px; margin-bottom:10px;">'+
                                                         '<div id="upData'+comment.id+'">'+'</div>'+
                                                 '</div>';
                                             }
-                                        commentData +=    '<div class="card" style="height: 220px; margin-bottom:10px;">'+
+                                        commentData +=    '<div class="card" style="min-height:150px; margin-bottom:10px;">'+
                                                 '<div class="card-body">'+
-                                                    '<div class="side" style="margin-left:8px; margin-top:8px;">' +
+                                                    '<div class="side" style="margin-left:8px;">' +
                                                         '<a href="/users/'+comment.userId+'">';
                                                             if(comment.image === null){
                                                                 commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;" onclick="location:href="/users/'+comment.id+'";">';
@@ -320,7 +320,7 @@
                                                     '</p>'+
                                                 '</div>'+
                                             '</div>'+
-                                            '<div class="card card-body" style="height: 220px;">'+
+                                            '<div class="card card-body" style="min-height:150px;">'+
                                                 '<div id="underDatas'+comment.id+'">'+'</div>'+
                                             '</div>'+
                                         '</div>';
@@ -331,8 +331,8 @@
                          '</div>'+
                                 '<div class="form-row">'+
                                     '<div class="col-sm-8 offset-sm-2">'+
-                                        '<div class="card alert-comment alertcomment-body-'+comment.id+'" style="height: 220px; cursor:pointer; margin-top:10px;" onclick="postData('+comment.id+')">'+
-                                            '<div class="side" style="margin-left:8px; margin-top:8px;">'+
+                                        '<div class="card alert-comment alertcomment-body-'+comment.id+'" style="min-height:150px; cursor:pointer; margin-top:10px;" onclick="postData('+comment.id+')">'+
+                                            '<div class="side" style="margin-left:8px;">'+
                                                 '<a href="/users/'+comment.user_id+'" onclick="event.stopPropagation();">'+
                                                     '<div>';
                                                         if(comment.image === null){
