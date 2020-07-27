@@ -3,7 +3,7 @@
 @section('content')
     <div class="text-center font-weight-bold font-family-Tahoma" style="font-size:3.5rem;">DETAILS</div>
     <div class='form-row'>
-        <div class="col-md-6" style="text-align:center;">
+        <div class="col-md-6" style="text-align:center; margin-top:30px;">
             <div class="card-header" style="height:70px; width:80%; border:solid; border-width:thin; display:inline-block;">
                 <a href="/users/{{$alert->user->id}}">
                     @if($alert->user->image == null)
@@ -53,14 +53,14 @@
         </div>
         <div class="col-md-6">
             <span style="vertical-align:middle;">
-            <div class="row map">
-                <div id="map" style="border:solid; border-width:thin; width:80%; height:350px;"></div>
-            </div>
+                <div class="row map">
+                    <div id="map" style="border:solid; border-width:thin; width:80%; height:350px;"></div>
+                </div>
             </span>
             @include('commons.map')
         </div>
     </div>
-    <p style="font-weight:bold;">メッセージ</p>
+    <p style="font-weight:bold; margin-top:8px;">メッセージ</p>
     <div class='form-row'>
         <div class='col-md-7'>
             <table class="table-bordered" style="display:flex; margin-top:5px;">
@@ -121,17 +121,19 @@
                                     <span style="text-align:right; list-style: none; margin-right:8px;">{{$alertcomment->time}}</span>
                                 </small>
                             </div>
-                            <p style="margin-top:10px; margin-left:60px;">{{$alertcomment->comment}}</p>
-                            <ul class="icons" style="list-style: none;">
-                                <li>
-                                    <span class="far fa-comment icon" style="color:black;" onclick="openCommentModal({{$alertcomment->id}}); event.stopPropagation();"></span> 
-                                 </li>
-                                <li>
-                                    @if(Auth::id() === $alertcomment->user_id)
-                                        <span class="fa fa-trash fa-lg icon" style="color:black;" onclick="openDeleteModal({{$alertcomment->id}}); event.stopPropagation();"></span> 
-                                    @endif
-                                </li>
-                            </ul>
+                            <p style="margin-top:10px; margin-left:60px; margin-right:10px;">{{$alertcomment->comment}}</p>
+                            <p style="margin-top:8px;">
+                                <ul class="icons" style="list-style: none;">
+                                    <li>
+                                        <span class="far fa-comment icon" style="color:black;" onclick="openCommentModal({{$alertcomment->id}}); event.stopPropagation();"></span> 
+                                     </li>
+                                    <li>
+                                        @if(Auth::id() === $alertcomment->user_id)
+                                            <span class="fa fa-trash fa-lg icon" style="color:black;" onclick="openDeleteModal({{$alertcomment->id}}); event.stopPropagation();"></span> 
+                                        @endif
+                                    </li>
+                                </ul>
+                            </p>
                         </div>
                         
                         <!--ボタン・リンククリック後に表示される画面の内容 -->
@@ -160,9 +162,9 @@
                                                         <div class="side" style="margin-left:8px; margin-top:8px;">
                                                             <a href="/users/{{$alertcomment->user->id}}">
                                                                 @if($alertcomment->user->image == null)
-                                                                    <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 35) }}" alt="" style="margin-right:15px;">
+                                                                    <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 35) }}" alt="" style="margin-right:15px; border-radius:50%;">
                                                                 @else
-                                                                    <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;">
+                                                                    <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px; border-radius:50%;">
                                                                 @endif
                                                                 <span id="modal-user_name{{$alertcomment->id}}" style="color:black;"></span>
                                                             </a>
@@ -272,25 +274,21 @@
             word-wrap:break-word;
         }
         @media screen and (max-width:319px) {
-        /*横幅が320px以下の場合に適用するスタイル */
             #message{
                width:250px;
             }
         }
         @media screen and (min-width:320px) and ( max-width:359px) {
-        /*横幅が320px以下の場合に適用するスタイル */
             #message{
                width:290px;
             }
         }
        @media screen and (min-width:360px) and ( max-width:374px) {
-        /*横幅が320px以下の場合に適用するスタイル */
             #message{
                width:330px;
             }
         }
         @media screen and (min-width:375px) and ( max-width:410px) {
-        /*横幅が320px以下の場合に適用するスタイル */
             #message{
                width:345px;
             }
@@ -341,23 +339,23 @@
         
         
         @media screen and (min-width:823px) and ( max-width:1023px) {
-        /*横幅が320px以下の場合に適用するスタイル */
             #message{
                width:398.33px;
             }
         }
         
         @media screen and (min-width:1024px) and ( max-width:1030px) {
-        /*横幅が320px以下の場合に適用するスタイル */
             #message{
                width:538.33px;
             }
         }
         
         @media screen and (min-width:1031px) {
-        /*横幅が320px以下の場合に適用するスタイル */
             #message{
                width:642px;
+            }
+            .map{
+                margin-top:120px;
             }
         }
         .side{

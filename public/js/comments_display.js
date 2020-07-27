@@ -35,9 +35,9 @@ function postData(id){
             upData = '<div class="side" style="margin-left:8px; margin-top:8px;">' +
                         '<a href="/users/'+json["upuserData"].id+'" style="cursor:pointer">';
                             if (json["upuserData"].image == null) {
-                                upData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+up_mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;">';
+                                upData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+up_mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px; border-radius:50%;">';
                             } else {
-                                upData += '<img class="float-left user-img" src="'+json["upuserData"].image+'" width="35" height="35" style="margin-right:15px;">';
+                                upData += '<img class="float-left user-img" src="'+json["upuserData"].image+'" width="35" height="35" style="margin-right:15px; border-radius:50%;">';
                             }
                             upData += '<span style="color:black;">' +
                                             json["upuserData"].name +
@@ -66,9 +66,9 @@ function postData(id){
                 underData = '<div class="side" style="margin-left:8px; margin-top:8px;">' +
                                 '<a href="/users/'+comment.id+'" style="cursor:pointer">';
                                     if (comment.image == null) {
-                                        underData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+under_mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px;">';
+                                        underData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+under_mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px; border-radius:50%;">';
                                     } else {
-                                        underData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px;">';
+                                        underData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px; border-radius:50%;">';
                                     }
                                     underData +='<span style="color:black;">' +
                                                     comment.name +

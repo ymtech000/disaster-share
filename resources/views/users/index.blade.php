@@ -9,9 +9,9 @@
                     <div class="card-body">
                         <p style="font-weight:bold;"><a href="/users/{{$user->id}}" style="color:black;">{{$user->name}}</a></p>
                         @if($user->image == null)
-                            <a href="/users/{{$user->id}}"><img class=" user-img avatar-type-circle" src="{{ Gravatar::src($user->email) }}" alt=""  style="width:90%;"></a>
+                            <a href="/users/{{$user->id}}"><img class=" user-img avatar-type-circle" src="{{ Gravatar::src($user->email) }}" alt=""  style="width:100%;"></a>
                         @else
-                            <a href="/users/{{$user->id}}"><img class="user-img" src="{{$user->image}}" style="width:90%;"></a>
+                            <a href="/users/{{$user->id}}"><img class="user-img" src="{{$user->image}}" style="width:100%;"></a>
                         @endif
                         @include('user_follow.follow_button', ['user'=>$user])
                     </div>
@@ -27,6 +27,9 @@
     .user-img{
         border-radius:10px;
         margin-bottom:3px;
+    }
+    .btn{
+        width:100%;
     }
 </style>
 @endsection

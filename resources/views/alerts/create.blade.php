@@ -2,6 +2,7 @@
 
 @section('content')
     <h1 class="text-center font-weight-bold font-family-Tahoma">NEW POST</h1>
+    <p style="text-align:right;">※位置情報は検索するか地図をタッチしてください。</p>
     {!! Form::model($alert, ['route' => 'alerts.store', 'files' => true, 'onsubmit' => "return false;"]) !!}
         <div class='form-row'>
             <div class="col-md-3">
@@ -13,7 +14,6 @@
                     <span id="fileimg" class="inline-block"></span>
             </div>
             <div class='col-md-9'>
-                <p style="text-align:right;">※位置情報は検索するか地図をタッチしてください。</p>
                 @include('commons.error_messages')
             </div>
         </div>

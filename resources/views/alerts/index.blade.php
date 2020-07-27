@@ -17,7 +17,7 @@
                 @foreach ($alerts as $alert)
                     <div class="col-md-4">
                         <div class="card" style="border:solid; border-width:thin; margin-bottom:10px">
-                            <div class="card-header" style="height: 70px; border-bottom:solid; border-width:thin;">
+                            <div class="card-header" style="max-height:70px; border-bottom:solid; border-width:thin;">
                                 @if($alert->user->image == null)
                                     <a href="/users/{{$alert->user->id}}"><img class="img-fluid float-left user-img" style="border-radius:50%; margin-bottom:10px; margin-right:10px;" src="{{ Gravatar::src($alert->user->email, 500) }}" width="35" height="35" alt=""></a>
                                 @else
