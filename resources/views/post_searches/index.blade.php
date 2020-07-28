@@ -3,10 +3,11 @@
 @section('content')
     <h1 class="text-center font-weight-bold font-family-Tahoma">DISASTER  INFORMATION</h1>
     <div class='form-row'>
-        <div class="col-sm-3 offset-sm-9">
+         <div class="col-sm-2 offset-sm-10">
             <div class="submit-form">
                 {!! Form::open(['route' => 'post_searches.index', 'method' => 'get']) !!}
-                    <ul>
+               
+                     <ul class="search_form">
                         <li><input type="text" name="search" placeholder="検索はこちらから" style="height:38px;"></li>
                         <li>
                             <button type="submit" name="button" style="cursor:pointer; border-radius:2px; height:38px;">
@@ -14,11 +15,12 @@
                             </button>
                         </li>
                     </ul>
-                {!! Form::close() !!}
+                
+                 {!! Form::close() !!}     
             </div>
         </div>
     </div>
-    <!--検索条件に一致した投稿を表示-->
+        <!--検索条件に一致した投稿を表示-->
     <div id="lists" class="row">
         @if(!empty($datas))
             <table class="table table-striped">
@@ -69,7 +71,7 @@
                                 </div>
                             @endif
                             <div class="card-body">
-                                <a href="alerts/{{$data->id}}"><img src="{{$data->image}}" width="300" height="300"></a>
+                                <a href="alerts/{{$data->id}}"><img src="{{$data->image}}" style="width:100%;"></a>
                             </div>
                             <div class="card-footer" style="border-top:solid; border-width:thin;">
                                 <div class="title" style="font-size:1.3em;">{{$data->title}}</div>
@@ -111,7 +113,7 @@
             </table>
         @endif
     </div>
-<style>
+    <style>
     .user-img{
         border-radius:50%;
         margin-bottom:10px;
@@ -120,19 +122,18 @@
       display: flex;
       justify-content:space-between;
     }
-    .submit-form{
-        width:100%;
-        text-align: right;
-        margin-bottom:10px;
-        }
     
     .icons li{
         display:inline-block;
     }
-    ul{
-      display: flex;
-      list-style:none;
+    .search_form{
+       display: flex;
+       list-style:none;
+       width:100%;
+       justify-content: center;
     }
+   
     
 </style>
+
 @endsection
