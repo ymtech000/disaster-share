@@ -3,7 +3,7 @@ function toggleFollowText(button,id) {
         let csrf = document.getElementById('csrf-token').content;
         if (button.innerHTML === "フォローする") {
             button.innerHTML = "フォロー中";
-            element_follow.className = "btn btn-danger";
+            element_follow.className = "btn btn-danger follow_button";
             
             $.ajax({
                 headers : {
@@ -22,7 +22,7 @@ function toggleFollowText(button,id) {
             });
         } else {
             button.innerHTML = "フォローする";
-            element_follow.className = "btn btn-primary";
+            element_follow.className = "btn btn-primary follow_button";
             $.ajax({
                 headers : {
                 　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')

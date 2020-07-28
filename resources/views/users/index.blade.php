@@ -28,7 +28,7 @@
         border-radius:10px;
         margin-bottom:3px;
     }
-    .btn{
+    .follow_button{
         width:100%;
     }
 </style>
