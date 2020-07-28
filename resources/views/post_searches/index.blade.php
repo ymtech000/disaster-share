@@ -6,7 +6,6 @@
          <div class="col-sm-2 offset-sm-10">
             <div class="submit-form">
                 {!! Form::open(['route' => 'post_searches.index', 'method' => 'get']) !!}
-               
                      <ul class="search_form">
                         <li><input type="text" name="search" placeholder="検索はこちらから" style="height:38px;"></li>
                         <li>
@@ -15,61 +14,41 @@
                             </button>
                         </li>
                     </ul>
-                
                  {!! Form::close() !!}     
             </div>
         </div>
     </div>
-        <!--検索条件に一致した投稿を表示-->
+    <!--検索条件に一致した投稿を表示-->
     <div id="lists" class="row">
         @if(!empty($datas))
             <table class="table table-striped">
                 @foreach ($datas as $data)
                     <div class="col-md-4">
                         <div class="card" style="border:solid; border-width:thin; margin-bottom:10px">
-                            @if($data->user->image == null)
-                                <div class="card-header" style="height: 70px; border-bottom:solid; border-width:thin;">
+                            <div class="card-header" style="height: 70px; border-bottom:solid; border-width:thin;">
+                                @if($data->user->image == null)
                                     <a href="/users/{{$data->user->id}}"><img class="img-fluid float-left user-img" style="border-radius:50%; margin-bottom:10px; margin-right:10px;" src="{{ Gravatar::src($data->user->email, 500) }}" width="35" height="35" alt=""></a>
-                                    <div class="side">
-                                        <a href="/users/{{$data->user->id}}" style="color:black; text-decoration: none;">{{$data->user->name}}</a>
-                                        @if(Auth::id() == $data->user_id)
-                                            <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fas fa-chevron-down"></span></a>
-                                            <ul class="dropdown-menu" style="list-style: none;">
-                                                <li class="dropdown-item">
-                                                    <a href="{{ route('alerts.edit', ['id' => $data->id]) }}"><span class="fa fa-edit" style="color:black;"></span></a>
-                                                    {!! link_to_route('alerts.edit', '編集', ['id' => $data->id], ['class' => 'btn btn-default']) !!}
-                                                </li>
-                                                <li class="dropdown-item">
-                                                    <a href="#" type="button" data-toggle="modal" data-target="#data-delete"><span class="fa fa-trash delete-btn" style="color:black;"></span></a>
-                                                    <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#data-delete">削除</a>
-                                                </li>
-                                            </ul>
-                                        @endif
-                                    </div>
-                                    <small><p style="text-align:right">{{$data->time}}</p></small>
-                                </div>
-                            @else
-                                <div class="card-header" style="height: 70px; border-bottom:solid; border-width:thin;">
+                                @else
                                     <a href="/users/{{$data->user->id}}"><img src="{{$data->user->image}}" class="img-fluid float-left user-img" style="border-radius:50%; margin-bottom:10px; margin-right:10px;" width="35" height="35"></a>
-                                    <div class="side">
-                                        <a href="/users/{{$data->user->id}}" style="color:black;">{{$data->user->name}}</a>
-                                        @if(Auth::id() == $data->user_id)
-                                            <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fas fa-chevron-down"></span></a>
-                                            <ul class="dropdown-menu" style="list-style: none;">
-                                                <li class="dropdown-item">
-                                                    <a href="{{ route('alerts.edit', ['id' => $data->id]) }}"><span class="fa fa-edit" style="color:black;"></span></a>
-                                                    {!! link_to_route('alerts.edit', '編集', ['id' => $data->id], ['class' => 'btn btn-default']) !!}
-                                                </li>
-                                                <li class="dropdown-item">
-                                                    <a href="#" type="button" data-toggle="modal" data-target="#data-delete"><span class="fa fa-trash delete-btn" style="color:black;"></span></a>
-                                                    <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#data-delete">削除</a>
-                                                </li>
-                                            </ul>
-                                        @endif
-                                    </div>
-                                    <small><p style="text-align:right">{{$data->time}}</p></small>
+                                @endif
+                                <div class="side">
+                                    <a href="/users/{{$data->user->id}}" style="color:black;">{{$data->user->name}}</a>
+                                    @if(Auth::id() == $data->user_id)
+                                        <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fas fa-chevron-down"></span></a>
+                                        <ul class="dropdown-menu" style="list-style: none;">
+                                            <li class="dropdown-item">
+                                                <a href="{{ route('alerts.edit', ['id' => $data->id]) }}"><span class="fa fa-edit" style="color:black;"></span></a>
+                                                {!! link_to_route('alerts.edit', '編集', ['id' => $data->id], ['class' => 'btn btn-default']) !!}
+                                            </li>
+                                            <li class="dropdown-item">
+                                                <a href="#" type="button" data-toggle="modal" data-target="#data-delete{{$data->id}}"><span class="fa fa-trash delete-btn" style="color:black;"></span></a>
+                                                <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#data-delete{{$data->id}}">削除</a>
+                                            </li>
+                                        </ul>
+                                    @endif
                                 </div>
-                            @endif
+                                <small><p style="text-align:right">{{$data->time}}</p></small>
+                            </div>
                             <div class="card-body">
                                 <a href="alerts/{{$data->id}}"><img src="{{$data->image}}" style="width:100%;"></a>
                             </div>
@@ -91,11 +70,11 @@
                     </div>
                     
                     <!--ボタン・リンククリック後に表示される画面の内容 -->
-                    <div class="modal fade" id="data-delete" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                    <div class="modal fade" id="data-delete{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4><class="modal-title" id="myModalLabel">投稿削除確認画面</h4>
+                                    <h4><class="modal-title">投稿削除確認画面</h4>
                                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
                                 </div>
                                 <div class="modal-body">
@@ -132,8 +111,5 @@
        width:100%;
        justify-content: center;
     }
-   
-    
 </style>
-
 @endsection
