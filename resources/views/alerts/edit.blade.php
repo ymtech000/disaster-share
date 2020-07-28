@@ -1,21 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="text-center font-weight-bold font-family-Tahoma">NEW POST</h1>
+    <h1 class="text-center font-weight-bold font-family-Tahoma">EDIT PAGE</h1>
     {!! Form::model($alert, ['route' => ['alerts.update', $alert->id], 'method' => 'put', 'files' => true, 'onsubmit' => "return false;"]) !!}
-        <div class='form-row'>
-            <div class="col-md-3">
+        <div class="side">
+            <label class="inline-block">
                 {!! Form::label('thefile', '画像') !!}
-                    <label>
-                        <span class="fa fa-file-image inline-block" style="cursor: pointer; font-size:85px; margin-bottom:30px;"></span>
-                        <input type="file" style="display:none" name="thefile">
-                    </label>
-                    <span id="fileimg" class="inline-block"></span>
-            </div>
-            <div class='col-md-9'>
-                <p style="text-align:right;">※位置情報は検索するか地図をタッチしてください。</p>
-                @include('commons.error_messages')
-            </div>
+                <span class="fa fa-file-image inline-block" style="cursor: pointer; font-size:85px; margin-bottom:30px;"></span>
+                <input type="file" style="display:none" name="thefile">
+                <span id="fileimg"></span>
+            </label>
+            @include('commons.error_messages')
+            <p style="text-align:right;">※位置情報は検索するか地図をタッチしてください。</p>
         </div>
         <div class='form-row'>
             <div class='col-md-7'>
@@ -47,44 +43,72 @@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoKnN8__KItXFDswfAfs_y3VHwfbX3_ms"></script>
     <script src="{{ asset('/js/file_upload.js') }}"></script>
     <script src="{{ asset('/js/alert_create.js') }}"></script>
-    <style>
-        #error {
-            color: red;
+@endsection
+<style>
+    #error {
+        color: red;
+    }
+    .file_upload {
+        border: 3px solid;
+        display: inline-block;
+        padding: 2px 1em;
+        position: relative;
+       
+    }
+    .form-group {
+        display:inline-block;
+    }
+    
+     @media screen and (min-width: 320px) and (max-width: 767px) {
+         .submit{
+                margin-top:10px;
+                text-align:right;
+            }
+         .search{
+                position: absolute;
+                top:65;
+                left:10;
+                z-index: 1;
+            }
+    }
+    @media screen and (min-width: 768px) and (max-width: 959px) {
+            .submit{
+                position: absolute;
+                top:655;
+            }
+             .search{
+                position: absolute;
+                top:65;
+                left:10;
+                z-index: 1;
+            }
         }
-        
-        .file_upload {
-            border: 3px solid;
-            display: inline-block;
-            padding: 2px 1em;
-            position: relative;
-           
-        }
-        .form-group {
-            display:inline-block;
-        }
+    
+    @media screen and (min-width:960px) {
         .submit{
             position: absolute;
-            top:660;
-        }
-        #map { 
-            height: 250px
-        }
-        .search{
-            padding-top:20px;
-        }
-        .inline-block{
-            display: inline-block;
-            vertical-align: top;
-        }
-        .box {
-            padding-top:10px;
-            position: relative;
+            top:625;
         }
         .search{
             position: absolute;
-            top:0;
+            top:20;
             left: 200;
             z-index: 1;
         }
-    </style>
-@endsection
+    }
+    #map { 
+        height: 250px
+    }
+    .inline-block{
+        display: inline-block;
+        vertical-align: top;
+    }
+    .box {
+        padding-top:10px;
+        position: relative;
+    }
+    .side{
+          display: flex;
+          justify-content:space-between;
+        }
+</style>
