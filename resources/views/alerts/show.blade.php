@@ -26,10 +26,10 @@
                                 {!! link_to_route('alerts.edit', '編集', ['id' => $alert->id], ['class' => 'btn btn-default']) !!}
                             </li>
                             <li class="dropdown-item">
-                                <a href="#" type="button" data-toggle="modal" data-target="#alert-delete">
+                                <a href="#" type="button" data-toggle="modal" data-target="#alert-delete{{$alert->id}}">
                                     <span class="fa fa-trash delete-btn" style="color:black;"></span>
                                 </a>
-                                <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alert-delete">削除</a>
+                                <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alert-delete{{$alert->id}}">削除</a>
                             </li>
                         </ul>
                     @endif
@@ -63,9 +63,13 @@
     <p style="font-weight:bold; margin-top:8px;">メッセージ</p>
     <div class='form-row'>
         <div class='col-md-7'>
-            <table class="table-bordered" style="display:flex; margin-top:5px;">
+            <table style="display:flex; margin-top:5px;">
                 <tr class="message_parent">
-                    <td id="message" style="font-size:1.2em; text-align: justify; min-height:147px;">{{ $alert->content }}</td>
+                    <td class="table-bordered" id="message" style="font-size:1.2em;  text-align:center; min-height:147px;">
+                        <span style="margin-left:10px;">
+                            {{ $alert->content }}
+                        </span>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -235,6 +239,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             @endforeach
@@ -242,7 +247,7 @@
     </div>
     
     <!--ボタン・リンククリック後に表示される画面の内容 -->
-    <div class="modal fade" id="alert-delete" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal fade" id="alert-delete{{$alert->id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -273,84 +278,38 @@
         #message{
             word-wrap:break-word;
         }
-        @media screen and (max-width:319px) {
-            #message{
+
+        @media screen and (max-width: 319px){
+             #message{
                width:250px;
             }
         }
-        @media screen and (min-width:320px) and ( max-width:359px) {
-            #message{
-               width:290px;
-            }
-        }
-       @media screen and (min-width:360px) and ( max-width:374px) {
-            #message{
-               width:330px;
-            }
-        }
-        @media screen and (min-width:375px) and ( max-width:410px) {
+        
+        @media screen and (min-width: 320px) and (max-width: 559px) {
             #message{
                width:345px;
             }
         }
-       
         
-        @media screen and (min-width:411px) and ( max-width:413px) {
-            #message{
-               width:381px;
-            }
-        }
-        
-        @media screen and (min-width:414px) and ( max-width:449px) {
-            #message{
-               width:383px;
-            }
-        }
-        
-        @media screen and (min-width:450px) and ( max-width:567px) {
-            #message{
-               width:420px;
-            }
-        }
-        
-        @media screen and (min-width:568px) and ( max-width:599px) {
-            #message{
-               width:538px;
-            }
-        }
-        
-        @media screen and (min-width:600px) and ( max-width:639px) {
-            #message{
-               width:510px;
-            }
-        }
-        
-        @media screen and (min-width:640px) and ( max-width:767px) {
-            #message{
-               width:510px;
-            }
-        }
-        
-        @media screen and (min-width:768px) and ( max-width:822px) {
+        @media screen and (min-width: 560px) and (max-width: 959px) {
             #message{
                width:398.33px;
             }
-        }
-        
-        
-        @media screen and (min-width:823px) and ( max-width:1023px) {
-            #message{
-               width:398.33px;
+            .map{
+                margin-top:40px;
             }
         }
         
-        @media screen and (min-width:1024px) and ( max-width:1030px) {
+        @media screen and (min-width: 960px) and (max-width: 1279px) {
             #message{
-               width:538.33px;
+               width:535px;
+            }
+            .map{
+                margin-top:90px;
             }
         }
-        
-        @media screen and (min-width:1031px) {
+    
+        @media screen and (min-width:1280px) {
             #message{
                width:642px;
             }
