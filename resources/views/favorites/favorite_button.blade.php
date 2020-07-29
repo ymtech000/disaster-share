@@ -8,54 +8,7 @@
     </div>
 @endif
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script>
-    function postFavorite(id, favorite_count) {
-        let favorite_class = $('#favorite'+id).parent().attr('class');
-        console.log(favorite_class);
-        let favorite_button = document.getElementById("favorite_count"+id);
-        let favorite_parent = document.getElementById("favorite_parent"+id);
-        
-        if (favorite_class === 'favorite') {
-            favorite_parent.className = 'unfavorite';
-            favorite_button.innerHTML = Number(favorite_button.innerHTML)+1;
-            
-            $.ajax({
-                headers : {
-                　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-                },
-                url: '/alerts/'+ id +'/favorite',
-                dataType:'json',
-                type: 'POST', 
-                data: {'id': id, _token: '{{ csrf_token() }}',},
-            })
-            // Ajaxリクエストが成功した場合
-            .done(function (results){
-                console.log(results);
-            }).fail(function(){
-                alert('通信に失敗しました');
-            });
-        } else {
-            favorite_parent.className = 'favorite';
-            favorite_button.innerHTML = Number(favorite_button.innerHTML)-1;
-            
-            $.ajax({
-                headers : {
-                　'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-                },
-                url: '/alerts/'+ id +'/unfavorite',
-                dataType:'json',
-                type: 'POST', 
-                data: {'id': id,'_method': 'DELETE'},  _token: '{{ csrf_token() }}',
-            })
-            // Ajaxリクエストが成功した場合
-            .done(function (results){
-                console.log(results);
-            }).fail(function(){
-                alert('通信に失敗しました');
-            });
-        }
-    }
-</script>
+<script src="{{ asset('js/favorite.js') }}"></script>
 <style>
     .fa-thumbs-up{
         cursor:pointer;
