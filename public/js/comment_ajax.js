@@ -83,98 +83,97 @@
                 '</div>'+
             '</div>'+
 
-           '<div class="modal fade" id="alertcomment-comment-thread'+comment.id+'" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">'+
-                        '<div class="modal-dialog">'+
-                            '<div class="modal-content">'+
-                                '<div class="modal-header">'+
-                                    '<h4>'+'</h4>'+
-                                    '<button type="button" class="btn btn-default" data-dismiss="modal">'+
-                                        '<span class="fa fa-times" style="cursor:pointer;">'+'</span>'+
-                                    '</button>'+
-                                '</div>'+
-                                '<div class="modal-body">';
+            '<div class="modal fade" id="alertcomment-comment-thread'+comment.id+'" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">'+
+                '<div class="modal-dialog">'+
+                    '<div class="modal-content">'+
+                        '<div class="modal-header" style="height:35px;">'+
+                            '<h4>'+'</h4>'+
+                            '<span class="fa fa-times fa-xs" style="cursor:pointer;" data-dismiss="modal">'+'</span>'+
+                        '</div>'+
+                        '<div style="margin-right:7px; margin-left:7px;">';
                                     if(data['comments'].length>0){
                                         commentData += '<p>' +
                                                             '<div id="deleted'+comment.id+'">'+'</div>'+
                                                         '</p>'+
                                         '<div>';
                                             if(comment.parent_id !== null){
-                                                commentData += '<div class="card card-body" style="min-height:150px; margin-bottom:10px;">'+
+                                                commentData += '<div>'+
                                                         '<div id="upData'+comment.id+'">'+'</div>'+
                                                 '</div>';
-                                        }
-                                        commentData +=    '<div class="card" style="min-height:150px; margin-bottom:10px;">'+
-                                                '<div class="card-body">'+
-                                                    '<div class="side" style="margin-left:8px; margin-top:8px;">' +
-                                                        '<a href="/users/'+comment.userId+'">';
-                                                            if(comment.image == null){
-                                                                commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px; border-radius:50%;" onclick="location:href="/users/'+comment.id+'";">';
-                                                            }else{
-                                                                commentData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px; border-radius:50%;" onclick="location:href="/users/'+comment.id+'";">';
-                                                            }
-                                                            commentData += '<span id="modal-user_name'+comment.id+'" style="color:black;">'+'</span>'+
-                                                        '</a>'+
-                                                        '<small>'+
-                                                            '<span id="modal-time'+comment.id+'" style="text-align:right; list-style: none; margin-right:8px;">'+'</span>'+
-                                                        '</small>'+
-                                                    '</div>'+
-                                                    '<p style="margin-top:10px; margin-left:60px;">'+
-                                                        '<span id="modal-comment'+comment.id+'">'+'</span>'+
-                                                    '</p>'+
-                                                '</div>'+
-                                            '</div>'+
-                                            '<div class="card card-body" style="min-height:150px;">'+
-                                                '<div id="underDatas'+comment.id+'">'+'</div>'+
-                                            '</div>'+
-                                        '</div>';
-                                    }
-                                commentData += '</div>'+
-                            '</div>'+
-                        '</div>'+
-                         '</div>'+
-                            '<div class="form-row">'+
-                                '<div class="col-sm-8 offset-sm-2">'+
-                                    '<div class="card alert-comment alertcomment-body-'+comment.id+'" style="min-height:150px; cursor:pointer; margin-top:10px;" onclick="postData('+comment.id+')">'+
-                                        '<div class="side" style="margin-left:8px; margin-top:8px;">'+
-                                            '<a href="/users/'+comment.user_id+'" onclick="event.stopPropagation();">'+
-                                                '<div>';
-                                                    if(comment.image == null){
-                                                        commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px; border-radius:50%;" onclick="location:href="/users/'+comment.id+'";">';
-                                                    }else{
-                                                        commentData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px; border-radius:50%;" onclick="location:href="/users/'+comment.id+'";">';
-                                                    }
-                                                    commentData += '<span style="color:black;">'+
-                                                                        comment.name+
-                                                                    '</span>'+
-                                                '</div>'+
-                                            '</a>'+
-                                            '<small>'+
-                                                '<span style="text-align:right; list-style: none; margin-right:8px;">'+
-                                                    comment.time+
-                                                '</span>'+
-                                            '</small>'+
-                                        '</div>'+
-                                        '<p style="margin-top:10px; margin-left:60px; margin-right:10px;">'+
-                                            comment.comment+
-                                        '</p>'+
-                                        '<p style="margin-top:8px;">'+
-                                            '<ul class="icons" style="list-style: none;">'+
-                                                '<li>'+
-                                                    '<span class="far fa-comment icon" style="color:black;" onclick="openCommentModal('+comment.id+'); event.stopPropagation();">'+
-                                                    '</span>'+
-                                                '<li>';
-                                                
-                                                if(data['AuthId'] === comment.user_id){
-                                                            commentData += '<li>'+
-                                                            '<span class="fa fa-trash fa-lg icon" style="color:black; margin-left:5px;" onclick="openDeleteModal('+comment.id+'); event.stopPropagation();">'+
-                                                            '</span>';
-                                                }
-                                                commentData += '</li>'+
-                                            '</ul>'+
-                                        '</p>'+
+                                            }
+                                    commentData +=    '<div class="card" style="min-height:150px;">'+
+                                    '<div class="side" style="margin-left:8px; margin-top:8px;">' +
+                                        '<a href="/users/'+comment.userId+'">';
+                                            if(comment.image == null){
+                                                commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px; border-radius:50%;" onclick="location:href="/users/'+comment.id+'";">';
+                                            }else{
+                                                commentData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px; border-radius:50%;" onclick="location:href="/users/'+comment.id+'";">';
+                                            }
+                                            commentData += '<span id="modal-user_name'+comment.id+'" style="color:black;">'+'</span>'+
+                                        '</a>'+
+                                        '<small>'+
+                                            '<span id="modal-time'+comment.id+'" style="text-align:right; list-style: none; margin-right:8px;">'+'</span>'+
+                                        '</small>'+
                                     '</div>'+
+                                    '<p style="margin-top:10px; margin-left:60px;">'+
+                                        '<span id="modal-comment'+comment.id+'">'+'</span>'+
+                                    '</p>'+
                                 '</div>'+
-                            '</div>';
+                                  '<div style="max-height:20px;">'+
+                                    '<div id="vertical'+comment.id+'">'+'</div>'+
+                                '</div>'+
+                                '<div>'+
+                                    '<div id="underDatas'+comment.id+'">'+'</div>'+
+                                '</div>'+
+                            '</div>'+
+                         '<div id="blank'+comment.id+'">'+'</div>';  
+                        }
+                    commentData += '</div>'+
+                '</div>'+
+            '</div>'+
+        '</div>'+
+            
+        '<div class="form-row">'+
+            '<div class="col-sm-8 offset-sm-2">'+
+                '<div class="card alert-comment alertcomment-body-'+comment.id+'" style="min-height:150px; cursor:pointer; margin-top:10px;" onclick="postData('+comment.id+')">'+
+                    '<div class="side" style="margin-left:8px; margin-top:8px;">'+
+                        '<a href="/users/'+comment.user_id+'" onclick="event.stopPropagation();">'+
+                            '<div>';
+                                if(comment.image === null){
+                                    commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px; border-radius:50%;" onclick="location:href="/users/'+comment.id+'";">';
+                                }else{
+                                    commentData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px; border-radius:50%;" onclick="location:href="/users/'+comment.id+'";">';
+                                }
+                                commentData += '<span class="commentuser_name" style="color:black;">'+
+                                                    comment.name+
+                                                '</span>'+
+                            '</div>'+
+                        '</a>'+
+                        '<small>'+
+                            '<span style="text-align:right; list-style: none; margin-right:8px;">'+
+                                comment.time+
+                            '</span>'+
+                        '</small>'+
+                    '</div>'+
+                    '<p style="margin-top:10px; margin-left:60px;">'+
+                        comment.comment+
+                    '</p>'+
+                    '<ul class="icons" style="list-style: none;">'+
+                        '<li>'+
+                            '<span class="far fa-comment icon" style="color:black;" onclick="openCommentModal('+comment.id+'); event.stopPropagation();">'+
+                            '</span>'+
+                        '<li>';
+                    
+                        if(data['AuthId'] === comment.user_id){
+                                commentData += '<li>'+
+                                '<span class="fa fa-trash fa-lg icon" style="color:black; margin-left:5px;" onclick="openDeleteModal('+comment.id+'); event.stopPropagation();">'+
+                                '</span>';
+                        }
+                        commentData += '</li>'+
+                    '</ul>'+
+                '</div>'+
+            '</div>'+
+        '</div>';
             $results.append(commentData);
             });
     }, function(){
@@ -222,7 +221,6 @@
             data['comments'].forEach(function(comment){ 
             var mail_hash = CybozuLabs.MD5.calc(comment.email);
             let csrf = document.getElementById('csrf-token').content;
-            console.log(csrf);
             // dataの中身をループをつかってresultsにどんどんいれていく
             commentData = 
             '<div class="modal fade" id="alertcomment-comment'+comment.id+'" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">'+
@@ -280,99 +278,98 @@
                     '</div>'+
                 '</div>'+
             '</div>'+
-            
+
             '<div class="modal fade" id="alertcomment-comment-thread'+comment.id+'" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">'+
-                        '<div class="modal-dialog">'+
-                            '<div class="modal-content">'+
-                                '<div class="modal-header">'+
-                                    '<h4>'+'</h4>'+
-                                    '<button type="button" class="btn btn-default" data-dismiss="modal">'+
-                                        '<span class="fa fa-times" style="cursor:pointer;">'+'</span>'+
-                                    '</button>'+
-                                '</div>'+
-                                '<div class="modal-body">';
+                '<div class="modal-dialog">'+
+                    '<div class="modal-content">'+
+                        '<div class="modal-header" style="height:35px;">'+
+                            '<h4>'+'</h4>'+
+                            '<span class="fa fa-times fa-xs" style="cursor:pointer;" data-dismiss="modal">'+'</span>'+
+                        '</div>'+
+                        '<div style="margin-right:7px; margin-left:7px;">';
                                     if(data['comments'].length>0){
                                         commentData += '<p>' +
                                                             '<div id="deleted'+comment.id+'">'+'</div>'+
                                                         '</p>'+
                                         '<div>';
                                             if(comment.parent_id !== null){
-                                                commentData += '<div class="card card-body" style="min-height:150px; margin-bottom:10px;">'+
+                                                commentData += '<div>'+
                                                         '<div id="upData'+comment.id+'">'+'</div>'+
                                                 '</div>';
                                             }
-                                        commentData +=    '<div class="card" style="min-height:150px; margin-bottom:10px;">'+
-                                                '<div class="card-body">'+
-                                                    '<div class="side" style="margin-left:8px; margin-top:8px;">' +
-                                                        '<a href="/users/'+comment.userId+'">';
-                                                            if(comment.image === null){
-                                                                commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px; border-radius:50%;" onclick="location:href="/users/'+comment.id+'";">';
-                                                            }else{
-                                                                commentData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px; border-radius:50%;" onclick="location:href="/users/'+comment.id+'";">';
-                                                            }
-                                                            commentData += '<span id="modal-user_name'+comment.id+'" style="color:black;">'+'</span>'+
-                                                        '</a>'+
-                                                        '<small>'+
-                                                            '<span id="modal-time'+comment.id+'" style="text-align:right; list-style: none; margin-right:8px;">'+'</span>'+
-                                                        '</small>'+
-                                                    '</div>'+
-                                                    '<p style="margin-top:10px; margin-left:60px;">'+
-                                                        '<span id="modal-comment'+comment.id+'">'+'</span>'+
-                                                    '</p>'+
-                                                '</div>'+
-                                            '</div>'+
-                                            '<div class="card card-body" style="min-height:150px;">'+
-                                                '<div id="underDatas'+comment.id+'">'+'</div>'+
-                                            '</div>'+
-                                        '</div>';
-                                    }
-                                commentData += '</div>'+
-                            '</div>'+
-                        '</div>'+
-                         '</div>'+
-                                '<div class="form-row">'+
-                                    '<div class="col-sm-8 offset-sm-2">'+
-                                        '<div class="card alert-comment alertcomment-body-'+comment.id+'" style="min-height:150px; cursor:pointer; margin-top:10px;" onclick="postData('+comment.id+')">'+
-                                            '<div class="side" style="margin-left:8px; margin-top:8px;">'+
-                                                '<a href="/users/'+comment.user_id+'" onclick="event.stopPropagation();">'+
-                                                    '<div>';
-                                                        if(comment.image === null){
-                                                            commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px; border-radius:50%;" onclick="location:href="/users/'+comment.id+'";">';
-                                                        }else{
-                                                            commentData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px; border-radius:50%;" onclick="location:href="/users/'+comment.id+'";">';
-                                                        }
-                                                        commentData += '<span style="color:black;">'+
-                                                                            comment.name+
-                                                                        '</span>'+
-                                                    '</div>'+
-                                                '</a>'+
-                                                '<small>'+
-                                                    '<span style="text-align:right; list-style: none; margin-right:8px;">'+
-                                                        comment.time+
-                                                    '</span>'+
-                                                '</small>'+
-                                            '</div>'+
-                                            '<p style="margin-top:10px; margin-left:60px; margin-right:10px;">'+
-                                                comment.comment+
-                                            '</p>'+
-                                            '<p style="margin-top:8px;">'+
-                                                '<ul class="icons" style="list-style: none;">'+
-                                                    '<li>'+
-                                                        '<span class="far fa-comment icon" style="color:black;" onclick="openCommentModal('+comment.id+'); event.stopPropagation();">'+
-                                                        '</span>'+
-                                                    '<li>';
-                                                
-                                                    if(data['AuthId'] === comment.user_id){
-                                                            commentData += '<li>'+
-                                                            '<span class="fa fa-trash fa-lg icon" style="color:black; margin-left:5px;" onclick="openDeleteModal('+comment.id+'); event.stopPropagation();">'+
-                                                            '</span>';
-                                                    }
-                                                    commentData += '</li>'+
-                                                '</ul>'+
-                                            '</p>'+
-                                        '</div>'+
+                                    commentData +=    '<div class="card" style="min-height:150px;">'+
+                                    '<div class="side" style="margin-left:8px; margin-top:8px;">' +
+                                        '<a href="/users/'+comment.userId+'">';
+                                            if(comment.image == null){
+                                                commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px; border-radius:50%;" onclick="location:href="/users/'+comment.id+'";">';
+                                            }else{
+                                                commentData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px; border-radius:50%;" onclick="location:href="/users/'+comment.id+'";">';
+                                            }
+                                            commentData += '<span id="modal-user_name'+comment.id+'" style="color:black;">'+'</span>'+
+                                        '</a>'+
+                                        '<small>'+
+                                            '<span id="modal-time'+comment.id+'" style="text-align:right; list-style: none; margin-right:8px;">'+'</span>'+
+                                        '</small>'+
                                     '</div>'+
-                                '</div>';
+                                    '<p style="margin-top:10px; margin-left:60px;">'+
+                                        '<span id="modal-comment'+comment.id+'">'+'</span>'+
+                                    '</p>'+
+                                '</div>'+
+                                 '<div style="max-height:20px;">'+
+                                    '<div id="vertical'+comment.id+'">'+'</div>'+
+                                '</div>'+
+                                '<div>'+
+                                    '<div id="underDatas'+comment.id+'">'+'</div>'+
+                                '</div>'+
+                            '</div>'+
+                         '<div id="blank'+comment.id+'">'+'</div>';  
+                        }
+                    commentData += '</div>'+
+                '</div>'+
+            '</div>'+
+        '</div>'+
+        
+        '<div class="form-row">'+
+            '<div class="col-sm-8 offset-sm-2">'+
+                '<div class="card alert-comment alertcomment-body-'+comment.id+'" style="min-height:150px; cursor:pointer; margin-top:10px;" onclick="postData('+comment.id+')">'+
+                    '<div class="side" style="margin-left:8px; margin-top:8px;">'+
+                        '<a href="/users/'+comment.user_id+'" onclick="event.stopPropagation();">'+
+                            '<div>';
+                                if(comment.image === null){
+                                    commentData += '<img class="img-fluid float-left user-img" src="https://www.gravatar.com/avatar/'+mail_hash+'?s=35&r=g&d=identicon'+'" alt="" style="margin-right:15px; border-radius:50%;" onclick="location:href="/users/'+comment.id+'";">';
+                                }else{
+                                    commentData += '<img class="float-left user-img" src="'+comment.image+'" width="35" height="35" style="margin-right:15px; border-radius:50%;" onclick="location:href="/users/'+comment.id+'";">';
+                                }
+                                commentData += '<span class="commentuser_name" style="color:black;">'+
+                                                    comment.name+
+                                                '</span>'+
+                            '</div>'+
+                        '</a>'+
+                        '<small>'+
+                            '<span style="text-align:right; list-style: none; margin-right:8px;">'+
+                                comment.time+
+                            '</span>'+
+                        '</small>'+
+                    '</div>'+
+                    '<p style="margin-top:10px; margin-left:60px;">'+
+                        comment.comment+
+                    '</p>'+
+                    '<ul class="icons" style="list-style: none;">'+
+                        '<li>'+
+                            '<span class="far fa-comment icon" style="color:black;" onclick="openCommentModal('+comment.id+'); event.stopPropagation();">'+
+                            '</span>'+
+                        '<li>';
+                    
+                        if(data['AuthId'] === comment.user_id){
+                                commentData += '<li>'+
+                                '<span class="fa fa-trash fa-lg icon" style="color:black; margin-left:5px;" onclick="openDeleteModal('+comment.id+'); event.stopPropagation();">'+
+                                '</span>';
+                        }
+                        commentData += '</li>'+
+                    '</ul>'+
+                '</div>'+
+            '</div>'+
+        '</div>';
         $results.append(commentData);
         });
     }, function () {
