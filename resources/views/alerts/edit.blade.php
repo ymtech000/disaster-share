@@ -39,10 +39,11 @@
         </div>
         <p class="submit">{!! Form::button('投稿', ['class' => 'btn btn-primary', 'onclick' => 'submit();']) !!}</p>
     {!! Form::close() !!}
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoKnN8__KItXFDswfAfs_y3VHwfbX3_ms"></script>
-    <script src="{{ asset('/js/file_upload.js') }}"></script>
-    <script src="{{ asset('/js/alert_create.js') }}"></script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="{{ asset('/js/alert_create.js') }}"></script>
+<script src="{{ asset('/js/file_upload.js') }}"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoKnN8__KItXFDswfAfs_y3VHwfbX3_ms"></script>
 @endsection
 <style>
     #error {
@@ -71,10 +72,10 @@
                 z-index: 1;
             }
     }
-    @media screen and (min-width: 768px) and (max-width: 959px) {
+    @media screen and (min-width: 768px) and (max-width: 991px) {
             .submit{
                 position: absolute;
-                top:655;
+                top:630;
             }
              .search{
                 position: absolute;
@@ -84,7 +85,7 @@
             }
         }
     
-    @media screen and (min-width:960px) {
+    @media screen and (min-width:992px) {
         .submit{
             position: absolute;
             top:625;
@@ -92,7 +93,7 @@
         .search{
             position: absolute;
             top:20;
-            left: 200;
+            left: 207;
             z-index: 1;
         }
     }

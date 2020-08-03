@@ -3,17 +3,16 @@
 @section('content')
     <h1 class="text-center font-weight-bold font-family-Tahoma">NEW POST</h1>
     {!! Form::model($alert, ['route' => 'alerts.store', 'files' => true, 'onsubmit' => "return false;"]) !!}
-            <div class="side">
-                <label class="inline-block">
-                    {!! Form::label('thefile', '画像') !!}
-                    <span class="fa fa-file-image inline-block" style="cursor: pointer; font-size:85px; margin-bottom:30px;"></span>
-                    <input type="file" style="display:none" name="thefile">
-                    <span id="fileimg"></span>
-                </label>
-                @include('commons.error_messages')
-                <p style="text-align:right;">※位置情報は検索するか地図をタッチしてください。</p>
-            </div>
-        
+        <div class="side">
+            <label class="inline-block">
+                {!! Form::label('thefile', '画像') !!}
+                <span class="fa fa-file-image inline-block" style="cursor: pointer; font-size:85px; margin-bottom:30px;"></span>
+                <input type="file" style="display:none" name="thefile">
+                <span id="fileimg"></span>
+            </label>
+            @include('commons.error_messages')
+            <p style="text-align:right;">※位置情報は検索するか地図をタッチしてください。</p>
+        </div>
         <div class='form-row'>
             <div class='col-md-7'>
                 {!! Form::label('title', 'タイトル(15字以内):') !!}
@@ -49,10 +48,6 @@
     #error {
         color: red;
     }
-    /*.file_image{*/
-    /*    width:50%;*/
-    /*    height:auto;*/
-    /*}*/
     .file_upload {
         border: 3px solid;
         display: inline-block;
@@ -76,10 +71,10 @@
                 z-index: 1;
             }
     }
-    @media screen and (min-width: 768px) and (max-width: 959px) {
+    @media screen and (min-width: 768px) and (max-width: 991px) {
             .submit{
                 position: absolute;
-                top:655;
+                top:630;
             }
              .search{
                 position: absolute;
@@ -89,7 +84,7 @@
             }
         }
     
-    @media screen and (min-width:960px) {
+    @media screen and (min-width:992px) {
         .submit{
             position: absolute;
             top:625;
@@ -97,7 +92,7 @@
         .search{
             position: absolute;
             top:20;
-            left: 200;
+            left: 207;
             z-index: 1;
         }
     }
@@ -116,5 +111,4 @@
           display: flex;
           justify-content:space-between;
         }
-    
 </style>
