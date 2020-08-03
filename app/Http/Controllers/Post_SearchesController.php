@@ -11,15 +11,15 @@ class Post_SearchesController extends Controller
     public function index(Request $request){
         //投稿を1ページにつき9件ずつ表示
         $query = Alert::query()->orderBy('created_at', 'desc');
-        $datas = $query->paginate(9);
+        $alerts = $query->paginate(9);
         if (\Auth::check()) {
             $searches = $request->input('search');
             // 検索ワード入力フォームで入力した文字列を含むカラムを取得
             if ($request->has('search') && $searches != '') {
-                $datas = $query->where('content', 'like', '%'.$searches.'%')->orWhere('area', 'like', '%'.$searches.'%')->orWhere('location', 'like', '%'.$searches.'%')->get();
+                $alerts = $query->where('content', 'like', '%'.$searches.'%')->orWhere('area', 'like', '%'.$searches.'%')->orWhere('location', 'like', '%'.$searches.'%')->paginate(9);
             }   
             return view('post_searches.index',[
-                'datas' => $datas
+                'alerts' => $alerts
             ]);
         }
     }

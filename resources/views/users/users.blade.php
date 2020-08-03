@@ -1,14 +1,44 @@
 @if (count($users) > 0)
-    @foreach ($users as $user)
-        <div class="card-body">
-            <a href="/users/{{$user->id}}" style="color:black; text-decoration: none;"><p style="font-weight:bold;">{{$user->name}}</p></a>
-            @if($user->image == null)
-                <a href="/users/{{$user->id}}"><img class=" user-img avatar-type-circle" src="{{ Gravatar::src($user->email, 50) }}" alt="" width="200" height="200" style="border-radius:10px;"></a>
-            @else
-                <a href="/users/{{$user->id}}"><img class="user-img" src="{{$user->image}}" width="200" height="200" style="border-radius:10px;"></a>
-            @endif
-           <p> @include('user_follow.follow_button', ['user' => $user])</p>
-        </div>
-        {{ $users->links('pagination::bootstrap-4') }}
-    @endforeach
+    <div class='form-row'>
+        @foreach ($users as $user)
+            <div id="user_card{{$user->id}}" class="col-sm-3 user_card" style="text-align:center;">
+                <div class="card-body">
+                    <p class="user_name" style="font-weight:bold;">
+                        <a href="/users/{{$user->id}}" style="color:black;">
+                            {{$user->name}}
+                        </a>
+                    </p>
+                    @if($user->image == null)
+                        <a href="/users/{{$user->id}}"><img class=" user-img avatar-type-circle" src="{{ Gravatar::src($user->email) }}" alt=""  style="width:100%; max-width:250px;"></a>
+                    @else
+                        <a href="/users/{{$user->id}}"><img class="user-img" src="{{$user->image}}" style="max-width:250px;"></a>
+                    @endif
+                    @include('user_follow.follow_button', ['user'=>$user])
+                </div>
+            </div>
+        @endforeach
+    </div>
+    {{ $users->links('pagination::bootstrap-4') }}
 @endif
+<script src="{{asset('/js/users_response.js')}}"></script>
+<style>
+    .user_name{
+        max-width: 250px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align:center;
+        margin: 0 auto;
+    }
+    h1{
+        text-align:center;
+    }
+    .user-img{
+        border-radius:10px;
+        margin-bottom:3px;
+    }
+    .follow_button{
+        width:100%;
+        max-width:250px;
+    }
+</style>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Alert;
 use App\Alertcomment;
 use Storage;
@@ -13,7 +14,6 @@ class AlertsController extends Controller
     // getでalerts/にアクセスされた場合の「一覧表示処理」
     public function index()
     {
-        
         $data = [];
         if (\Auth::check()) {
             $user = \Auth::user();
@@ -25,7 +25,6 @@ class AlertsController extends Controller
             ];
         }
         return view('alerts.index', $data);
-      
     }
    
    // getでalerts/createにアクセスされた場合の「新規登録画面表示処理」
@@ -134,14 +133,12 @@ class AlertsController extends Controller
     }
     
     // deleteでalerts/idにアクセスされた場合の「削除処理」
-     public function destroy($id)
+    public function destroy($id)
     {
         $alert = \App\Alert::find($id);
         if (\Auth::id() === $alert->user_id) {
             $alert->delete();
         }
-        
             return back();
-        
     }
 }

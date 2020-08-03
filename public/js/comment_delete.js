@@ -7,6 +7,7 @@ function postDeletedata(id){
     })
     .done(function() {
         $('.alertcomment-body-'+ id).remove();
+        $('#vertical'+ id).remove();
     })
     .fail(function() {
     alert('通信に失敗しました。');

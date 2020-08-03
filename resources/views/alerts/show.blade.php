@@ -3,8 +3,8 @@
 @section('content')
     <h1 class="text-center font-weight-bold font-family-Tahoma">DETAILS</h1>
     <div class='form-row'>
-        <div class="col-md-6">
-            <div class="card-header" style="height: 70px; width:450px; border:solid; border-width:thin;">
+        <div class="col-md-6" style="text-align:center; margin-top:30px;">
+            <div class="card-header" style="max-height:80px; width:80%; border:solid; border-width:thin; display:inline-block;">
                 <a href="/users/{{$alert->user->id}}">
                     @if($alert->user->image == null)
                         <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alert->user->email, 45) }}" alt="" style="border-radius:50%; margin-right:10px; margin-bottom:10px;">
@@ -13,10 +13,8 @@
                     @endif
                 </a>
                 <div class="side">
-                    <h4>
-                        <a href="/users/{{$alert->user->id}}" style="color:black;">{{$alert->user->name}}</a>
-                    </h4>
-                    @if(Auth::id() == $alert->user_id)
+                    <a href="/users/{{$alert->user->id}}" class="user_name" style="color:black; font-size:1.2em;">{{$alert->user->name}}</a>
+                    @if(Auth::id() === $alert->user_id)
                         <a href="#" class="nav-link" data-toggle="dropdown" style="color:black">
                             <span class="fas fa-chevron-down"></span>
                         </a>
@@ -28,10 +26,10 @@
                                 {!! link_to_route('alerts.edit', '編集', ['id' => $alert->id], ['class' => 'btn btn-default']) !!}
                             </li>
                             <li class="dropdown-item">
-                                <a href="#" type="button" data-toggle="modal" data-target="#alert-delete">
+                                <a href="#" type="button" data-toggle="modal" data-target="#alert-delete{{$alert->id}}">
                                     <span class="fa fa-trash delete-btn" style="color:black;"></span>
                                 </a>
-                                <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alert-delete">削除</a>
+                                <a href="#" type="button" class="btn btn-default" data-toggle="modal" data-target="#alert-delete{{$alert->id}}">削除</a>
                             </li>
                         </ul>
                     @endif
@@ -39,31 +37,44 @@
                 <p style="text-align:right;">{{$alert->edit}}</p>
             </div>
             <div class="img">
-                <img class="place-img" src="{{$alert->image}}" width="450" height="450" style="border-bottom:solid; border-right:solid; border-left:solid; border-width:thin;">
+                <img class="place-img" src="{{$alert->image}}" width="80%" height="auto" style="border-bottom:solid; border-right:solid; border-left:solid; border-width:thin;">
             </div>
-            <div class="side" style="height: 70px; width:450px;">
-                <h2>{{$alert->title}}</h2>
-                <div class="fav-btn" style="font-size:x-large;">
-                    <span>
-                        @include('favorites.favorite_button', ['alert'=>$alert])
-                    </span>
-                    <span id="favorite_count{{$alert->id}}">{{count($alert->favorited)}}</span>
+            <div style="width:80%; display:inline-block;">
+                <div class="side">
+                    <h4>{{$alert->title}}</h4>
+                    <div class="fav-btn" style="font-size:x-large;">
+                        <span>
+                            @include('favorites.favorite_button', ['alert'=>$alert])
+                        </span>
+                        <span id="favorite_count{{$alert->id}}">{{count($alert->favorited)}}</span>
+                    </div>
                 </div>
             </div>
         </div>
-        @include('commons.map')
+        <div class="col-md-6">
+            <span style="vertical-align:middle;">
+                <div class="row map">
+                    <div id="map" style="border:solid; border-width:thin; width:80%; height:350px;"></div>
+                </div>
+            </span>
+            @include('commons.map')
+        </div>
     </div>
-    <p style="font-weight:bold;">メッセージ</p>
+    <p style="font-weight:bold; margin-top:8px;">メッセージ</p>
     <div class='form-row'>
         <div class='col-md-7'>
-            <table class="table table-bordered">
-                <tr>
-                    <td height="147" style="font-size:1.3em;">{{ $alert->content }}</td>
+            <table class="justify-content-center" style="display:flex; margin-top:5px;">
+                <tr class="message_parent">
+                    <td class="table-bordered" id="message" style="font-size:1.2em; min-height:147px;">
+                        <span style="margin-left:10px;">
+                            {{ $alert->content }}
+                        </span>
+                    </td>
                 </tr>
             </table>
         </div>
         <div class='col-md-5'>
-            <table class="table table-bordered">
+            <table class="table table-bordered" height="147" style="margin-top:5px;">
                 <tr>
                     <th>エリア</th>
                     <td>{{ $alert->area }}</td>
@@ -79,148 +90,151 @@
             </table>
         </div>
     </div>
-    
-    <form id="form" method="POST" action="/ajax">
-        <div class="form-group">
-            {{ csrf_field() }}
-            <input type="hidden" name="alert_id" value="{{$alert->id}}">
-            <label for="comment" class="comment">コメント</label>
-            <textarea class="form-control" id="comment" name="comment" style="font-size:1.3em;"></textarea>
+    <div class='form-row'>
+        <div class="col-sm-8 offset-sm-2">
+            <form id="form" method="POST" action="/ajax">
+                <div class="form-group">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="alert_id" value="{{$alert->id}}">
+                    <label for="comment" class="comment"style="font-weight:bold;">コメント</label>
+                    <textarea class="form-control" id="comment" name="comment" style="font-size:1.3em;"></textarea>
+                </div>
+                <input type="submit" class="btn btn-primary" value="コメントする" style="float:right;">
+            </form>
         </div>
-        <input type="submit" class="btn btn-primary" value="コメントする" style="float:right;">
-    </form>
-    <div id="results"style=" margin-top:100px;"></div>
-    <div align="left" style="margin-top:70px;">
+    </div>
+    <div id="results" style="margin-bottom:10px;"></div>
+    <div style="margin-bottom:10px;">
         @if(count($alertcomments)>0)
             @foreach ($alertcomments as $alertcomment)
                 <div class="form-row">
                     <div class="col-sm-8 offset-sm-2">
-                        <div class="card alert-comment alertcomment-body-{{$alertcomment->id}}" style="height: 220px; cursor:pointer; margin-top:10px;" onclick="postData({{$alertcomment->id}})">
+                        <div class="card alert-comment alertcomment-body-{{$alertcomment->id}}" style="min-height: 150px; cursor:pointer; margin-top:10px;" onclick="postData({{$alertcomment->id}})">
                             <div class="side" style="margin-left:8px; margin-top:8px;">
                                 <a href="/users/{{$alertcomment->user->id}}" onclick="event.stopPropagation();">
                                     <div>
                                         @if($alertcomment->user->image == null)
-                                            <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 35) }}" alt="" style="margin-right:15px;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
+                                            <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 35) }}" alt="" style="margin-right:15px; border-radius:50%;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
                                         @else
-                                            <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
+                                            <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px; border-radius:50%;" onclick="location:href='/users/{{$alertcomment->user->id}}';">
                                         @endif
-                                        <span style="color:black;">{{$alertcomment->user->name}}</span>
+                                        <span class="commentuser_name" style="color:black;">{{$alertcomment->user->name}}</span>
                                     </div>
                                 </a>
                                 <small>
                                     <span style="text-align:right; list-style: none; margin-right:8px;">{{$alertcomment->time}}</span>
                                 </small>
                             </div>
-                            <p style="margin-top:10px; margin-left:60px;">{{$alertcomment->comment}}</p>
-                            <ul class="icons" style="list-style: none;">
-                                <li>
-                                    <span class="far fa-comment icon" style="color:black;" onclick="openCommentModal({{$alertcomment->id}}); event.stopPropagation();"></span> 
-                                 </li>
-                                <li>
-                                    @if(Auth::id() === $alertcomment->user_id)
-                                        <span class="fa fa-trash fa-lg icon" style="color:black;" onclick="openDeleteModal({{$alertcomment->id}}); event.stopPropagation();"></span> 
-                                    @endif
-                                </li>
-                            </ul>
+                            <p style="margin-top:10px; margin-left:60px; margin-right:10px;">{{$alertcomment->comment}}</p>
+                            <p style="margin-top:8px;">
+                                <ul class="icons" style="list-style: none;">
+                                    <li>
+                                        <span class="far fa-comment icon" style="color:black;" onclick="openCommentModal({{$alertcomment->id}}); event.stopPropagation();"></span> 
+                                     </li>
+                                    <li>
+                                        @if(Auth::id() === $alertcomment->user_id)
+                                            <span class="fa fa-trash fa-lg icon" style="color:black;" onclick="openDeleteModal({{$alertcomment->id}}); event.stopPropagation();"></span> 
+                                        @endif
+                                    </li>
+                                </ul>
+                            </p>
                         </div>
-                    </div>
-                </div>
-                
-                <!--ボタン・リンククリック後に表示される画面の内容 -->
-                <div class="modal fade" id="alertcomment-comment-thread{{$alertcomment->id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4></h4>
-                                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times" style="cursor:pointer;"></span></button>
+                        
+                        <!--ボタン・リンククリック後に表示される画面の内容 -->
+                        <div class="modal fade" id="alertcomment-comment-thread{{$alertcomment->id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="height:35px;">
+                                        <h4></h4>
+                                        <span class="fa fa-times fa-xs" style="cursor:pointer;" data-dismiss="modal"></span>
+                                    </div>
+                                     <div style="margin-right:7px; margin-left:7px;">
+                                        @if(count($alertcomments)>0)
+                                            <p>
+                                                <div id="deleted{{$alertcomment->id}}"></div>
+                                            </p>
+                                            <div> 
+                                                @if($alertcomment->parent_id !== null)
+                                                    @if($alertcomments->where('id', $alertcomment->parent_id)->first() !== null)
+                                                        <div id="upData{{$alertcomment->id}}" style="min-height: 150px;"></div>
+                                                    @endif
+                                                @endif
+                                                <div class="card" style="min-height:150px;">
+                                                    <div class="side" style="margin-left:8px; margin-top:8px;">
+                                                        <a href="/users/{{$alertcomment->user->id}}">
+                                                            @if($alertcomment->user->image == null)
+                                                                <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 35) }}" alt="" style="margin-right:15px; border-radius:50%;">
+                                                            @else
+                                                                <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px; border-radius:50%;">
+                                                            @endif
+                                                            <span id="modal-user_name{{$alertcomment->id}}" style="color:black;"></span>
+                                                        </a>
+                                                        <small>
+                                                            <span id="modal-time{{$alertcomment->id}}" style="text-align:right; list-style: none; margin-right:8px;"></span>
+                                                        </small>
+                                                    </div>
+                                                    <p style="margin-top:10px; margin-left:60px;">
+                                                        <span id="modal-comment{{$alertcomment->id}}"></span>
+                                                    </p>
+                                                </div>
+                                                @if($alertcomments->where('parent_id', $alertcomment->id)->first() !== null)
+                                                    <div style="max-height:20px;">
+                                                        <div id="vertical{{$alertcomment->id}}"></div>
+                                                    </div>
+                                                    <div id="underDatas{{$alertcomment->id}}"></div>
+                                                @endif
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="blank"></div>
+                                </div>
                             </div>
-                             <div class="modal-body">
-                                @if(count($alertcomments)>0)
-                                    <p>
-                                        <div id="deleted{{$alertcomment->id}}"></div>
-                                    </p>
-                                    <div> 
-                                        @if($alertcomment->parent_id !== null)
-                                            @if($alertcomments->where('id', $alertcomment->parent_id)->first() !== null)
-                                                <div class="card card-body" style="height: 220px; margin-bottom:10px;">
-                                                    <div id="upData{{$alertcomment->id}}"></div>
-                                                </div>
-                                            @endif
-                                        @endif
-                                        <div class="card" style="height: 220px; margin-bottom:10px;">
-                                            <div class="card-body">
-                                                <div class="side" style="margin-left:8px; margin-top:8px;">
-                                                    <a href="/users/{{$alertcomment->user->id}}">
-                                                        @if($alertcomment->user->image == null)
-                                                            <img class="img-fluid float-left user-img" src="{{ Gravatar::src($alertcomment->user->email, 35) }}" alt="" style="margin-right:15px;">
-                                                        @else
-                                                            <img class="float-left user-img" src="{{$alertcomment->user->image}}" width="35" height="35" style="margin-right:15px;">
-                                                        @endif
-                                                        <span id="modal-user_name{{$alertcomment->id}}" style="color:black;"></span>
-                                                    </a>
-                                                    <small>
-                                                        <span id="modal-time{{$alertcomment->id}}" style="text-align:right; list-style: none; margin-right:8px;"></span>
-                                                    </small>
-                                                </div>
-                                                <p style="margin-top:10px; margin-left:60px;">
-                                                    <span id="modal-comment{{$alertcomment->id}}"></span>
-                                                </p>
+                        </div>
+                        
+                        <!--ボタン・リンククリック後に表示される画面の内容 -->
+                        <div class="modal fade" id="alertcomment-comment{{$alertcomment->id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">コメント</h4>
+                                        <button id="delete-modal{{$alertcomment->id}}" type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        @include('commons.error_messages')
+                                        <form id="comment{{$alertcomment->id}}" method="POST" action="/ajax">
+                                            <div class="form-group">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="alert_id" value="{{$alert->id}}">
+                                                <input type="hidden" name="parent_id" value="{{$alertcomment->id}}">
+                                                <textarea class="form-control" name="comment" style="font-size:1.3em;"></textarea>
                                             </div>
-                                        </div>
-                                        @if($alertcomments->where('parent_id', $alertcomment->id)->first() !== null)
-                                            <div class="card card-body" style="height: 220px;">
-                                                <div id="underDatas{{$alertcomment->id}}"></div>
-                                            </div>
-                                        @endif
+                                            <button type="button" class="comment-button btn btn-primary" style="float:right;">コメントする</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                @if ($errors->has('comment'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('comment') }}
                                     </div>
                                 @endif
                             </div>
                         </div>
-                    </div>
-                </div>
-                
-                <!--ボタン・リンククリック後に表示される画面の内容 -->
-                <div class="modal fade" id="alertcomment-comment{{$alertcomment->id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">コメント</h4>
-                                <button id="delete-modal{{$alertcomment->id}}" type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
-                            </div>
-                            <div class="modal-body">
-                                @include('commons.error_messages')
-                                <form id="comment{{$alertcomment->id}}" method="POST" action="/ajax">
-                                    <div class="form-group">
-                                        {{ csrf_field() }}
-                                        <input type="hidden" name="alert_id" value="{{$alert->id}}">
-                                        <input type="hidden" name="parent_id" value="{{$alertcomment->id}}">
-                                        <textarea class="form-control" name="comment" style="font-size:1.3em;"></textarea>
+                        
+                        <!--ボタン・リンククリック後に表示される画面の内容 -->
+                        <div class="modal fade" id="alertcomment-delete{{$alertcomment->id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">投稿削除確認画面</h4>
+                                        <span class="fa fa-times" data-dismiss="modal" style="cursor:pointer;"></span>
                                     </div>
-                                    <button type="button" class="comment-button btn btn-primary" style="float:right;">コメントする</button>
-                                </form>
-                            </div>
-                        </div>
-                        @if ($errors->has('comment'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('comment') }}
-                            </div>
-                        @endif
-                    </div>
-                </div>
-                
-                <!--ボタン・リンククリック後に表示される画面の内容 -->
-                <div class="modal fade" id="alertcomment-delete{{$alertcomment->id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">投稿削除確認画面</h4>
-                                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
-                            </div>
-                            <div class="modal-body">
-                                <label>本当に削除しますか？（この操作は取り消しできません。）</label>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-danger" onclick="postDeletedata({{$alertcomment->id}})" data-dismiss="modal">削除</button>
+                                    <div class="modal-body">
+                                        <label>本当に削除しますか？（この操作は取り消しできません。）</label>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-danger" onclick="postDeletedata({{$alertcomment->id}})" data-dismiss="modal">削除</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -230,24 +244,27 @@
     </div>
     
     <!--ボタン・リンククリック後に表示される画面の内容 -->
-    <div class="modal fade" id="alert-delete" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal fade" id="alert-delete{{$alert->id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">投稿削除確認画面</h4>
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span></button>
+                    <span class="fa fa-times" data-dismiss="modal" style="cursor:pointer;"></span>
                 </div>
                 <div class="modal-body">
                     <label>本当に削除しますか？（この操作は取り消しできません。）</label>
                 </div>
                 <div class="modal-footer">
-                    {!! Form::model($alert, ['route' => ['alerts.destroy', $alert->id], 'method' => 'delete']) !!}
+                    <form action="{{ route('alertdestroys.destroy', [$alert->id]) }}" method="post">
+                        {{ csrf_field() }}
+                        {{ method_field('delete') }}
                         <input class="btn btn-danger" type="submit" value="削除">
-                    {!! Form::close() !!}
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="{{ asset('/js/md5.js') }}"></script>
     <script src="{{ asset('/js/comments_display.js') }}"></script>
@@ -257,8 +274,70 @@
     <script src="{{asset('/js/favorite.js')}}"></script>
     <script src="{{asset('/js/comment_ajax.js')}}"></script>
     <style>
-        .comment{
-            font-size:35px;
+        #message{
+            word-wrap:break-word;
+        }
+
+        @media screen and (max-width: 320px){
+             #message{
+               width:250px;
+            }
+            .commentuser_name{
+                max-width: 80px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                display:inline-block;
+            }
+        }
+        
+        @media screen and (min-width: 321px) and (max-width: 559px) {
+            #message{
+               width:345px;
+            }
+        }
+        
+        @media screen and (min-width: 560px) and (max-width: 775px) {
+            #message{
+               width:398.33px;
+            }
+            .map{
+                margin-top:40px;
+            }
+            .commentuser_name{
+                max-width: 160px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                display:inline-block;
+            }
+        }
+        
+        @media screen and (min-width: 776px) and (max-width: 991px) {
+            #message{
+               width:398.33px;
+            }
+            .map{
+                margin-top:40px;
+            }
+        }
+        
+        @media screen and (min-width: 992px) and (max-width: 1279px) {
+            #message{
+               width:535px;
+            }
+            .map{
+                margin-top:90px;
+            }
+        }
+    
+        @media screen and (min-width:1280px) {
+            #message{
+               width:642px;
+            }
+            .map{
+                margin-top:120px;
+            }
         }
         .side{
           display: flex;
@@ -302,6 +381,29 @@
           border-bottom-color: transparent;
           transform: translateY(0.1875em);
         }
-        
-    </style>
+        #map {
+          margin: auto;
+        }
+        .map {
+          display: flex;
+        }
+       .message_parent{
+           display:flex;
+       }
+        .user_name{
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .vertical_line{
+          margin       : auto;
+          width        : 3px;
+          height       : 20px;
+          background   : black;
+        }
+.blank{
+    margin-bottom:10px;
+}
+        </style>
 @endsection
