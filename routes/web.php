@@ -42,7 +42,8 @@ Route::get('guest', 'Auth\LoginController@authenticate')->name('login.guest');
 // ユーザ機能
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'destroy', 'update', 'edit']]);
-    Route::resource('alerts', 'AlertsController'); 
+    Route::delete('alertdestroys/{id}', 'AlertdestroysController@destroy')->name('alertdestroys.destroy');
+    Route::resource('alerts', 'AlertsController');
     Route::resource('post_searches', 'Post_SearchesController', ['only' => ['index']]);
     Route::resource('area_searches', 'Area_SearchesController', ['only' => ['index']]);
     Route::resource('unsubscribe', 'UnsubscribesController', ['only' => ['index']]);
