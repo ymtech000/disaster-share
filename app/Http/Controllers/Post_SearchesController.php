@@ -16,7 +16,7 @@ class Post_SearchesController extends Controller
             $searches = $request->input('search');
             // 検索ワード入力フォームで入力した文字列を含むカラムを取得
             if ($request->has('search') && $searches != '') {
-                $alerts = $query->where('content', 'like', '%'.$searches.'%')->orWhere('area', 'like', '%'.$searches.'%')->orWhere('location', 'like', '%'.$searches.'%')->get();
+                $alerts = $query->where('content', 'like', '%'.$searches.'%')->orWhere('area', 'like', '%'.$searches.'%')->orWhere('location', 'like', '%'.$searches.'%')->paginate(9);
             }   
             return view('post_searches.index',[
                 'alerts' => $alerts

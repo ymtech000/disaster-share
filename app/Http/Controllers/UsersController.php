@@ -26,7 +26,7 @@ class UsersController extends Controller
     {
         $user = User::find($id);
        
-        $alerts = $user->alerts()->orderBy('created_at', 'desc')->paginate(10);
+        $alerts = $user->alerts()->orderBy('created_at', 'desc')->paginate(8);
 
         $data = [
             'user' => $user,
