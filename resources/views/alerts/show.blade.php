@@ -57,7 +57,6 @@
                     <div id="map" style="border:solid; border-width:thin; width:80%; height:350px;"></div>
                 </div>
             </span>
-            @include('commons.map')
         </div>
     </div>
     <p style="font-weight:bold; margin-top:8px;">メッセージ</p>
@@ -264,7 +263,7 @@
             </div>
         </div>
     </div>
-
+    <span id="js-getVariable" data-name="{{ $alert }}"></span>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="{{ asset('/js/md5.js') }}"></script>
     <script src="{{ asset('/js/comments_display.js') }}"></script>
@@ -273,6 +272,8 @@
     <script src="{{asset('/js/delete_modal.js')}}"></script>
     <script src="{{asset('/js/favorite.js')}}"></script>
     <script src="{{asset('/js/comment_ajax.js')}}"></script>
+    <script src="{{asset('/js/map.js')}}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoKnN8__KItXFDswfAfs_y3VHwfbX3_ms&callback=initMap"></script>
     <style>
         #message{
             word-wrap:break-word;
