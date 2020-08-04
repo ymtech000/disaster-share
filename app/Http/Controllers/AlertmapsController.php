@@ -16,7 +16,7 @@ class AlertmapsController extends Controller
                 
                 $data = [
                     'user' => $user,
-                    'maps' => $alerts,
+                    'alerts' => $alerts,
                 ];
                 
                 return view('alerts.alertmaps', $data);

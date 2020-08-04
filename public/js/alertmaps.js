@@ -2,14 +2,14 @@ var map;
 var marker = [];
 var markerData = [];
 var infoWindow = [];
-var maps = @json($maps);
-
-for (var i = 0; i < maps.length; i++){
+const datas = $('#js-getVariable').data();
+console.log(datas['name']);
+for (var i = 0; i < datas['name'].length; i++){
     markerData.push({
-        id: Number(maps[i].id),
-        name: maps[i].content,
-        lat: Number(maps[i].lat),
-        lng: Number(maps[i].lng),
+        id: Number(datas['name'][i].id),
+        name: datas['name'][i].content,
+        lat: Number(datas['name'][i].lat),
+        lng: Number(datas['name'][i].lng),
     });
 }
 
@@ -22,7 +22,7 @@ function initMap(){
         });
          
     // マーカー毎の処理
-    for (var i = 0; i < maps.length; i++){
+    for (var i = 0; i < datas['name'].length; i++){
         for (var i = 0; i < markerData.length; i++) {
             markerLatLng = new google.maps.LatLng({lat: markerData[i]['lat'], lng: markerData[i]['lng']}); // 緯度経度のデータ作成
             marker[i] = new google.maps.Marker({ // マーカーの追加
