@@ -14,7 +14,7 @@ $(function() {
             // 画像表示
             var reader = new FileReader();
             reader.onload = function() {
-                var img_src = $('<img width="135" height="135">').attr('src', reader.result);
+                var img_src = $('<img class="file_image">').attr('src', reader.result);
                 $('#fileimg').html(img_src);
             };
             reader.readAsDataURL(file);

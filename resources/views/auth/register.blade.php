@@ -26,11 +26,13 @@
                 
                 <div class="form-group">
                     {!! Form::label('thefile', '画像（任意）') !!}
-                    <label>
-                        <span class="fa fa-file-image inline-block" style="cursor: pointer;"></span>
-                        <input type="file" style="display:none;" name="thefile">
-                    </label>
-                    <span id="fileimg" class="inline-block"></span>
+                    <p>
+                        <label>
+                            <span class="fa fa-file-image inline-block" style="cursor: pointer;"></span>
+                            <input type="file" style="display:none;" name="thefile">
+                        </label>
+                        <span id="fileimg" class="inline-block"></span>
+                    </p>
                 </div>
 
                 <div class="form-group">
@@ -54,6 +56,10 @@
         .inline-block{
             display: inline-block;
             vertical-align: top;
+        }
+        .file_image{
+            width:95px;
+            height:95px;
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
