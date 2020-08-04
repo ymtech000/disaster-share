@@ -14,7 +14,7 @@
                 @endif
             </div>
             <div class="form-group">
-                {!! Form::label('name', '氏名') !!}
+                {!! Form::label('name', '名前(15字以内)') !!}
                 {!! Form::text('name', old('name'), ['class' => 'form-control']) !!}
             </div>
             
@@ -35,12 +35,12 @@
             </div>
         
             <div class="form-group">
-                {!! Form::label('introduction', '自己紹介（任意）') !!}
+                {!! Form::label('introduction', '自己紹介（任意, 140字以内）') !!}
                 <textarea class="form-control" name="introduction" id="introduction" value = "{{ old('introduction') }}"></textarea>
             </div>
             
             <div class="form-group">
-                {!! Form::label('password', '新しいパスワード（任意）') !!}
+                {!! Form::label('password', '新しいパスワード（任意, 8字以上）') !!}
                 {!! Form::password('password', ['class' => 'form-control']) !!}
             </div>
             

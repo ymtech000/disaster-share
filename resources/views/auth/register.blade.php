@@ -10,7 +10,7 @@
             {!! Form::open(['route' => 'signup.post', 'files' => true]) !!}
             {{ csrf_field() }}
                 <div class="form-group">
-                    {!! Form::label('name', '氏名') !!}
+                    {!! Form::label('name', '名前(15字以内)') !!}
                     {!! Form::text('name', old('name'), ['class' => 'form-control']) !!}
                 </div>
 
@@ -20,7 +20,7 @@
                 </div>
                 
                 <div class="form-group">
-                    {!! Form::label('introduction', '自己紹介(任意)') !!}
+                    {!! Form::label('introduction', '自己紹介(任意, 140字以内)') !!}
                     {!! Form::textarea('introduction', null, ['class' => 'form-control']) !!}
                 </div>
                 
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('password', 'パスワード') !!}
+                    {!! Form::label('password', 'パスワード(8字以上)') !!}
                     {!! Form::password('password', ['class' => 'form-control']) !!}
                 </div>
 
