@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <h1 class="text-center font-weight-bold font-family-Tahoma">EDIT PAGE</h1>
     {!! Form::model($user, ['route' => ['users.update', $user->id], 'method' => 'put', 'files' => true]) !!}
      {{ csrf_field() }}
     <div class="form-row">
