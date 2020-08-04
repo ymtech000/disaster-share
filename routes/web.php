@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('post_searches', 'Post_SearchesController', ['only' => ['index']]);
     Route::resource('area_searches', 'Area_SearchesController', ['only' => ['index']]);
     Route::resource('unsubscribe', 'UnsubscribesController', ['only' => ['index']]);
-    Route::resource('alertcomments', 'AlertcommentsController', ['only' => ['destroy', 'update', 'edit']]);
+    Route::resource('alertcomments', 'AlertcommentsController', ['only' => ['destroy']]);
     Route::post('alertcomments/{id}/ajax', 'AlertcommentsController@ajax');
     Route::get('ajax/{id}', 'AlertcommentsController@ajaxindex');
     Route::post('ajax', 'AlertcommentsController@ajaxstore');
