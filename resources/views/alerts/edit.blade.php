@@ -112,4 +112,8 @@
           display: flex;
           justify-content:space-between;
         }
+    .file_image{
+            width:95px;
+            height:95px;
+        }
 </style>
