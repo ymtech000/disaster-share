@@ -17,30 +17,7 @@
                  {!! Form::close() !!}     
             </div>
         </div>
-    </div>
+    </div>    
     <!--検索条件に一致した投稿を表示-->
     @include('alerts.posts', ['alerts'=>$alerts])
-    <style>
-    .user-img{
-        border-radius:50%;
-        margin-bottom:10px;
-    }
-    .side{
-      display: flex;
-      justify-content:space-between;
-    }
-    
-    .icons li{
-        display:inline-block;
-    }
-    .search_form{
-       display: flex;
-       list-style:none;
-       width:100%;
-       justify-content: center;
-    }
-    .edit li{
-            display:inline-block;
-        }
-</style>
 @endsection

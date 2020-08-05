@@ -4,7 +4,7 @@
     <div class="text-center">
         <h1>ログイン</h1>
     </div>
- @include('commons.error_messages')
+    @include('commons.error_messages')
     <div class="row">
         <div class="col-sm-6 offset-sm-3">
 
@@ -29,10 +29,5 @@
              </div>
         </div>
     </div>
+    <link rel="stylesheet" href="{{asset('/css/auth_login.css')}}">
 @endsection
-<style>
-    .side{
-          display: flex;
-          justify-content:space-between;
-        }
-</style>

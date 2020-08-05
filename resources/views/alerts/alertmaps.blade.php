@@ -50,22 +50,14 @@
                 </ul>
             </div>
         </nav>
-        
         <div id="map"></div>
         <span id="js-getVariable" data-name="{{ $alerts }}"></span>
-        <style>
-            #map {
-                background-position: center center;
-                background-repeat: no-repeat;
-                background-size: cover;
-                height: 100vh;
-            }
-        </style>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script src="{{asset('/js/alertmaps.js')}}"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoKnN8__KItXFDswfAfs_y3VHwfbX3_ms&callback=initMap"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
+        <link rel="stylesheet" href="{{asset('/css/alertmaps.css')}}">
     </body>
 </html>

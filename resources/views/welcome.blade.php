@@ -50,37 +50,18 @@
             </div>
         </nav>
         <div class="full-image">
-            <div class="text-center app-title">
-                <h1>DISASTER SHARE</h1>
-                <h5>災害時に情報とその場所を共有することのできるアプリです。</h5>
-                <p>{!! link_to_route('signup.get', '新規登録はこちら', [], ['class' => 'btn btn-lg btn-primary']) !!}</p>
+            <div class="bg-mask">
+                <div class="app-title">
+                    <h1>DISASTER SHARE</h1>
+                    <h3>災害情報共有サービス</h3>
+                    <p>{!! link_to_route('signup.get', '新規登録はこちら', [], ['class' => 'btn btn-lg btn-primary']) !!}</p>
+                </div>
             </div>
         </div>
-        <script type="text/javascript" src="/mod/LKBNX/v2.23/demo/cn/cn.php"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
+        <link rel="stylesheet" href="{{asset('/css/welcome.css')}}">
     </body>
 </html>
-<style>
-    .full-image{
-        background:url("{{asset('assets/dawn.jpg')}}");
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        height: 100vh;
-    }
-    h1{
-        opacity:0.7;
-        color:white;
-    }
-    h5{
-        /*opacity:0.7;*/
-        
-        padding-top:160px;
-    }
-    .app-title{
-        padding-top:100px;
-    }
-</style>

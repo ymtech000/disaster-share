@@ -78,34 +78,6 @@
     @endif
     {{ $alerts->links('pagination::bootstrap-4') }}
 </div>
-<style>
-    .title{
-        font-size:18px;
-        max-width: 320px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-    .user_name{
-        font-size:18px;
-        max-width: 250px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-     @media screen and (min-width: 565px) and (max-width: 991px) {
-        .side{
-           font-size:small;
-        }
-    }
-     @media screen and (max-width: 575px) {
-         .side{
-           font-size:small;
-        }
-        .alert_card{
-           max-width:300px;
-           margin:0 auto;
-        }
-    }
-</style>
 <script src="{{asset('/js/alerts_response.js')}}"></script>
+<script src="{{ asset('/js/area_searches.js') }}"></script>
+<link rel="stylesheet" href="{{asset('/css/alerts_posts.css')}}">

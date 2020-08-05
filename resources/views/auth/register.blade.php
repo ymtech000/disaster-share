@@ -49,20 +49,8 @@
             {!! Form::close() !!}
         </div>
     </div>
-    <style>
-        .fa-file-image{
-               font-size:70px;
-            }
-        .inline-block{
-            display: inline-block;
-            vertical-align: top;
-        }
-        .file_image{
-            width:95px;
-            height:95px;
-        }
-    </style>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="{{ asset('/js/file_upload.js') }}"></script>
+    <link rel="stylesheet" href="{{asset('/css/auth_register.css')}}">
 @endsection
 
