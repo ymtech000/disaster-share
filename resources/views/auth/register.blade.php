@@ -10,7 +10,7 @@
             {!! Form::open(['route' => 'signup.post', 'files' => true]) !!}
             {{ csrf_field() }}
                 <div class="form-group">
-                    {!! Form::label('name', '氏名') !!}
+                    {!! Form::label('name', '名前(15字以内)') !!}
                     {!! Form::text('name', old('name'), ['class' => 'form-control']) !!}
                 </div>
 
@@ -20,21 +20,23 @@
                 </div>
                 
                 <div class="form-group">
-                    {!! Form::label('introduction', '自己紹介(任意)') !!}
+                    {!! Form::label('introduction', '自己紹介(任意, 140字以内)') !!}
                     {!! Form::textarea('introduction', null, ['class' => 'form-control']) !!}
                 </div>
                 
                 <div class="form-group">
                     {!! Form::label('thefile', '画像（任意）') !!}
-                    <label>
-                        <span class="fa fa-file-image inline-block" style="cursor: pointer;"></span>
-                        <input type="file" style="display:none;" name="thefile">
-                    </label>
-                    <span id="fileimg" class="inline-block"></span>
+                    <p>
+                        <label>
+                            <span class="fa fa-file-image inline-block" style="cursor: pointer;"></span>
+                            <input type="file" style="display:none;" name="thefile">
+                        </label>
+                        <span id="fileimg" class="inline-block"></span>
+                    </p>
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('password', 'パスワード') !!}
+                    {!! Form::label('password', 'パスワード(8字以上)') !!}
                     {!! Form::password('password', ['class' => 'form-control']) !!}
                 </div>
 
@@ -54,6 +56,10 @@
         .inline-block{
             display: inline-block;
             vertical-align: top;
+        }
+        .file_image{
+            width:95px;
+            height:95px;
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>

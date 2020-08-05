@@ -22,9 +22,9 @@
                 <input type="hidden" name='edit' id='edit' class="form-control" value="(編集済み)">
             </div>
             <div class='col-md-5'>
-                {!! Form::label('area', 'エリア') !!}
+                {!! Form::label('area', 'エリア:') !!}
                 @include('commons.area')
-                {!! Form::label('location', '場所') !!}
+                {!! Form::label('location', '場所(15字以内):') !!}
                 {!! Form::text('location', null, ['class' => 'form-control']) !!}
                 <div class="box">
                     <div class="search">
@@ -111,5 +111,9 @@
     .side{
           display: flex;
           justify-content:space-between;
+        }
+    .file_image{
+            width:95px;
+            height:95px;
         }
 </style>

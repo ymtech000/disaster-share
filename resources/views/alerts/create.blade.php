@@ -21,9 +21,9 @@
                 {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
             </div>
             <div class='col-md-5'>
-                {!! Form::label('area', 'エリア') !!}
+                {!! Form::label('area', 'エリア:') !!}
                 @include('commons.area')
-                {!! Form::label('location', '場所') !!}
+                {!! Form::label('location', '場所(15字以内):') !!}
                 {!! Form::text('location', null, ['class' => 'form-control']) !!}
                 <div class="box">
                     <div class="search">
@@ -111,4 +111,8 @@
           display: flex;
           justify-content:space-between;
         }
+    .file_image{
+        width:115px;
+        height:115px;
+    }
 </style>
