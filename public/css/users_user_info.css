@@ -1,0 +1,17 @@
+.follow_button{
+    width:185px;
+}
+h1{
+    text-align:center;
+}
+@media screen and (min-width: 768px) and (max-width: 991px){
+    .name{
+        margin-left:50px;
+        margin-top:15px;
+    }
+}
+@media screen and (min-width: 992px){
+    .name{
+        margin-top:15px;
+    }
+}

@@ -80,75 +80,7 @@
     {{ $alerts->links('pagination::bootstrap-4') }}
 </div>
 <script src="{{asset('/js/alerts_response.js')}}"></script>
-<style>
-    .user-img{
-        border-radius:50%;
-        margin-bottom:10px;
-    }
-    .submit-select{
-        width:170px;
-        text-align: right;
-    }
-    
-    .side{
-      display: flex;
-      justify-content:space-between;
-    }
-    .icons{
-        text-align:right;
-    }
-    
-    .icons li{
-        display:inline-block;
-    }
-
-    .media{
-        float:left;
-        padding-right:15px;
-        padding-left:15px;
-    }
-    .user-img{
-        border-radius:50%;
-        margin-right:10px;
-        margin-bottom:10px;
-    }
-    .edit li{
-        display:inline-block;
-    }
-    
-    .card-footer{
-        position: relative;
-    }
-    .icons{
-        position: absolute;
-          right: 0;
-          bottom: 0;
-          margin-right:8px;
-    }
-    .user_name{
-        max-width: 250px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-    .title{
-        font-size:18px;
-        max-width: 250px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-    
-    @media screen and (max-width: 575px) {
-        .alert_card{
-           max-width:300px;
-           text-align:center;
-           margin:0 auto;
-        }
-    }
-    
-</style>
-
+<link rel="stylesheet" href="{{asset('/css/alerts_alerts.css')}}">
             
             
       
