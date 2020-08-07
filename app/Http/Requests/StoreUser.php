@@ -22,7 +22,7 @@ class StoreUser extends FormRequest
             'name' => 'required|string|max:15',
             'email' => 'required|string|email|max:30',
             'password' => 'nullable|string|min:6|confirmed',
-            'introduction' => 'nullable|string|max:300',
+            'introduction' => 'nullable|string|max:140',
             'thefile' => [
                 'nullable',
                 'file',
@@ -42,7 +42,7 @@ class StoreUser extends FormRequest
             'email.email' => 'メールアドレスが正しくありません。',
             'password.min' => 'パスワードは6字以上で入力してください。',
             'password.confirmed' => 'パスワードが一致しません。',
-            'introduction.max' => '自己紹介は300字以内で入力してください。'
+            'introduction.max' => '自己紹介は140字以内で入力してください。'
         ];
     }
 }

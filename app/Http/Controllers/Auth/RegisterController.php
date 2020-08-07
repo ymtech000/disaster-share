@@ -36,14 +36,14 @@ class RegisterController extends Controller
             'name' => 'required|string|max:15',
             'email' => 'required|string|email|max:30|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'introduction' =>'nullable|max:300',
+            'introduction' =>'nullable|max:140',
             'thefile' => [
                 'nullable',
                 'file',
                 'image',
                 'mimes:jpeg,png',
             ]
-        ] , RegistersUsers::$registerErrorMessage);
+        ] , RegistersUsers:: $registerErrorMessage);
     }
 
     protected function create(array $data)

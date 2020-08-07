@@ -11,4 +11,5 @@ npm-debug.log
 yarn-error.log
 .env
 .DS_Store
-storage/logs/laravel.log
+/storage/logs/laravel.log
+/docker/mysql/mysql-data
