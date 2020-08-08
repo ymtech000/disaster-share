@@ -1,0 +1,16 @@
+@media screen and (min-width: 300px) and (max-width: 559px) {
+     .side{
+        display: flex;
+        justify-content:space-between;
+        margin-top:8px;
+    }
+}
+@media screen and (min-width: 776px){
+    .side{
+        display: flex;
+        justify-content:space-between;
+        margin-top:8px;
+    }
+}
+
+
