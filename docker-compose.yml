@@ -10,11 +10,11 @@ services:
    - ./docker/web/default.conf:/etc/nginx/conf.d/default.conf
    - ./:/var/www/
  app:
-  build: docker/php
+  build:
+   context: .
+   dockerfile: ./docker/php/Dockerfile
   depends_on:
    - mysql
-  volumes:
-   - ./:/var/www/
  mysql:
   image: mysql:5.7
   environment:
