@@ -10,8 +10,9 @@ services:
    - ./docker/web/default.conf:/etc/nginx/conf.d/default.conf
    - ./:/var/www/
  app:
-  build: 
-   context: ./
+  build:
+   context: .
+   dockerfile: ./docker/php/Dockerfile
   depends_on:
    - mysql
  mysql:
