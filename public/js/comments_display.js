@@ -59,7 +59,7 @@ function postData(id){
                     json["upData"].comment +
                 '</p>'+
             '</div>'+
-            '<div class="vertical_line">'+'</div>';
+            '<div class="vertical_line" id="veprtical'+comment.id+'">'+'</div>';
             $upData.append(upData);
             }
         
@@ -68,7 +68,7 @@ function postData(id){
         if(json["underDatas"] ==''){
             $underDatas.parent().remove();
         }else{
-            vertical_line = '<div class="vertical_line">'+'</div>';
+            vertical_line = '<div class="vertical_line" id="vertical'+comment.id+'">'+'</div>';
             $vertical.append(vertical_line);
             json['underDatas'].forEach(function(comment) { 
                 var under_mail_hash = CybozuLabs.MD5.calc(comment.email);
