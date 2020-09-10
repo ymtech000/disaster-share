@@ -121,20 +121,20 @@ jobs:
       - run:
           name: migration # マイグレーションタスクを実行
           command: aws ecs run-task --cluster ${AWS_ECS_CLUSTER_NAME} --task-definition sample-app-migrate
-  workflows:
-    version: 2
-    test:
-      jobs:
-        - build
-        - build_image:
-            requires:
-              - build
-            filters:
-              branches:
-                only: master
-        - deploy:
-            requires:
-              - build_image
-            filters:
-              branches:
-                only: master
+workflows:
+  version: 2
+  test:
+    jobs:
+      - build
+      - build_image:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+      - deploy:
+          requires:
+            - build_image
+          filters:
+            branches:
+              only: master
