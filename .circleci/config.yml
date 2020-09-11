@@ -23,19 +23,19 @@ jobs:
             sudo docker-php-ext-configure gd --with-png-dir=/usr/include --with-jpeg-dir=/usr/include |
             sudo docker-php-ext-install pdo_mysql gd
 
-      # - restore_cache: # composer.jsonのキャッシュがあれば利用
-      #     keys:
-      #     - v1-dependencies-{{ checksum "composer.json" }}
-      #     - v1-dependencies-
+      - restore_cache: # composer.jsonのキャッシュがあれば利用
+          keys:
+          - v1-dependencies-{{ checksum "composer.json" }}
+          - v1-dependencies-
 
       - run:
           name: composer install
           command: composer install -n --prefer-dist
 
-      # - save_cache: # composer.jsonをキャッシュ
-      #     paths:
-      #       - ./vendor
-      #     key: v1-dependencies-{{ checksum "composer.json" }}
+      - save_cache: # composer.jsonをキャッシュ
+          paths:
+            - ./vendor
+          key: v1-dependencies-{{ checksum "composer.json" }}
 
       - run:
           name: migration
