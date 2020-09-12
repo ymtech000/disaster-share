@@ -3,14 +3,21 @@ jobs:
   build: # テストを行うworkflow
     docker:
       - image: circleci/php:7.2.15-fpm
-      - image: circleci/mysql:5.7
-        command: mysqld --default-authentication-plugin=mysql_native_password
-        envirionment: # MySQLの初期設定
+        envirionment:
           - APP_DEBUG: true
           - APP_ENV: circle
           - DB_CONNECTION: mysql
-          - MYSQL_ALLOW_EMPTY_PASSWORD: true
-
+          - DB_HOST: 127.0.0.1
+          - DB_PORT: 3306
+          - DB_DATABASE: test
+          - DB_USERNAME: root
+          - DB_PASSWORD: password
+      - image: circleci/mysql:5.7
+        envirionment: # MySQLの初期設定
+          - MYSQL_DATABASE: test
+          - MYSQL_USER: root
+          - MYSQL_ROOT_PASSWORD: password
+          - DB_HOST: 127.0.0.1
     working_directory: ~/repo
 
     steps:
@@ -22,7 +29,6 @@ jobs:
             sudo apt-get update && sudo apt-get install -y libpng-dev libjpeg-dev |
             sudo docker-php-ext-configure gd --with-png-dir=/usr/include --with-jpeg-dir=/usr/include |
             sudo docker-php-ext-install pdo_mysql gd
-
       - restore_cache: # composer.jsonのキャッシュがあれば利用
           keys:
           - v1-dependencies-{{ checksum "composer.json" }}
@@ -63,7 +69,6 @@ jobs:
           command: |
             ln -s .env.production .env
             sudo chmod -R 777 storage bootstrap/cache
-
       - run:
           name: composer install
           command: composer install -n --prefer-dist
@@ -83,7 +88,6 @@ jobs:
             curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
             sudo python get-pip.py
             sudo pip install awscli
-
       - run:
           name: push docker image # ECRにコンテナイメージをpush
           command: |
@@ -92,7 +96,6 @@ jobs:
             docker push ${AWS_ECR_DOMAIN_APP}:latest
             docker push ${AWS_ECR_DOMAIN_WEB}:$CIRCLE_SHA1
             docker push ${AWS_ECR_DOMAIN_WEB}:latest
-
   deploy:
     docker:
       - image: circleci/python:3.7
@@ -106,7 +109,6 @@ jobs:
           command: |
             wget https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
             mv jq-linux64 jq
-
       - run:
           name: login ecr
           command: $(aws ecr get-login --no-include-email --region ap-northeast-1)
@@ -117,7 +119,6 @@ jobs:
             aws ecs describe-task-definition --task-definition ${AWS_ECS_TASK_NAME} | jq '.taskDefinition | { containerDefinitions: .containerDefinitions }' > task_definition.json
             aws ecs register-task-definition --family ${AWS_ECS_TASK_NAME} --cli-input-json file://task_definition.json
             aws ecs update-service --cluster ${AWS_ECS_CLUSTER_NAME} --service ${AWS_ECS_SERVICE_NAME} --task-definition ${AWS_ECS_TASK_NAME}
-
       - run:
           name: migration # マイグレーションタスクを実行
           command: aws ecs run-task --cluster ${AWS_ECS_CLUSTER_NAME} --task-definition sample-app-migrate
