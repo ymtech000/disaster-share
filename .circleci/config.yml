@@ -17,7 +17,7 @@ jobs:
       - run:
           name: test_setup # テストを行うために必要なライブラリなどのインストール
           command: |
-            sudo apt-get update && sudo apt-get install -y libpng-dev libjpeg-dev |
+            sudo apt-get update && sudo apt-get install -y libpng-dev libjpeg-dev mariadb-client |
             sudo docker-php-ext-configure gd --with-png-dir=/usr/include --with-jpeg-dir=/usr/include |
             sudo docker-php-ext-install pdo_mysql gd
       - restore_cache: # composer.jsonのキャッシュがあれば利用
@@ -36,7 +36,10 @@ jobs:
           command: ln -s .env.circle .env.testing
       - run:
           name: wait mysql
-          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
+          command: |
+            dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
+            mysql -h 127.0.0.1 -u root --execute="SELECT 1 as value FROM DUAL WHERE true"
+            mysql -h 127.0.0.1 -u root --execute="SHOW databases"
       - run:
           name: migration
           command: php artisan migrate --env=circle --database=mysql --seed
@@ -46,7 +49,7 @@ jobs:
 
   build_image:
     docker:
-      - image: circleci/php:7.3.9-fpm
+      - image: circleci/php:7.2.15-fpm
 
     working_directory: ~/repo
 
@@ -61,11 +64,9 @@ jobs:
       - run:
           name: composer install
           command: composer install -n --prefer-dist
-
       - run: # configファイルをキャッシュ
           name: create config cache
           command: php artisan config:cache
-
       - run:
           name: build container # PHPコンテナをビルド
           command: |
