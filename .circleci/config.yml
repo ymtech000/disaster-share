@@ -86,6 +86,7 @@ jobs:
             docker push ${AWS_ECR_DOMAIN_APP}:latest
             docker push ${AWS_ECR_DOMAIN_WEB}:$CIRCLE_SHA1
             docker push ${AWS_ECR_DOMAIN_WEB}:latest
+            
   deploy:
     docker:
       - image: circleci/python:3.7
