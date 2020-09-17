@@ -68,10 +68,15 @@ jobs:
           name: create config cache
           command: php artisan config:cache
       - run:
-          name: build container # PHPコンテナをビルド
+          name: build image # PHPコンテナをビルド
           command: |
-            docker build -t ${AWS_ECR_DOMAIN_APP}:latest --build-arg TZ=${TZ} -f ./docker/php/Dockerfile .
-            docker build -t ${AWS_ECR_DOMAIN_WEB}:latest --build-arg TZ=${TZ} -f ./docker/web/Dockerfile .
+            docker build -t app . -f ./docker/app/Dockerfile 
+            docker build -t web . -f ./docker/web/Dockerfile 
+      - run:
+        name: attach tag # PHPコンテナにタグを付ける
+        command: |
+          docker tag app:latest ${AWS_ECR_DOMAIN_APP}/app:latest
+          docker tag web:latest ${AWS_ECR_DOMAIN_WEB}/web:latest
       - run:
           name: install aws cli # コマンドラインからAWSを操作するためにaws-cliをインストール
           command: |
@@ -82,8 +87,8 @@ jobs:
           name: push docker image # ECRにコンテナイメージをpush
           command: |
             $(aws ecr get-login --no-include-email --region ap-northeast-1)
-            docker push ${AWS_ECR_DOMAIN_APP}:latest
-            docker push ${AWS_ECR_DOMAIN_WEB}:latest
+            docker push ${AWS_ECR_DOMAIN_APP}/app:latest
+            docker push ${AWS_ECR_DOMAIN_WEB}/web:latest
             
   deploy:
     docker:
