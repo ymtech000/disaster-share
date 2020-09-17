@@ -67,7 +67,7 @@ jobs:
       - run:
           name: build image # PHPコンテナをビルド
           command: |
-            docker build -t app . -f ./docker/app/Dockerfile 
+            docker build -t app . -f ./docker/php/Dockerfile 
             docker build -t web . -f ./docker/web/Dockerfile 
       - run:
           name: attach tag # PHPコンテナにタグを付ける
