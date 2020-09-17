@@ -66,10 +66,10 @@ jobs:
           name: create config cache
           command: php artisan config:cache
       - run:
-          name: build image # PHPコンテナをビルド
+          name: build image # PHPイメージをビルド
           command: |
-            docker build -t app . -f ./docker/php/Dockerfile 
-            docker build -t web . -f ./docker/web/Dockerfile 
+            docker build -f ./docker/php/Dockerfile -t app:latest . 
+            docker build -f ./docker/web/Dockerfile -t web:latest . 
       - run:
           name: attach tag # PHPコンテナにタグを付ける
           command: |
