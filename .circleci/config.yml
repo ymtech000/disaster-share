@@ -14,7 +14,6 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - setup_remote_docker
       - run:
           name: test_setup # テストを行うために必要なライブラリなどのインストール
           command: |
@@ -53,7 +52,8 @@ jobs:
       - image: circleci/php:7.2.15-fpm
     working_directory: ~/repo
     steps:
-      - checkout:
+      - checkout
+      - setup_remote_docker
       - run:
           name: setup Laravel # envをproduction用のものに変更&権限設定
           command: |
@@ -65,9 +65,9 @@ jobs:
       - run: # configファイルをキャッシュ
           name: create config cache
           command: php artisan config:cache
-      - run: # dockerを起動させる
-          name: docker start
-          command: systemctl start docker
+      # - run: # dockerを起動させる
+      #     name: docker start
+      #     command: systemctl start docker
       - run:
           name: build image # PHPコンテナをビルド
           command: |
@@ -98,7 +98,6 @@ jobs:
       - run:
           name: install aws cli
           command: sudo pip install awscli
-
       - run:
           name: download jq # JSONファイルを簡単に操作するためにjqをインストール
           command: |
