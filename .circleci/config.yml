@@ -64,6 +64,9 @@ jobs:
       - run: # configファイルをキャッシュ
           name: create config cache
           command: php artisan config:cache
+      - run: # dockerを起動させる
+          name: docker start
+          command: systemctl start docker
       - run:
           name: build image # PHPコンテナをビルド
           command: |
