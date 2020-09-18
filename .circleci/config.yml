@@ -82,6 +82,11 @@ jobs:
             sudo python get-pip.py
             sudo pip install awscli
       - run:
+          name: search command # aws, dockerコマンドのパスを探す
+          command: |
+            which aws
+            which docker
+      - run:
           name: push docker image # ECRにコンテナイメージをpush
           command: |
             $(aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${AWS_ECR_ACCOUNT_URL})
