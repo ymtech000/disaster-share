@@ -86,6 +86,7 @@ jobs:
           command: |
             which aws
             which docker
+            echo $PATH
       - run:
           name: push docker image # ECRにコンテナイメージをpush
           command: |
