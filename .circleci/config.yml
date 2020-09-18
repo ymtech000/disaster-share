@@ -73,8 +73,8 @@ jobs:
       - run:
           name: attach tag # PHPコンテナにタグを付ける
           command: |
-            docker tag app:latest ${AWS_ECR_DOMAIN_APP}:latest
-            docker tag web:latest ${AWS_ECR_DOMAIN_WEB}:latest
+            docker tag app:latest ${AWS_ECR_ACCOUNT_URL}/app:latest
+            docker tag web:latest ${AWS_ECR_ACCOUNT_URL}/web:latest
       - run:
           name: install aws cli # コマンドラインからAWSを操作するためにaws-cliをインストール
           command: |
@@ -84,9 +84,9 @@ jobs:
       - run:
           name: push docker image # ECRにコンテナイメージをpush
           command: |
-            $(aws ecr get-login --no-include-email --region ap-northeast-1)
-            docker push ${AWS_ECR_DOMAIN_APP}:latest
-            docker push ${AWS_ECR_DOMAIN_WEB}:latest
+            $(aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${AWS_ECR_ACCOUNT_URL})
+            docker push ${AWS_ECR_ACCOUNT_URL}/app:latest
+            docker push ${AWS_ECR_ACCOUNT_URL}/web:latest
             
   deploy:
     docker:
