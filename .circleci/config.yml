@@ -103,16 +103,17 @@ jobs:
       - run:
           name: login ecr
           command: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${AWS_ECR_ACCOUNT_URL}
-
       - run:
           name: deploy # 新しいタスク定義ファイルを作成し、ECSに反映させる
           command: |
+            aws configure set region us-east-1
             aws ecs describe-task-definition --task-definition ${AWS_ECS_TASK_NAME} | jq '.taskDefinition | { containerDefinitions: .containerDefinitions }' > task_definition.json
             aws ecs register-task-definition --family ${AWS_ECS_TASK_NAME} --cli-input-json file://task_definition.json
             aws ecs update-service --cluster ${AWS_ECS_CLUSTER_NAME} --service ${AWS_ECS_SERVICE_NAME} --task-definition ${AWS_ECS_TASK_NAME}
       - run:
           name: migration # マイグレーションタスクを実行
           command: aws ecs run-task --cluster ${AWS_ECS_CLUSTER_NAME} --task-definition sample-app-migrate
+
 workflows:
   version: 2
   test:
