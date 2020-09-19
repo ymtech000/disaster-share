@@ -140,9 +140,9 @@ jobs:
             filters:
               branches:
                 only: master
-        - deploy:
-            requires:
-              - build_image
-            filters:
-              branches:
-                only: master
+        # - deploy:
+        #     requires:
+        #       - build_image
+        #     filters:
+        #       branches:
+        #         only: master
