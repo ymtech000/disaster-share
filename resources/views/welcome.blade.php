@@ -54,6 +54,7 @@
                 <div class="app-title">
                     <h1>DISASTER SHARE</h1>
                     <h3>災害情報共有サービス</h3>
+                    <h4>大阪府高槻市を対象とした災害情報共有サービスです。</h4>
                     <p>{!! link_to_route('signup.get', '新規登録はこちら', [], ['class' => 'btn btn-lg btn-primary']) !!}</p>
                 </div>
             </div>
