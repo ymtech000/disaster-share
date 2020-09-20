@@ -85,8 +85,8 @@ jobs:
           name: push docker image # ECRにコンテナイメージをpush
           command: |
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${AWS_ECR_ACCOUNT_URL}
-            docker push ${AWS_ECR_ACCOUNT_URL}/app:latest
-            docker push ${AWS_ECR_ACCOUNT_URL}/web:latest
+            docker push ${AWS_ECR_ACCOUNT_URL}/app:app
+            docker push ${AWS_ECR_ACCOUNT_URL}/web:web
             
   deploy:
     docker:
