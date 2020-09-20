@@ -73,8 +73,8 @@ jobs:
       - run:
           name: attach tag # PHPコンテナにタグを付ける
           command: |
-            docker tag app:latest ${AWS_ECR_ACCOUNT_URL}/app:latest
-            docker tag web:latest ${AWS_ECR_ACCOUNT_URL}/web:latest
+            docker tag app:latest ${AWS_ECR_ACCOUNT_URL}/app:app
+            docker tag web:latest ${AWS_ECR_ACCOUNT_URL}/web:web
       - run:
           name: install aws cli # コマンドラインからAWSを操作するためにaws-cliをインストール
           command: |
