@@ -16,8 +16,8 @@
                                     <a href="#" class="nav-link" data-toggle="dropdown" style="color:black"><span class="fas fa-chevron-down"></span></a>
                                     <ul class="dropdown-menu" style="list-style: none;">
                                         <li class="dropdown-item">
-                                            <a href="{{ route('alerts.edit', ['id' => $alert->id]) }}"><span class="fa fa-edit" style="color:black;"></span></a>
-                                            {!! link_to_route('alerts.edit', '編集', ['id' => $alert->id], ['class' => 'btn btn-default']) !!}
+                                            <a href="{{ route('alerts.edit', [$alert->id]) }}"><span class="fa fa-edit" style="color:black;"></span></a>
+                                            {!! link_to_route('alerts.edit', '編集', [$alert->id], ['class' => 'btn btn-default']) !!}
                                         </li>
                                         <li class="dropdown-item">
                                             <a href="#" type="button" data-toggle="modal" data-target="#alert-delete{{$alert->id}}"><span class="fa fa-trash delete-btn" style="color:black;"></span></a>

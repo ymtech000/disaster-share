@@ -16,13 +16,13 @@
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
                         <ul class="dropdown-menu dropdown-menu-right">
                                 <li class="dropdown-item">
-                                     <a href="{{route('users.show', ['id' => Auth::id()]) }}" style="color:black;"><span class="fa fa-user"></span></a>
-                                    {!! link_to_route('users.show', 'プロフィール', ['id' => Auth::id()], ['class' => 'btn btn-default']) !!}
+                                     <a href="{{route('users.show', [Auth::id()]) }}" style="color:black;"><span class="fa fa-user"></span></a>
+                                    {!! link_to_route('users.show', 'プロフィール', [Auth::id()], ['class' => 'btn btn-default']) !!}
                                 </li>
                                 <li class="dropdown-divider"></li>
                                 <li class="dropdown-item">
-                                    <a href="{{route('users.edit', ['id' => Auth::id()]) }}" style="color:black;"><span class="fa fa-tools"></span></a>
-                                    {!! link_to_route('users.edit', '設定', ['id' => Auth::id()], ['class' => 'btn btn-default']) !!}
+                                    <a href="{{route('users.edit', [Auth::id()]) }}" style="color:black;"><span class="fa fa-tools"></span></a>
+                                    {!! link_to_route('users.edit', '設定', [Auth::id()], ['class' => 'btn btn-default']) !!}
                                 </li>
                                 <li class="dropdown-divider"></li>
                                 <li class="dropdown-item">
