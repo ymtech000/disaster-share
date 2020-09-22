@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('password', 'パスワード(8字以上)') !!}
+                    {!! Form::label('password', 'パスワード(6字以上)') !!}
                     {!! Form::password('password', ['class' => 'form-control']) !!}
                 </div>
 
