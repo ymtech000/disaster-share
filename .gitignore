@@ -13,3 +13,4 @@ yarn-error.log
 .DS_Store
 /storage/logs/laravel.log
 /docker/mysql/mysql-data
+/.phpunit.result.cache
