@@ -26,13 +26,13 @@
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
                             <ul class="dropdown-menu dropdown-menu-right">
                                     <li class="dropdown-item">
-                                         <a href="{{route('users.show', ['id' => Auth::id()]) }}" style="color:black;"><span class="fa fa-user"></span></a>
-                                        {!! link_to_route('users.show', 'プロフィール', ['id' => Auth::id()], ['class' => 'btn btn-default']) !!}
+                                         <a href="{{route('users.show', [Auth::id()]) }}" style="color:black;"><span class="fa fa-user"></span></a>
+                                        {!! link_to_route('users.show', 'プロフィール', [Auth::id()], ['class' => 'btn btn-default']) !!}
                                     </li>
                                     <li class="dropdown-divider"></li>
                                     <li class="dropdown-item">
-                                        <a href="{{route('users.edit', ['id' => Auth::id()]) }}" style="color:black;"><span class="fa fa-tools"></span></a>
-                                        {!! link_to_route('users.edit', '設定', ['id' => Auth::id()], ['class' => 'btn btn-default']) !!}
+                                        <a href="{{route('users.edit', [Auth::id()]) }}" style="color:black;"><span class="fa fa-tools"></span></a>
+                                        {!! link_to_route('users.edit', '設定', [Auth::id()], ['class' => 'btn btn-default']) !!}
                                     </li>
                                     <li class="dropdown-divider"></li>
                                     <li class="dropdown-item">
@@ -54,6 +54,7 @@
                 <div class="app-title">
                     <h1>DISASTER SHARE</h1>
                     <h3>災害情報共有サービス</h3>
+                    <h4>大阪府高槻市を対象とした災害情報共有サービスです。</h4>
                     <p>{!! link_to_route('signup.get', '新規登録はこちら', [], ['class' => 'btn btn-lg btn-primary']) !!}</p>
                 </div>
             </div>

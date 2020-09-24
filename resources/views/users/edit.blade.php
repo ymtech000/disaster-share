@@ -41,7 +41,7 @@
                 </div>
                 
                 <div class="form-group">
-                    {!! Form::label('password', '新しいパスワード（任意, 8字以上）') !!}
+                    {!! Form::label('password', '新しいパスワード（任意, 6字以上）') !!}
                     {!! Form::password('password', ['class' => 'form-control']) !!}
                 </div>
                 
@@ -59,7 +59,7 @@
                         <p>退会は<a href="#" type="button" data-toggle="modal" data-target="#testModal" style="font-size:1.3em;">こちら</a></p>
                     </div>
                     <div>
-                        {!! link_to_route('users.show', '戻る',['id' => Auth::id()], ['class' => 'btn btn-outline-dark'])!!}
+                        {!! link_to_route('users.show', '戻る',[Auth::id()], ['class' => 'btn btn-outline-dark'])!!}
                         {!! Form::submit('更新', ['class' => 'btn btn-primary']) !!}
                     </div>
                 </div>

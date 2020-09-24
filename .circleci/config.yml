@@ -1,0 +1,133 @@
+version: 2
+jobs:
+  build: # テストを行うworkflow
+    docker:
+      - image: circleci/php:7.2.15-fpm
+        envirionment:
+          - APP_DEBUG: true
+          - APP_ENV: circle
+      - image: circleci/mysql:5.7
+        envirionment: # MySQLの初期設定
+          - MYSQL_USER: disaster
+          - MYSQL_PASSWORD: password
+          - MYSQL_ALLOW_EMPTY_PASSWORD: yes
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: test_setup # テストを行うために必要なライブラリなどのインストール
+          command: |
+            sudo apt-get update && sudo apt-get install -y libpng-dev libjpeg-dev mariadb-client |
+            sudo docker-php-ext-configure gd --with-png-dir=/usr/include --with-jpeg-dir=/usr/include |
+            sudo docker-php-ext-install pdo_mysql gd
+      - restore_cache: # composer.jsonのキャッシュがあれば利用
+          keys:
+          - v1-dependencies-{{ checksum "composer.json" }}
+          - v1-dependencies-
+      - run:
+          name: composer install
+          command: composer install -n --prefer-dist
+      - save_cache: # composer.jsonをキャッシュ
+          paths:
+            - ./vendor
+          key: v1-dependencies-{{ checksum "composer.json" }}
+      - run: # envファイルをcircleci用のものに変更
+          name: env_copy
+          command: ln -s .env.circle .env.testing
+      - run:
+          name: wait mysql
+          command: |
+            dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
+            mysql -h 127.0.0.1 -u root --execute="SELECT 1 as value FROM DUAL WHERE true"
+            mysql -h 127.0.0.1 -u root --execute="SHOW databases"
+      - run:
+          name: migration
+          command: php artisan migrate --env=circle --database=mysql --seed
+      - run:
+          name: test_run
+          command: ./vendor/bin/phpunit --testdox
+
+  build_image:
+    docker:
+      - image: circleci/php:7.2.15-fpm
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: setup Laravel # envをproduction用のものに変更&権限設定
+          command: |
+            ln -s .env.production .env
+            sudo chmod -R 777 storage bootstrap/cache
+      - run:
+          name: composer install
+          command: composer install -n --prefer-dist
+      - run: # configファイルをキャッシュ
+          name: create config cache
+          command: php artisan config:cache
+      - run:
+          name: build image # PHPイメージをビルド
+          command: |
+            docker build --no-cache -f ./docker/php/Dockerfile -t app . 
+            docker build --no-cache -f ./docker/web/Dockerfile -t web . 
+      - run:
+          name: attach tag # PHPコンテナにタグを付ける
+          command: |
+            docker tag app:latest ${AWS_ECR_ACCOUNT_URL}/app:app
+            docker tag web:latest ${AWS_ECR_ACCOUNT_URL}/web:web
+      - run:
+          name: install aws cli # コマンドラインからAWSを操作するためにaws-cliをインストール
+          command: |
+            curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
+            sudo python get-pip.py
+            sudo pip install awscli
+      - run:
+          name: push docker image # ECRにコンテナイメージをpush
+          command: |
+            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${AWS_ECR_ACCOUNT_URL}
+            docker push ${AWS_ECR_ACCOUNT_URL}/app:app
+            docker push ${AWS_ECR_ACCOUNT_URL}/web:web
+            
+  deploy:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - run:
+          name: install aws cli
+          command: sudo pip install awscli
+      - run:
+          name: download jq # JSONファイルを簡単に操作するためにjqをインストール
+          command: |
+            wget https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+            mv jq-linux64 jq
+      - run:
+          name: login ecr
+          command: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${AWS_ECR_ACCOUNT_URL}
+      - run:
+          name: deploy # 新しいタスク定義ファイルを作成し、ECSに反映させる
+          command: |
+            aws configure set region us-east-1
+            aws ecs describe-task-definition --task-definition ${AWS_ECS_TASK_NAME} | jq '.taskDefinition | { containerDefinitions: .containerDefinitions }' > task_definition.json
+            aws ecs register-task-definition --family ${AWS_ECS_TASK_NAME} --cli-input-json file://task_definition.json
+            aws ecs update-service --cluster ${AWS_ECS_CLUSTER_NAME} --service ${AWS_ECS_SERVICE_NAME} --task-definition ${AWS_ECS_TASK_NAME}
+      - run:
+          name: migration # マイグレーションタスクを実行
+          command: aws ecs run-task --cluster ${AWS_ECS_CLUSTER_NAME} --task-definition ${AWS_ECS_TASK_NAME}
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - build
+      - build_image:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+      - deploy:
+          requires:
+            - build_image
+          filters:
+            branches:
+              only: master
