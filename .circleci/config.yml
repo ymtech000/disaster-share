@@ -112,7 +112,6 @@ jobs:
             aws ecs update-service --cluster ${AWS_ECS_CLUSTER_NAME} --service ${AWS_ECS_SERVICE_NAME} --task-definition ${AWS_ECS_TASK_NAME}
       - run:
           name: migration # マイグレーションタスクを実行
-          mem_limit: 268435456
           command: aws ecs run-task --cluster ${AWS_ECS_CLUSTER_NAME} --task-definition ${AWS_ECS_TASK_NAME}
 
 workflows:
