@@ -68,8 +68,8 @@ jobs:
       - run:
           name: build image # PHPイメージをビルド
           command: |
-            docker build --no-cache -f ./docker/php/Dockerfile -t app . 
-            docker build --no-cache -f ./docker/web/Dockerfile -t web . 
+            docker build --no-cache -t app . -f ./docker/php/Dockerfile  
+            docker build --no-cache -t web . -f ./docker/web/Dockerfile 
       - run:
           name: attach tag # PHPコンテナにタグを付ける
           command: |
