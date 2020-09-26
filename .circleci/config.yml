@@ -117,6 +117,9 @@ jobs:
           name: migration # マイグレーションタスクを実行
           command: |
             export ECS_TASK_ARNS=$(aws ecs list-tasks --cluster ${AWS_ECS_CLUSTER_NAME})
+            echo $ECS_TASK_ARNS
+            echo ${AWS_ECS_CLUSTER_NAME}
+            echo $(echo $ECS_TASK_ARNS | jq -r '.taskArns[0]')
             aws ecs stop-task --cluster ${AWS_ECS_CLUSTER_NAME} --task $(echo $ECS_TASK_ARNS | jq -r '.taskArns[0]')
             aws ecs run-task --cluster ${AWS_ECS_CLUSTER_NAME} --task-definition ${AWS_ECS_TASK_NAME}
 
