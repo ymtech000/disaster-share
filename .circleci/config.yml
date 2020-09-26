@@ -111,14 +111,13 @@ jobs:
             aws ecs register-task-definition --family ${AWS_ECS_TASK_NAME} --cli-input-json file://task_definition.json
             aws ecs update-service --cluster ${AWS_ECS_CLUSTER_NAME} --service ${AWS_ECS_SERVICE_NAME} --task-definition ${AWS_ECS_TASK_NAME}
       - run:
-          name: install jq
+          name: install jq #jqをインストール
           command: sudo pip install jq
       - run:
           name: migration # マイグレーションタスクを実行
           command: |
             export ECS_TASK_ARNS=$(aws ecs list-tasks --cluster ${AWS_ECS_CLUSTER_NAME})
-            echo $ECS_TASK_ARNS | jq '.taskArns[]'
-            aws ecs stop-task --cluster ${AWS_ECS_CLUSTER_NAME} --task $ECS_TASK_ARNS | jq '.taskArns[]'
+            aws ecs stop-task --cluster ${AWS_ECS_CLUSTER_NAME} --task $(echo $ECS_TASK_ARNS | jq -r '.taskArns[0]')
             aws ecs run-task --cluster ${AWS_ECS_CLUSTER_NAME} --task-definition ${AWS_ECS_TASK_NAME}
 
 workflows:
