@@ -54,17 +54,14 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run:
-          name: setup Laravel # envをproduction用のものに変更&権限設定
-          command: |
-            ln -s .env.production .env
-            sudo chmod -R 777 storage bootstrap/cache
+      # - run:
+      #     name: setup Laravel # envをproduction用のものに変更&権限設定
+      #     command: |
+      #       ln -s .env.production .env
+      #       sudo chmod -R 777 storage bootstrap/cache
       - run:
           name: composer install
           command: composer install -n --prefer-dist
-      # - run: # configファイルをキャッシュ
-      #     name: create config cache
-      #     command: php artisan config:cache
       - run:
           name: build image # PHPイメージをビルド
           command: |
