@@ -16,17 +16,22 @@ class RegisterTest extends TestCase
     public function testRegisterTest()
     {
         $data = [
-            'name' => 'テストユーザー',
-            'email' => 'test123@example.com',
-            'passwosrd' => 'test0000',
+            'name' => 'testuser',
+            'email' => 'test0000@example.com',
+            'password' => 'test0000',
             'current_password' => 'test0000',
             'image' => '画像',
             'introduction' => 'あいうえおかきくけこさしすせそたちつてとなにぬねの',
         ];
 
-        $response = $this->json('POST', route('signup.post'), $data);
+        $response = $this->json('POST', route('register'), $data);
 
-        $response->assertStatus(200);
+        $user = User::first();
+        $this->assertEquals($data['name'], $user->name);
+
+        $response
+            ->assertStatus(201)
+            ->assertJson(['name' => $user->name]);
     }
   
 }
