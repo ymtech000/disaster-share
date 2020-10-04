@@ -62,9 +62,9 @@ jobs:
       - run:
           name: composer install
           command: composer install -n --prefer-dist
-      - run: # configファイルをキャッシュ
-          name: create config cache
-          command: php artisan config:cache
+      # - run: # configファイルをキャッシュ
+      #     name: create config cache
+      #     command: php artisan config:cache
       - run:
           name: build image # PHPイメージをビルド
           command: |
