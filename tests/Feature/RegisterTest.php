@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,23 +16,21 @@ class RegisterTest extends TestCase
      */
     public function testRegisterTest()
     {
+        $testPassword = 'test0000';
+        $factory_user = factory(User::class)->create();
         $data = [
-            'name' => 'testuser',
-            'email' => 'test0000@example.com',
-            'password' => 'test0000',
-            'current_password' => 'test0000',
-            'image' => '画像',
-            'introduction' => 'あいうえおかきくけこさしすせそたちつてとなにぬねの',
+            'id' => $factory_user->id,
+            'name' => $factory_user->name,
+            'email' => $factory_user->email,
+            'password' =>  $testPassword,
+            'current_password' =>  $testPassword,
+            'image' => $factory_user->testimage,
+            'introduction' => $factory_user->introduction,
         ];
 
-        $response = $this->json('POST', route('register'), $data);
+        $response = $this->json('POST', route('signup.post'), $data);
 
-        $user = User::first();
-        $this->assertEquals($data['name'], $user->name);
-
-        $response
-            ->assertStatus(201)
-            ->assertJson(['name' => $user->name]);
+        $response -> assertStatus(201);
     }
   
 }
