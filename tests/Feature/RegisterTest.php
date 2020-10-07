@@ -16,18 +16,17 @@ class RegisterTest extends TestCase
      */
     public function testRegisterTest()
     {
-        $testPassword = 'test0000';
         $factory_user = factory(User::class)->create();
         $data = [
             'id' => $factory_user->id,
             'name' => $factory_user->name,
             'email' => $factory_user->email,
-            'password' =>  $testPassword,
-            'current_password' =>  $testPassword,
-            'image' => $factory_user->testimage,
+            'password' =>  $factory_user->password,
+            'current_password' =>  $factory_user->password,
+            'image' => $factory_user->file,
             'introduction' => $factory_user->introduction,
         ];
-
+        // dd($data);
         $response = $this->json('POST', route('signup.post'), $data);
 
         $response -> assertStatus(201);
