@@ -22,7 +22,7 @@ $factory->define(User::class, function (Faker $faker) {
 
     $file = UploadedFile::fake()->image('dummy.jpg', 800, 800);
 
-    Storage::disk('local')->assertExists('files/' . $file);
+    Storage::disk('local')->assertExists($file->name);
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
