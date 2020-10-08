@@ -43,6 +43,14 @@ jobs:
       - run:
           name: migration
           command: php artisan migrate --env=circle --database=mysql --seed
+      - run: 
+          name: Install Library 
+          command: sudo apt-get install -y libpng-dev libjpeg-dev 
+      - run: 
+          name: Install PHP Extension
+          command: |
+            sudo docker-php-ext-configure gd --with-png-dir=/usr/include --with-jpeg-dir=/usr/include
+            sudo docker-php-ext-install gd 
       - run:
           name: test_run
           command: ./vendor/bin/phpunit --testdox
@@ -54,11 +62,6 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      # - run:
-      #     name: setup Laravel # envをproduction用のものに変更&権限設定
-      #     command: |
-      #       ln -s .env.production .env
-      #       sudo chmod -R 777 storage bootstrap/cache
       - run:
           name: composer install
           command: composer install -n --prefer-dist
