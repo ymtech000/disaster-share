@@ -16,6 +16,8 @@ class RegisterTest extends TestCase
      *
      * @return void
      */
+    use RefreshDatabase;
+
     public function testRegisterTest()
     {
         $factory_user = factory(User::class)->create();
@@ -24,21 +26,21 @@ class RegisterTest extends TestCase
 
         $file = UploadedFile::fake()->image('dummy.jpg', 800, 800);
 
-        Storage::disk('local')->assertExists($file->name);
+        $email = 'test1234@example.com';
 
         $data = [
-            'id' => $factory_user->id,
             'name' => $factory_user->name,
-            'email' => $factory_user->email,
+            'email' => $email,
             'password' =>  $factory_user->password,
-            'current_password' =>  $factory_user->password,
-            'image' => $file,
+            'password_confirmation' =>  $factory_user->password,
+            'thefile' => $file,
             'introduction' => $factory_user->introduction,
         ];
-        
+       
         $response = $this->json('POST', route('signup.post'), $data);
-
+        dd($response->content());
         $response -> assertStatus(201);
     }
   
 }
+
