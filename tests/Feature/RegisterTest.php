@@ -38,7 +38,7 @@ class RegisterTest extends TestCase
         ];
        
         $response = $this->json('POST', route('signup.post'), $data);
-        dd($response->content());
+  
         $response -> assertStatus(201);
     }
   
