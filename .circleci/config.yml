@@ -26,7 +26,7 @@ jobs:
           name: test_setup # テストを行うために必要なライブラリなどのインストール
           command: |
             sudo apt-get update && sudo apt-get install -y libpng-dev libjpeg-dev mariadb-client |
-            sudo docker-php-ext-configure gd --with-png-dir=/usr/include --with-jpeg-dir=/usr/include |
+            sudo docker-php-ext-configure gd --with-png-dir=/usr/include --with-jpeg-dir=/usr/include --disable-float --disable-atomic |
             sudo docker-php-ext-install pdo_mysql gd
       - restore_cache: # composer.jsonのキャッシュがあれば利用
           keys:
