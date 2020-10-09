@@ -14,14 +14,6 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run: 
-          name: Install Library 
-          command: sudo apt-get update && sudo apt-get install -y libpng-dev libjpeg-dev 
-      - run: 
-          name: Install PHP Extension
-          command: |
-            sudo docker-php-ext-configure gd --with-png-dir=/usr/include --with-jpeg-dir=/usr/include
-            sudo docker-php-ext-install gd 
       - run:
           name: test_setup # テストを行うために必要なライブラリなどのインストール
           command: |
