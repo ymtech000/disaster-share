@@ -25,7 +25,7 @@ class RegisterTest extends TestCase
 
         Storage::fake('local');
 
-        $file = UploadedFile::fake()->image('dummy.jpg', 800, 800);
+        $file = UploadedFile::fake()->image('dummy.png', 800, 800);
 
         $email = 'test1234@example.com';
 
