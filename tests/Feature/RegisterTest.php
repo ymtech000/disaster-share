@@ -18,8 +18,9 @@ class RegisterTest extends TestCase
      */
     use RefreshDatabase;
 
-    public function testRegisterTest()
+    public function testRegister()
     {
+        $this->withoutExceptionHandling();
         $factory_user = factory(User::class)->create();
 
         Storage::fake('local');
