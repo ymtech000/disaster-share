@@ -43,7 +43,7 @@ class RegisterController extends Controller
                 'image',
                 'mimes:jpeg,png',
             ]
-        ] , RegistersUsers::$registerErrorMessage);
+        ]);
     }
 
     protected function create(array $data)
