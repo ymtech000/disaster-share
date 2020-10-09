@@ -35,6 +35,9 @@ jobs:
       - run:
           name: composer install
           command: composer install -n --prefer-dist
+      - run: 
+          name: replace_vendor_file
+          command: cp RegistersController.php vendor/…
       - save_cache: # composer.jsonをキャッシュ
           paths:
             - ./vendor
