@@ -17,6 +17,8 @@ class AlertTest extends TestCase
      *
      * @return void
      */
+    use RefreshDatabase;
+
     public function testCreateAlert()
     {
         $user = factory(User::class)->create();
@@ -40,27 +42,20 @@ class AlertTest extends TestCase
             'area' => 'わからない',
             'lat' => $alert->lat,
             'lng' => $alert->lng,
-            'image' => $file,
-            'time' => $now,
+            // 'image' => $file,
+            // 'time' => $now,
         ];
-
         $response->post('/alerts',$data);
-        $response->assertDatabaseHas('alerts', [
-            'image' => $file,
-            'title' => $alert->title,
-            'content' => $alert->content,
-            'location' => $alert->location,
-            'lat' => $alert->lat,
-            'lng' => $alert->lng,
-            'time' => $now,
-        ]);
+        $response->assertDatabaseHas('alerts', $data);
     }
     
-    // public function testUpdateAlertTest()
+    // public function testUpdateAlert()
     // {
-    //     $factory_user = factory(User::class)->create();
+    //     $user = factory(User::class)->create();
 
-    //     $response = $this->actingAs($factory_user);
+    //     $alert = factory(Alert::class)->create();
+
+    //     $response = $this->actingAs($user);
 
     //     Storage::fake('local');
 
@@ -69,15 +64,21 @@ class AlertTest extends TestCase
     //     //時間のセット
     //     date_default_timezone_set('Asia/Tokyo');
     //     $now = date("Y/m/d H:i");
+    //     // dd($now);
 
-    //     $response->post('/alerts', ['title' => $testTitle, 'content' => $testContent, 'location' => $testLocation,]);
-    //     $response->assertDatabaseHas('alerts', [
+    //     $data = [
+    //         'title' => $alert->title,
+    //         'content' => $alert->content,
+    //         'location' => $alert->location,
+    //         'area' => 'わからない',
+    //         'lat' => $alert->lat,
+    //         'lng' => $alert->lng,
     //         'image' => $file,
-    //         'title' => $testTitle,
-    //         'content' => $testContent,
-    //         'location' => $testLocation,
     //         'time' => $now,
-    //     ]);
+    //     ];
+    //     dd($data);
+    //     $response->post('/alerts',$data);
+    //     $response->assertDatabaseHas('alerts', $data);
     // }
 }
 
