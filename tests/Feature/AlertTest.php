@@ -27,10 +27,6 @@ class AlertTest extends TestCase
 
         $response = $this->actingAs($user);
 
-        Storage::fake('local');
-
-        $file = UploadedFile::fake()->image('dummy.jpg', 800, 800);
-
         //時間のセット
         date_default_timezone_set('Asia/Tokyo');
         $now = date("Y/m/d H:i");
@@ -39,10 +35,9 @@ class AlertTest extends TestCase
             'title' => $alert->title,
             'content' => $alert->content,
             'location' => $alert->location,
-            'area' => 'わからない',
+            'area' => $alert->area,
             'lat' => $alert->lat,
             'lng' => $alert->lng,
-            // 'image' => $file,
             // 'time' => $now,
         ];
         $response->post('/alerts',$data);
