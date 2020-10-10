@@ -20,8 +20,7 @@ class RegisterTest extends TestCase
 
     public function testRegister()
     {
-        $this->withoutExceptionHandling();
-        $factory_user = factory(User::class)->create();
+        $user = factory(User::class)->create();
 
         Storage::fake('local');
 
@@ -30,12 +29,12 @@ class RegisterTest extends TestCase
         $email = 'test1234@example.com';
 
         $data = [
-            'name' => $factory_user->name,
+            'name' => $user->name,
             'email' => $email,
-            'password' =>  $factory_user->password,
-            'password_confirmation' =>  $factory_user->password,
+            'password' =>  $user->password,
+            'password_confirmation' =>  $user->password,
             'thefile' => $file,
-            'introduction' => $factory_user->introduction,
+            'introduction' => $user->introduction,
         ];
        
         $response = $this->json('POST', route('signup.post'), $data);

@@ -7,7 +7,8 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class LoginTest extends TestCase
+
+class AuthenticatedTest extends TestCase
 {
     /**
      * A basic feature test example.
@@ -32,10 +33,8 @@ class LoginTest extends TestCase
             'email' => $this->user->email,
             'password' => 'test0000',
         ]);
-            // dd($response);
-        $response
-            ->assertStatus(302);
-            // ->assertJson(['name' => $this->user->name]);
+        
+        $response->assertStatus(302);
 
         $this->assertAuthenticatedAs($this->user);
     }
@@ -46,7 +45,7 @@ class LoginTest extends TestCase
         $response = $this->actingAs($this->user);
 
         // ログアウトページへリクエストを送信
-        $response->json('POST', route('logout.get'));
+        $response = $this->json('GET', route('logout.get'));
 
         // ログアウト後のレスポンスで、HTTPステータスコードが正常であることを確認
         $response->assertStatus(302);
