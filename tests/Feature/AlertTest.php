@@ -27,10 +27,6 @@ class AlertTest extends TestCase
 
         $response = $this->actingAs($user);
 
-        //時間のセット
-        date_default_timezone_set('Asia/Tokyo');
-        $now = date("Y/m/d H:i");
-
         $data = [
             'title' => $alert->title,
             'content' => $alert->content,
@@ -38,42 +34,9 @@ class AlertTest extends TestCase
             'area' => $alert->area,
             'lat' => $alert->lat,
             'lng' => $alert->lng,
-            // 'time' => $now,
         ];
         $response->post('/alerts',$data);
         $response->assertDatabaseHas('alerts', $data);
     }
-    
-    // public function testUpdateAlert()
-    // {
-    //     $user = factory(User::class)->create();
-
-    //     $alert = factory(Alert::class)->create();
-
-    //     $response = $this->actingAs($user);
-
-    //     Storage::fake('local');
-
-    //     $file = UploadedFile::fake()->image('dummy.jpg', 800, 800);
-
-    //     //時間のセット
-    //     date_default_timezone_set('Asia/Tokyo');
-    //     $now = date("Y/m/d H:i");
-    //     // dd($now);
-
-    //     $data = [
-    //         'title' => $alert->title,
-    //         'content' => $alert->content,
-    //         'location' => $alert->location,
-    //         'area' => 'わからない',
-    //         'lat' => $alert->lat,
-    //         'lng' => $alert->lng,
-    //         'image' => $file,
-    //         'time' => $now,
-    //     ];
-    //     dd($data);
-    //     $response->post('/alerts',$data);
-    //     $response->assertDatabaseHas('alerts', $data);
-    // }
 }
 
