@@ -32,35 +32,35 @@ URL: [https://www.disaster-share.com](https://www.disaster-share.com/)
 If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library. -->
 学生時代に災害などをはじめとするもの周りの危険について学び、危機管理について勉強していました。そこで東日本大震災をはじめとする大災害について深く学んでいくうちに自分も災害で命を落とす人を一人でも減らすために何かをしたいと考えるようになりました。
 
+## 工夫した点
+
 <!-- ## Laravel Sponsors -->
 ## 使用技術
-###フロント
--HTML
--CSS
--JavaScript
--jQuery
--bootstrap
-###バックエンド
--PHP 7.2.33
--Laravel 6.18.40
-###サーバー
--Nginx
--PHP-FPM
+### フロント
+- HTML
+- CSS
+- JavaScript
+- jQuery
+- bootstrap
+### バックエンド
+- PHP 7.2.33
+- Laravel 6.18.40
+### サーバー
+- Nginx
+- PHP-FPM
 
-###DB
--MySQL 8.0.19
-###インフラ・開発環境等
--AWS(ACM,EC2,ALB,ECR,ECS,RDS,Route53,VPC,S3)
--Docker/docker-compose
--CircleCI(CI/CD)
-###その他
--Google API
-
-
+### DB
+- MySQL 8.0.19
+### インフラ・開発環境等
+- AWS(ACM,EC2,ALB,ECR,ECS,RDS,Route53,VPC,S3)
+- Docker/docker-compose
+- CircleCI(CI/CD)
+### その他
+- Google API
 
 <!-- We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell): -->
 
-- **[Vehikl](https://vehikl.com/)**
+<!-- - **[Vehikl](https://vehikl.com/)**
 - **[Tighten Co.](https://tighten.co)**
 - **[British Software Development](https://www.britishsoftware.co)**
 - [Fragrantica](https://www.fragrantica.com)
@@ -72,9 +72,12 @@ If you're not in the mood to read, [Laracasts](https://laracasts.com) contains o
 - [TECPRESSO](https://tecpresso.co.jp/)
 - [Pulse Storm](http://www.pulsestorm.net/)
 - [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
+- [WebL'Agence](https://weblagence.com/) -->
 
-## Contributing
+## インフラ構成図
+<p align="center"><img src="{{ asset('/img/AWS.png') }}"></p>
+
+<!-- ## Contributing
 
 Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
@@ -84,4 +87,4 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT). -->
