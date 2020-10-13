@@ -34,32 +34,31 @@ If you're not in the mood to read, [Laracasts](https://laracasts.com) contains o
 
 <!-- ## Laravel Sponsors -->
 ## 使用技術
-フロント
-・HTML
-・CSS
-・JavaScript
-・jQuery
-・bootstrap
-バックエンド
-・PHP 7.2.33
-・Laravel 6.18.40
-サーバー
-・Nginx
-・PHP-FPM
+###フロント
+-HTML
+-CSS
+-JavaScript
+-jQuery
+-bootstrap
+###バックエンド
+-PHP 7.2.33
+-Laravel 6.18.40
+###サーバー
+-Nginx
+-PHP-FPM
 
-DB
-・MySQL 8.0.19
-インフラ・開発環境等
-・AWS(ACM,EC2,ALB,ECR,ECS,RDS,Route53,VPC,S3)
-・Docker/docker-compose
-・CircleCI(CI/CD)
- その他
-・Google API
-・Rubocop
-・RSpec
+###DB
+-MySQL 8.0.19
+###インフラ・開発環境等
+-AWS(ACM,EC2,ALB,ECR,ECS,RDS,Route53,VPC,S3)
+-Docker/docker-compose
+-CircleCI(CI/CD)
+###その他
+-Google API
 
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
+
+<!-- We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell): -->
 
 - **[Vehikl](https://vehikl.com/)**
 - **[Tighten Co.](https://tighten.co)**
