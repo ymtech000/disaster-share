@@ -6,7 +6,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\User;
-use DB;
 
 class FollowTest extends TestCase
 {
@@ -43,7 +42,7 @@ class FollowTest extends TestCase
         $follower = User::find($follow_id);
 
         $response = $this->actingAs($following_user);
-        $response = $response->get('/users/'.$user_id.'/following');
+        $response = $response->get('/users/'.$user_id.'/followings');
 
         $response->assertSeeText($follower->name);
     }
