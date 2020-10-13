@@ -34,15 +34,28 @@ class FollowTest extends TestCase
 
     public function testDisplayFollowingUsers() 
     {   
-        $following_user = factory(User::class)->create();
-        $follower = factory(User::class)->create();
-        $user_id = $following_user->id;
-        $follow_id = $follower->id;
+        $userA = factory(User::class)->create();
+        $userB = factory(User::class)->create();
 
-        $response = $this->actingAs($following_user);
-        $response = $response->get('/users/'.$user_id.'/followings');
+        $response = $this->actingAs($userA);
+        $response->post('/users/'.$userB->id.'/follow');
 
-        $response->assertSeeText($follower->name);
+        $response = $response->get('/users/'.$userA->id.'/followings');
+
+        $response->assertSeeText($userB->name);
+    }
+
+    public function testDisplayFollowers() 
+    {   
+        $userA = factory(User::class)->create();
+        $userB = factory(User::class)->create();
+
+        $response = $this->actingAs($userB);
+        $response->post('/users/'.$userA->id.'/follow');
+        $response = $this->actingAs($userA);
+        $response = $response->get('/users/'.$userA->id.'/followers');
+
+        $response->assertSeeText($userB->name);
     }
 
 }
