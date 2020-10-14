@@ -15,6 +15,7 @@ class FavoriteTest extends TestCase
      *
      * @return void
      */
+    use RefreshDatabase;
     public function testPostFavorite()
     {
         #いいねーテスト
