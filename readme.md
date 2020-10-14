@@ -30,9 +30,10 @@ URL: [https://www.disaster-share.com](https://www.disaster-share.com/)
 <!-- Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
 
 If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library. -->
-学生時代に災害などをはじめとするもの周りの危険について学び、危機管理について勉強していました。そこで東日本大震災をはじめとする大災害について深く学んでいくうちに自分も災害で命を落とす人を一人でも減らすために何かをしたいと考えるようになりました。
-
-## 工夫した点
+大学４年間、様々な分野の「安全」について学び自然災害をはじめとする災害の被害最小化について学んできました。そこで東日本大震災をはじめとする災害の悲惨さを度々目の当たりにし、胸を痛めると同時に自分にも災害の被害を最小化し、災害からいち早く安全安心な暮らしへ復興するために私にもできることがあるのではないか？と考え本サービスを作成しました。
+<!-- ## 工夫した点
+・無限コメント機能
+・CI/CDパイプラインの構築 -->
 
 
 ## 機能一覧
