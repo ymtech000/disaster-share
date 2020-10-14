@@ -42,7 +42,8 @@ class AlertsController extends Controller
     {
         //画像ファイル受け取り処理
         $filename='';
-        if ($request->file('thefile')->isValid([])) {
+        $url='';
+        if ($request->file('thefile')->isValid()) {
             $filename = $request->file('thefile')->store('img');
             //s3アップロード開始
             $image = $request->file('thefile');
@@ -90,7 +91,8 @@ class AlertsController extends Controller
     {
         //画像ファイル受け取り処理
         $filename='';
-        if ($request->file('thefile')->isValid([])) {
+        $url='';
+        if ($request->file('thefile')->isValid()) {
             $filename = $request->file('thefile')->store('img');
             
             //s3アップロード開始
