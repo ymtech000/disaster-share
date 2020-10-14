@@ -11,7 +11,7 @@
                     @if($user->image == null)
                         <a href="/users/{{$user->id}}"><img class=" user-img avatar-type-circle" src="{{ Gravatar::src($user->email) }}" alt=""  style="width:100%; max-width:250px;"></a>
                     @else
-                        <a href="/users/{{$user->id}}"><img class="user-img" src="{{$user->image}}" style="max-width:250px;"></a>
+                        <a href="/users/{{$user->id}}"><img class="user-img" src="{{$user->image}}" style="width:100%; max-width:250px;"></a>
                     @endif
                     @include('user_follow.follow_button', ['user'=>$user])
                 </div>
