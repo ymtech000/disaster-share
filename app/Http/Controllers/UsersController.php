@@ -102,86 +102,87 @@ class UsersController extends Controller
      
     public function update(StoreUser $request, $id)
     {
-        if($request->email !== Auth::user()->email){
+        $user = User::find($id);
+        if($request->email !== $user->email){
             if(DB::table('users')->where('email', $request->email)->exists()){
                 return back()->with('error', 'そのメールアドレスは既に使用されています。');
             }
-        }
-        $filename='';
-        if( request()->hasFile('thefile')){
-            //画像ファイル受け取り処理
-            if (request()->file('thefile')->isValid([])) {
-                $filename = $request->file('thefile')->store('img');
-                //s3アップロード開始
-                $image = $request->file('thefile');
-                // バケットの`pogtor528`フォルダへアップロード
-                $path = Storage::disk('s3')->putFile('pogtor528', $image, 'public');
-                // アップロードした画像のフルパスを取得
-                $url = Storage::disk('s3')->url($path);
-            }
-            
-            $user = User::find($id);
-            $user->introduction = $request->introduction;
-            $user->image = $url;
-            if(Auth::id() !==1){
-                $user->name = $request->name;
-                $user->email = $request->email;
-                if($request->password !== null){
-                    if(Hash::check($request->current_password, Auth::user()->password)){
-                        $user->password = Hash::make($request->password);
-                    }
-                    else{
-                        return back()->with('error', '現在のパスワードが間違っています。');
+        }{
+            $filename='';
+            $url='';
+            if( request()->hasFile('thefile')){
+                //画像ファイル受け取り処理
+                if (request()->file('thefile')->isValid()) {
+                    $filename = $request->file('thefile')->store('img');
+                    //s3アップロード開始
+                    $image = $request->file('thefile');
+                    // バケットの`pogtor528`フォルダへアップロード
+                    $path = Storage::disk('s3')->putFile('pogtor528', $image, 'public');
+                    // アップロードした画像のフルパスを取得
+                    $url = Storage::disk('s3')->url($path);
+                }
+                
+                $user->introduction = $request->introduction;
+                $user->image = $url;
+                if($id !==1){
+                    $user->name = $request->name;
+                    $user->email = $request->email;
+                    if($request->password !== null){
+                        if(Hash::check($request->current_password, $user->password)){
+                            $user->password = Hash::make($request->password);
+                        }
+                        else{
+                            return back()->with('error', '現在のパスワードが間違っています。');
+                        }
                     }
                 }
-            }
-            else if($request->password !== null){
-                return back()->with('error', 'ゲストユーザーは氏名, メールアドレス, パスワードの変更ができません。');
-            }
-            else if($user->name !== $request->name){
-                return back()->with('error', 'ゲストユーザーは氏名, メールアドレス, パスワードの変更ができません。');
-            }
-            else if($user->email !== $request->email){
-                return back()->with('error', 'ゲストユーザーは氏名, メールアドレス, パスワードの変更ができません。');
+                else if($request->password !== null){
+                    return back()->with('error', 'ゲストユーザーは氏名, メールアドレス, パスワードの変更ができません。');
+                }
+                else if($user->name !== $request->name){
+                    return back()->with('error', 'ゲストユーザーは氏名, メールアドレス, パスワードの変更ができません。');
+                }
+                else if($user->email !== $request->email){
+                    return back()->with('error', 'ゲストユーザーは氏名, メールアドレス, パスワードの変更ができません。');
+                }
+                else{
+                    $user->name = $request->name;
+                    $user->email = $request->email;
+                }
+                
+                $user->save();
             }
             else{
-                $user->name = $request->name;
-                $user->email = $request->email;
-            }
-            
-            $user->save();
-        }
-        else{
-            $user = User::find($id);
-            $user->introduction = $request->introduction;
-            if(Auth::id() !==1){
-                $user->name = $request->name;
-                $user->email = $request->email;
-                if($request->password !== null){   
-                    if(Hash::check($request->current_password, Auth::user()->password)){
-                        $user->password = Hash::make($request->password);
-                    }
-                    else{
-                        return back()->with('error', '現在のパスワードが間違っています。');
+                $user->introduction = $request->introduction;
+                if(Auth::id() !==1){
+                    $user->name = $request->name;
+                    $user->email = $request->email;
+                    if($request->password !== null){   
+                        if(Hash::check($request->current_password, $user->password)){
+                            $user->password = Hash::make($request->password);
+                        }
+                        else{
+                            return back()->with('error', '現在のパスワードが間違っています。');
+                        }
                     }
                 }
+                else if($request->password !== null){
+                    return back()->with('error', 'ゲストユーザーは氏名, メールアドレス, パスワードの変更ができません。');
+                }
+                else if($user->name !== $request->name){
+                    return back()->with('error', 'ゲストユーザーは氏名, メールアドレス, パスワードの変更ができません。');
+                }
+                else if($user->email !== $request->email){
+                    return back()->with('error', 'ゲストユーザーは氏名, メールアドレス, パスワードの変更ができません。');
+                }
+                else{
+                    $user->name = $request->name;
+                    $user->email = $request->email;
+                }
+                
+                $user->save();
             }
-            else if($request->password !== null){
-                return back()->with('error', 'ゲストユーザーは氏名, メールアドレス, パスワードの変更ができません。');
-            }
-            else if($user->name !== $request->name){
-                return back()->with('error', 'ゲストユーザーは氏名, メールアドレス, パスワードの変更ができません。');
-            }
-            else if($user->email !== $request->email){
-                return back()->with('error', 'ゲストユーザーは氏名, メールアドレス, パスワードの変更ができません。');
-            }
-            else{
-                $user->name = $request->name;
-                $user->email = $request->email;
-            }
-            
-            $user->save();
+            return redirect()->route('users.show', [Auth::id()]);
         }
-        return redirect()->route('users.show', ['id' => Auth::id()]);
     }
 }
