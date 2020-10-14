@@ -50,10 +50,10 @@ class RegisterController extends Controller
     {
         //画像ファイル受け取り処理
         $filename='';
+        $url='';
         if( request()->hasFile('thefile')){
-            if (request()->file('thefile')->isValid([])) {
+            if (request()->file('thefile')->isValid()) {
                 $filename = request()->file('thefile')->store('img');
-                
                 //s3アップロード開始
                 $image = request()->file('thefile');
                 // バケットの`pogtor528`フォルダへアップロード
