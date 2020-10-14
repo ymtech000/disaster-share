@@ -34,7 +34,7 @@ class Alert extends Model
             return false;
         } else {
             // 未いいねであればいいねする
-            $this->favorites()->attach($alertId);
+            $this->favorited()->attach($alertId);
             return true;
         }
     }
@@ -46,7 +46,7 @@ class Alert extends Model
       
         if ($exist) {
             // 既にいいねしていればいいねを外す
-            $this->favorites()->detach($alertId);
+            $this->favorited()->detach($alertId);
             return true;
         } else {
             // 未いいねであれば何もしない
@@ -56,7 +56,7 @@ class Alert extends Model
     
     public function is_favorite($alertId)
     {
-        return $this->favorites()->where('alert_id', $alertId)->exists();
+        return $this->favorited()->where('alert_id', $alertId)->exists();
     }
 }
 
