@@ -37,7 +37,7 @@
             
                 <div class="form-group">
                     {!! Form::label('introduction', '自己紹介（任意, 140字以内）') !!}
-                    <textarea class="form-control" name="introduction" id="introduction" value = "{{ old('introduction') }}"></textarea>
+                    <textarea class="form-control" name="introduction" id="introduction">{{Auth::user()->introduction}}</textarea>
                 </div>
                 
                 <div class="form-group">
