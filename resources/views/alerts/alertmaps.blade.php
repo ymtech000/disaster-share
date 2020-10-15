@@ -11,7 +11,7 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark"> 
-            <a class="navbar-brand" href="/alerts">DISASTER SHARE</a>
+            <a class="navbar-brand" href="/alerts"><font face="Courier">DISASTER SHARE</font></a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#nav-bar">
                 <span class="navbar-toggler-icon"></span>
             </button>
