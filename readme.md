@@ -9,7 +9,7 @@
 
 # 災害情報共有サービス　DISASTER SHARE
 
-災害時に地域毎の有益な情報を共有し合うことにより、二次被害を防いだり、身を守る行動をより早く取れるようにすることを目的としたサービスです。
+災害時に地域毎の有益な情報を共有し合うことにより、二次被害を防いだり、身を守る行動をより早く取れるようにすることを目的としたサービスです。本サービスは大阪府を対象として作成されています。
 <!-- Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as: -->
 
 ## URL
@@ -90,6 +90,7 @@ If you're not in the mood to read, [Laracasts](https://laracasts.com) contains o
 ### その他
 - Google API
 - PHPUnit
+- Larastan
 
 <!-- We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell): -->
 
@@ -108,7 +109,7 @@ If you're not in the mood to read, [Laracasts](https://laracasts.com) contains o
 - [WebL'Agence](https://weblagence.com/) -->
 
 ## インフラ構成図
-<p align="center"><img src="{{ asset('/img/AWS.png') }}"></p>
+<img width="618" alt="AWS構成図" src="https://user-images.githubusercontent.com/47106952/96061588-94f3f580-0ece-11eb-8afc-2f7db68f278e.png">
 
 <!-- ## Contributing
 

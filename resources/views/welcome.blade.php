@@ -11,7 +11,7 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark"> 
-            <a class="navbar-brand" href="/alerts">DISASTER SHARE</a>
+            <a class="navbar-brand" href="/alerts"><font face="Courier">DISASTER SHARE</font></a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#nav-bar">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -52,9 +52,8 @@
         <div class="full-image">
             <div class="bg-mask">
                 <div class="app-title">
-                    <h1>DISASTER SHARE</h1>
-                    <h3>大阪府高槻市を対象とした</h3>
-                    <h4>災害情報共有サービス</h4>
+                <font face="Courier"><h1>DISASTER SHARE</h1></font>
+                <font face="Courier"><h4 style="margin-top:40px;">大阪府を対象とした災害情報共有サービス</h4></font>
                     <p>{!! link_to_route('signup.get', '新規登録はこちら', [], ['class' => 'btn btn-lg btn-primary']) !!}</p>
                 </div>
             </div>
