@@ -13,7 +13,7 @@
 <!-- Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as: -->
 
 ## URL
-URL: [https://www.disaster-share.com](https://www.disaster-share.com/)
+URL: [https://www.disaster-share.com](https://www.disaster-share.com)
 <!-- - [Simple, fast routing engine](https://laravel.com/docs/routing).
 - [Powerful dependency injection container](https://laravel.com/docs/container).
 - Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
@@ -22,6 +22,9 @@ URL: [https://www.disaster-share.com](https://www.disaster-share.com/)
 - [Robust background job processing](https://laravel.com/docs/queues).
 - [Real-time event broadcasting](https://laravel.com/docs/broadcasting). -->
 トップページのログインボタンからログインページに遷移していただき、「ゲストログインボタン」からゲストユーザーとしてログインしアプリをご使用いただけます。
+こちらのサービスで用いている災害の写真は以下ののサイトのものを利用しており、実際に起こった災害とは一切関係がありません。
+災害写真データベース: [http://www.saigaichousa-db-isad.jp/drsdb_photo/photoSearch.do](http://www.saigaichousa-db-isad.jp/drsdb_photo/photoSearch.do)
+
 
 <!-- Laravel is accessible, yet powerful, providing tools needed for large, robust applications. -->
 
