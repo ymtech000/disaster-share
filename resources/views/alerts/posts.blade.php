@@ -33,8 +33,8 @@
                                 </ul>
                             </small>
                         </div>
-                        <div class="card-body">
-                            <a href="alerts/{{$alert->id}}"><img src="{{$alert->image}}" style="width:100%;"></a>
+                        <div class="card-body" style="max-height:235px;">
+                            <a href="alerts/{{$alert->id}}"><img src="{{$alert->image}}" style="width:100%; max-height:200px;"></a>
                         </div>
                         <div class="card-footer" style="border-top:solid; border-width:thin;">
                             <div class="title" style="font-size:1.3em;　text-align:left;">{{$alert->title}}</div>
