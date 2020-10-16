@@ -3,8 +3,8 @@ var marker;
 function initialize() {
     // 地図を表示する際のオプションを設定
     var mapOptions = {
-        center: new google.maps.LatLng( 34.851732, 135.617728 ),
-        zoom: 16,
+        center: new google.maps.LatLng( 34.7024, 135.4959 ),
+        zoom: 14,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
   // Mapオブジェクトに地図表示要素情報とオプション情報を渡し、インスタンス生成
