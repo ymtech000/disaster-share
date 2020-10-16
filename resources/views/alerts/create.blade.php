@@ -4,12 +4,14 @@
     <h1 class="text-center font-weight-bold font-family-Tahoma">NEW POST</h1>
     {!! Form::model($alert, ['route' => 'alerts.store', 'files' => true, 'onsubmit' => "return false;"]) !!}
         <div class="side">
-            <label class="inline-block">
-                {!! Form::label('thefile', '画像') !!}
-                <span class="fa fa-file-image inline-block" style="cursor: pointer; font-size:85px; margin-bottom:30px;"></span>
-                <input type="file" style="display:none" name="thefile">
-                <span id="fileimg"></span>
-            </label>
+            <div class="inline-block">
+                画像
+                <label class="inline-block">
+                    <span class="fa fa-file-image inline-block" style="cursor: pointer; font-size:85px; margin-bottom:30px;"></span>
+                    <input type="file" style="display:none" name="thefile">
+                    <span id="fileimg"></span>
+                </label>
+            </div>
             @include('commons.error_messages')
             <p style="text-align:right;">※位置情報は検索するか地図をタッチしてください。</p>
         </div>
