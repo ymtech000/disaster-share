@@ -22,7 +22,7 @@ URL: [https://www.disaster-share.com](https://www.disaster-share.com)
 - [Robust background job processing](https://laravel.com/docs/queues).
 - [Real-time event broadcasting](https://laravel.com/docs/broadcasting). -->
 トップページのログインボタンからログインページに遷移していただき、「ゲストログインボタン」からゲストユーザーとしてログインしアプリをご使用いただけます。
-こちらのサービスで用いている災害の写真は以下ののサイトのものを利用しており、実際に起こった災害とは一切関係がありません。　　
+こちらのサービスで用いている災害の写真は以下ののサイトのものを利用しており、実際に起こった災害とは一切関係がありません。  
 災害写真データベース: [http://www.saigaichousa-db-isad.jp/drsdb_photo/photoSearch.do](http://www.saigaichousa-db-isad.jp/drsdb_photo/photoSearch.do)
 
 
