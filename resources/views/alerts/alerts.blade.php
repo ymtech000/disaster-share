@@ -6,9 +6,9 @@
                     <div class="card" style="border:solid; border-width:thin; margin-bottom:10px;">
                         <div class="card-header" style="max-height: 70px; border-bottom:solid; border-width:thin;">
                             @if($alert->user->image == null)
-                                <a href="/users/{{$alert->user->id}}"><img class="img-fluid float-left user-img" style="border-radius:50%; margin-bottom:10px; margin-right:10px;" src="{{ Gravatar::src($alert->user->email, 500) }}" width="35" height="35" alt=""></a>
+                                <a href="/users/{{$alert->user->id}}"><img class="img-fluid float-left user-img" style="border-radius:50%; margin-bottom:10px; margin-right:10px;" src="{{ Gravatar::src($alert->user->email) }}" width="35" height="35" alt=""></a>
                             @else
-                                <a href="/users/{{$alert->user->id}}"><img src="{{$alert->user->image}}" class="img-fluid float-left user-img" style="border-radius:50%; margin-bottom:10px; margin-right:10px;" width="35" height="35"></a>
+                                <a href="/users/{{$alert->user->id}}"><img src="{{$alert->user->image}}" class="img-fluid float-left user-img" style="border-radius:50%; margin-bottom:10px; margin-right:10px; width:35px; height:35px;"></a>
                             @endif
                             <div class="side">
                                 <a href="/users/{{$alert->user->id}}" class="user_name" style="color:black;">{{$alert->user->name}}</a>
@@ -33,9 +33,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <a href="/alerts/{{$alert->id}}"><img src="{{$alert->image}}" style="width:100%;"></a>
-                        </div>
+                        <a href="/alerts/{{$alert->id}}"><img src="{{$alert->image}}" style="width:100%; max-height:175px;"></a>
                         <div class="card-footer" style="border-top:solid; border-width:thin;">
                             <div class="title" style="text-align:left;">{{$alert->title}}</div>
                             <div class="side">
