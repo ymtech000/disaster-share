@@ -23,7 +23,7 @@ class AlertcommentsController extends Controller
             //クリックしたコメントに子コメントがあれば
             if(Alertcomment::where('parent_id', $request->id)->exists()){
                 //$undercommentにクリックしたコメントの子コメントのデータを入れる。
-                $undercomments = Alertcomment::join('users', 'users.id', '=', 'alertcomments.user_id')->where('parent_id' , $request->id)->orderBy('alertcomments.created_at', 'acs')->get();
+                $undercomments = Alertcomment::join('users', 'users.id', '=', 'alertcomments.user_id')->where('parent_id' , $request->id)->orderBy('alertcomments.created_at', 'asc')->get();
                 
                 return response()->json([
                     'responseData' => $alertcomment,
@@ -52,7 +52,7 @@ class AlertcommentsController extends Controller
                 //$upcommentにクリックしたコメントの親コメントのデータを入れる。
                 $upcomment = Alertcomment::find(optional($alertcomment)->parent_id);
                 $upuser = User::find(optional($upcomment)->user_id);
-                $undercomments = Alertcomment::join('users', 'users.id', '=', 'alertcomments.user_id')->where('parent_id' , $request->id)->orderBy('alertcomments.created_at', 'acs')->get();
+                $undercomments = Alertcomment::join('users', 'users.id', '=', 'alertcomments.user_id')->where('parent_id' , $request->id)->orderBy('alertcomments.created_at', 'asc')->get();
                 return response()->json([
                     'responseData' => $alertcomment,
                     'userData' => $user,
