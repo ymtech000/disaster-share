@@ -100,14 +100,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
-        'email' => [
-            'required' => 'メールアドレスを入力してください。',
-        ],
-        'password' => [
-            'required' => 'パスワードを入力してください。',
+        '属性名' => [
+            'ルール名' => 'カスタムメッセージ',
         ],
     ],
 
