@@ -57,7 +57,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('followings', 'UsersController@followings')->name('users.followings');
         Route::get('followers', 'UsersController@followers')->name('users.followers');
         Route::get('favorites', 'UsersController@favorites')->name('users.favorites');
-        Route::post('image', 'UsersController@image')->name('users.image');
         });
     Route::group(['prefix' => 'alerts/{id}'], function () {
         Route::post('/favorite', 'FavoritesController@store')->name('alerts.favorite');
