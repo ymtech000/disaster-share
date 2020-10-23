@@ -19,8 +19,8 @@ class AlertcommentTest extends TestCase
 
     public function testCreateAlertcomment()
     {
-        $user = factory(User::class)->create();
         $alertcomment = factory(Alertcomment::class)->create();
+        $user = User::find($alertcomment->user_id);
 
         $response = $this->actingAs($user);
 
@@ -30,5 +30,22 @@ class AlertcommentTest extends TestCase
 
         $response->post('/alertcomments',$data);
         $response->assertDatabaseHas('alertcomments',$data);
+    }
+
+    public function testDeleteAlertcomment()
+    {
+        $alertcomment = factory(Alertcomment::class)->create();
+        $user = User::find($alertcomment->user_id);
+
+        $response = $this->actingAs($user);
+
+        $data = [
+            'comment' => $alertcomment->comment,
+        ];
+
+        $response->delete('/alertcomments/'.$alertcomment->id,$data);
+        $response->assertDatabaseMissing('alertcomments', [
+            'id' => $alertcomment->id,
+        ]);
     }
 }
