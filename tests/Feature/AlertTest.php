@@ -21,9 +21,8 @@ class AlertTest extends TestCase
 
     public function testCreateAlert()
     {
-        $user = factory(User::class)->create();
-
         $alert = factory(Alert::class)->create();
+        $user = User::find($alert->id);
 
         $response = $this->actingAs($user);
 
@@ -36,6 +35,67 @@ class AlertTest extends TestCase
             'lng' => $alert->lng,
         ];
         $response->post('/alerts',$data);
+        $response->assertDatabaseHas('alerts', $data);
+    }
+
+    public function testDeleteAlert()
+    {
+        $alert = factory(Alert::class)->create();
+        $user = User::find($alert->user_id);
+
+        $response = $this->actingAs($user);
+
+        $data = [
+            'title' => $alert->title,
+            'content' => $alert->content,
+            'location' => $alert->location,
+            'area' => $alert->area,
+            'lat' => $alert->lat,
+            'lng' => $alert->lng,
+        ];
+
+        $response->delete('/alerts/'.$alert->id,$data);
+        $response->assertDatabaseMissing('alerts', [
+            'id' => $alert->id,
+        ]);
+    }
+
+    public function testDisplayAlerts() 
+    {   
+        $alert = factory(Alert::class)->create();
+        $user= User::find($alert->user_id);
+
+        $response = $this->actingAs($user);
+        $data = [
+            'title' => $alert->title,
+            'content' => $alert->content,
+            'location' => $alert->location,
+            'area' => $alert->area,
+            'lat' => $alert->lat,
+            'lng' => $alert->lng,
+        ];
+        $response->post('/alerts',$data);
+        $response = $response->get('/users/'.$user->id);
+
+        $response->assertSeeText($alert->title);
+    }
+
+    public function testUpdateAlert()
+    {
+        $alert = factory(Alert::class)->create();
+        $user = User::find($alert->user_id);
+
+        $response = $this->actingAs($user);
+
+        $data = [
+            'title' => $alert->title,
+            'content' => $alert->content,
+            'location' => $alert->location,
+            'area' => $alert->area,
+            'lat' => $alert->lat,
+            'lng' => $alert->lng,
+        ];
+        $response->post('/alerts/'.$alert->id,$data);
         $response->assertDatabaseHas('alerts', $data);
     }
 }
