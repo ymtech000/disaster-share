@@ -1,10 +1,49 @@
-{!! Form::select('area', ['わからない'=>'わからない', '池田市'=>'池田市', '泉大津市'=>'泉大津市', '泉佐野市'=>'泉佐野市', 
-    '和泉市'=>'和泉市','茨木市'=>'茨木市', '大阪狭山市'=>'大阪狭山市','大阪市'=>'大阪市', '貝塚市'=>'貝塚市', '柏原市'=>'柏原市',
-    '交野市'=>'交野市','交野町'=>'交野町','門真市'=>'門真市','河南町'=>'河南町',
-    '河内長野市'=>'河内長野市', '岸和田市'=>'岸和田市','熊取町'=>'熊取町', '堺市'=>'堺市', '狭山町'=>'狭山町', '四條畷市'=>'四條畷市', 
-    '四條畷町'=>'四條畷町', '島本町'=>'島本町', '吹田市'=>'吹田市','摂津市'=>'摂津市', '泉南市'=>'泉南市', '泉南町'=>'泉南町',
-    '太子町'=>'太子町', '高石市'=>'高石市', '高槻市'=>'高槻市', '田尻町'=>'田尻町','忠岡町'=>'忠岡町', '大東市'=>'大東市',
-    '千早赤阪村'=>'千早赤阪村', '豊中市'=>'豊中市', '豊能町'=>'豊能町', '富田林市'=>'富田林市', '南海町'=>'南海町','寝屋川市'=>'寝屋川市', 
-    '能勢町'=>'能勢町', '羽曳野市'=>'羽曳野市', '阪南市'=>'阪南市','阪南町'=>'阪南町', '東大阪市'=>'東大阪市', '東鳥取町'=>'東鳥取町','東能瀬村'=>'東能瀬村',
-    '枚方市'=>'枚方市', '藤井寺市'=>'藤井寺市', '松原市'=>'松原市', '岬町'=>'岬町','箕面市'=>'箕面市',
-    '美原町'=>'美原町', '守口市'=>'守口市', '八尾市'=>'八尾市'], '', ['class' => 'form-control', 'id' => 'submit_select']) !!}
+<select class="form-control" id="submit_select" name="area">
+    <option value="北海道">北海道</option>
+    <option value="青森県">青森県</option>
+    <option value="岩手県">岩手県</option>
+    <option value="宮城県">宮城県</option>
+    <option value="秋田県">秋田県</option>
+    <option value="山形県">山形県</option>
+    <option value="福島県">福島県</option>
+    <option value="茨城県">茨城県</option>
+    <option value="栃木県">栃木県</option>
+    <option value="群馬県">群馬県</option>
+    <option value="埼玉県">埼玉県</option>
+    <option value="千葉県">千葉県</option>
+    <option value="東京都">東京都</option>
+    <option value="神奈川県">神奈川県</option>
+    <option value="新潟県">新潟県</option>
+    <option value="富山県">富山県</option>
+    <option value="石川県">石川県</option>
+    <option value="福井県">福井県</option>
+    <option value="山梨県">山梨県</option>
+    <option value="長野県">長野県</option>
+    <option value="岐阜県">岐阜県</option>
+    <option value="静岡県">静岡県</option>
+    <option value="愛知県">愛知県</option>
+    <option value="三重県">三重県</option>
+    <option value="滋賀県">滋賀県</option>
+    <option value="京都府">京都府</option>
+    <option value="大阪府">大阪府</option>
+    <option value="兵庫県">兵庫県</option>
+    <option value="奈良県">奈良県</option>
+    <option value="和歌山県">和歌山県</option>
+    <option value="鳥取県">鳥取県</option>
+    <option value="島根県">島根県</option>
+    <option value="岡山県">岡山県</option>
+    <option value="広島県">広島県</option>
+    <option value="山口県">山口県</option>
+    <option value="徳島県">徳島県</option>
+    <option value="香川県">香川県</option>
+    <option value="愛媛県">愛媛県</option>
+    <option value="高知県">高知県</option>
+    <option value="福岡県">福岡県</option>
+    <option value="佐賀県">佐賀県</option>
+    <option value="長崎県">長崎県</option>
+    <option value="熊本県">熊本県</option>
+    <option value="大分県">大分県</option>
+    <option value="宮崎県">宮崎県</option>
+    <option value="鹿児島県">鹿児島県</option>
+    <option value="沖縄県">沖縄県</option>
+</select>
