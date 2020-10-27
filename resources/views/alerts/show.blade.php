@@ -76,7 +76,7 @@
             <table class="table table-bordered" height="147" style="margin-top:5px;">
                 <tr>
                     <th>エリア</th>
-                    <td>{{ $alert->area }}</td>
+                    <td>{{$alert->area}}<span style="padding-left:8px;">{{$alert->city}}</span></td>
                 </tr>
                 <tr>
                     <th>場所</th>
