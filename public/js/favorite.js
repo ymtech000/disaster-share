@@ -1,6 +1,5 @@
 function postFavorite(id, favorite_count) {
     let favorite_class = $('#favorite'+id).parent().attr('class');
-    console.log(favorite_class);
     let favorite_button = document.getElementById("favorite_count"+id);
     let favorite_parent = document.getElementById("favorite_parent"+id);
     let csrf = document.getElementById('csrf-token').content;
