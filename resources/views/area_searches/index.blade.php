@@ -5,12 +5,12 @@
     <div class='form-row'>
         <div class="col-md-4 offset-md-8">
             <div class="submit-select">
-                <form id="submit_form" method="get" action="area_searches">
-                    @include('commons.area_search')
-                </form>
+                @include('commons.area_search')
+                <div class="city"></div>
             </div>
         </div>
     </div>
     <!--検索条件に一致した投稿を表示-->
     @include('alerts.posts', ['alerts'=>$alerts])
+    <script src="{{ asset('/js/city_search.js') }}"></script>
 @endsection
