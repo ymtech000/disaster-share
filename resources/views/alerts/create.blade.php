@@ -24,8 +24,14 @@
             </div>
             <div class='col-md-5'>
                 {!! Form::label('area', 'エリア:') !!}
-                @include('commons.area')
-                <div class="city"></div>
+                <div class="area_name">
+                    <span>@include('commons.area')</span>
+                    <span>
+                        <div class="city">
+                            @include('cities.city_hokkaido')
+                        </div>
+                    </span>
+                </div>
                 {!! Form::label('location', '場所(15字以内):') !!}
                 {!! Form::text('location', null, ['class' => 'form-control']) !!}
                 <div class="box">
