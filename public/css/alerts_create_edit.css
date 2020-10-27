@@ -12,6 +12,10 @@
     display:inline-block;
 }
 
+.area_name span{
+    display:inline-block;
+}
+
  @media screen and (min-width: 320px) and (max-width: 767px) {
     .submit{
         margin-top:10px;
