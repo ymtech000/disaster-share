@@ -61,6 +61,7 @@ class AlertsController extends Controller
                 'content' => $request->content,
                 'title' => $request->title,
                 'area' => $request->area,
+                'city' => $request->city,
                 'location' => $request->location,
                 'time' => $now,
                 'image' => $url,
@@ -112,6 +113,7 @@ class AlertsController extends Controller
         $alert->content = $request->content;
         $alert->title = $request->title;
         $alert->area = $request->area;
+        $alert->city = $request->city;
         $alert->location = $request->location;
         $alert->time = $now;
         $alert->image = $url;

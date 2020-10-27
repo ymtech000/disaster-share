@@ -20,6 +20,7 @@ class CreateAlertsTable extends Migration
             $table->string('title')->nullable(); //title カラム追加
             $table->string('image')->nullable();      // image  カラム追加
             $table->string('area')->nullable();     // area   カラム追加
+            $table->string('city')->nullable();     // area   カラム追加
             $table->string('location')->nullable();      // location カラム追加
             $table->string('time')->nullable();         // timeカラム追加
             $table->string('lat')->nullable();
