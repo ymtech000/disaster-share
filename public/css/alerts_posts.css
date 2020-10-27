@@ -40,6 +40,13 @@
     justify-content: center;
 }
 
+.city_name{
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
     .side{
