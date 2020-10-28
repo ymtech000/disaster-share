@@ -293,7 +293,7 @@ $("#submit_select").change(function(){
             '<option value="女川町">女川町</option>'+
             '<option value="角田市">角田市</option>'+
             '<option value="加美町">加美町</option>'+
-            '<option value="川崎町">川崎町 (宮城県)</option>'+
+            '<option value="川崎町">川崎町</option>'+
             '<option value="栗原市">栗原市</option>'+
             '<option value="気仙沼市">気仙沼市</option>'+
             '<option value="蔵王町">蔵王町</option>'+
@@ -713,7 +713,7 @@ $("#submit_select").change(function(){
             '<option value="茂原市">茂原市</option>'+
             '<option value="八街市">八街市</option>'+
             '<option value="八街市">八街市</option>'+
-            '<option value="横芝光町"></option>'+
+            '<option value="横芝光町">横芝光町</option>'+
             '<option value="四街道市">四街道市</option>'+
         '</select>'+
     '</form>';
@@ -1193,7 +1193,7 @@ $("#submit_select").change(function(){
             '<option value="長久手市">長久手市</option>'+
             '<option value="名古屋市">名古屋市</option>'+
             '<option value="西尾市">西尾市</option>'+
-            '<option value="日進市>日進市</option>'+
+            '<option value="日進市">日進市</option>'+
             '<option value="半田市">半田市</option>'+
             '<option value="東浦町">東浦町</option>'+
             '<option value="扶桑町">扶桑町</option>'+
@@ -1374,7 +1374,7 @@ $("#submit_select").change(function(){
             '<option value="猪名川町">猪名川町</option>'+
             '<option value="稲美町">稲美町</option>'+
             '<option value="小野市">小野市</option>'+
-            '<option value="">加古川市</加古川市option>'+
+            '<option value="加古川">加古川市</option>'+
             '<option value="加西市">加西市</option>'+
             '<option value="加東市">加東市</option>'+
             '<option value="神河町">神河町</option>'+
@@ -1506,7 +1506,7 @@ $("#submit_select").change(function(){
             '<option value="日南町">日南町</option>'+
             '<option value="日吉津村">日吉津村</option>'+
             '<option value="日野町">日野町</option>'+
-            '<option value="伯耆町><伯耆町/option>'+
+            '<option value="伯耆町">伯耆町</option>'+
             '<option value="北栄町">北栄町</option>'+
             '<option value="三朝町">三朝町</option>'+
             '<option value="八頭町">八頭町</option>'+
@@ -1627,7 +1627,7 @@ $("#submit_select").change(function(){
             '<option value="防府市">防府市</option>'+
             '<option value="美祢市">美祢市</option>'+
             '<option value="柳井市">柳井市</option>'+
-            '<option value="山口市"山口市></option>'+
+            '<option value="山口市">山口市</option>'+
             '<option value="和木町">和木町</option>'+
         '</select>'+
     '</form>';
@@ -1768,7 +1768,7 @@ $("#submit_select").change(function(){
             '<option value="糸田町">糸田町</option>'+
             '<option value="うきは市">うきは市</option>'+
             '<option value="宇美町">宇美町</option>'+
-            '<option value="大川市><大川市/option>'+
+            '<option value="大川市">大川市</option>'+
             '<option value="大木町">大木町</option>'+
             '<option value="大任町">大任町</option>'+
             '<option value="大野城市">大野城市</option>'+
@@ -1808,9 +1808,9 @@ $("#submit_select").change(function(){
             '<option value="久山町">久山町</option>'+
             '<option value="広川町">広川町</option>'+
             '<option value="福岡市">福岡市</option>'+
-            '<option value="福智町"福智町></option>'+
+            '<option value="福智町">福智町</option>'+
             '<option value="福津市">福津市</option>'+
-            '<option value="豊前市"豊前市></option>'+
+            '<option value="豊前市">豊前市</option>'+
             '<option value="水巻町">水巻町</option>'+
             '<option value="宮若市">宮若市</option>'+
             '<option value="みやこ町">みやこ町</option>'+
@@ -2103,7 +2103,7 @@ $("#submit_select").change(function(){
     }else if(area === '茨城県'){
         $city.append(Ibaraki);
     }else if(area === '栃木県'){
-        $city.append(Ibaraki);
+        $city.append(Tochigi);
     }else if(area === '群馬県'){
         $city.append(Gunma);
     }else if(area === '埼玉県'){
@@ -2156,6 +2156,8 @@ $("#submit_select").change(function(){
         $city.append(Hiroshima);
     }else if(area === '山口県'){
         $city.append(Yamaguchi);
+    }else if(area === '徳島県'){
+        $city.append(Tokushima);
     }else if(area === '香川県'){
         $city.append(Kagawa);
     }else if(area === '愛媛県'){
