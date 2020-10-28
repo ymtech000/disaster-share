@@ -1,5 +1,4 @@
 <select class="form-control select" id="submit_select" name="search">
-    <option value="未選択">未選択</option>
     <option value="北海道">北海道</option>
     <option value="青森県">青森県</option>
     <option value="岩手県">岩手県</option>
