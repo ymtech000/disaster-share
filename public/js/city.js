@@ -1659,7 +1659,7 @@ $("#submit_select").change(function(){
         '<option value="春日市">春日市</option>'+
         '<option value="粕屋町">粕屋町</option>'+
         '<option value="嘉麻市">嘉麻市</option>'+
-        '<option value="川崎町（福岡県）">川崎町</option>'+
+        '<option value="川崎町">川崎町</option>'+
         '<option value="香春町">香春町</option>'+
         '<option value="苅田町">苅田町</option>'+
         '<option value="北九州市">北九州市</option>'+
