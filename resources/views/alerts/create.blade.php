@@ -25,7 +25,7 @@
             <div class='col-md-5'>
                 {!! Form::label('area', 'エリア:') !!}
                 <div class="area_name">
-                    <span>@include('commons.area')</span>
+                    <span class="area">@include('commons.area')</span>
                     <span>
                         <div class="city">
                             @include('cities.city_hokkaido')
