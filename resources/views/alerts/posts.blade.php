@@ -37,7 +37,7 @@
                         <div class="card-footer" style="border-top:solid; border-width:thin;">
                             <div class="title" style="font-size:1.3em;　text-align:left;">{{$alert->title}}</div>
                             <div class="side">
-                                <p class="city_name" >{{$alert->area}}<span style="padding-left:8px;">{{$alert->city}}</span></p>
+                                <div class="city_name">{{$alert->area}}<span style="padding-left:8px;">{{$alert->city}}</span></div>
                                 <ul class="icons">
                                     <li><span class="far fa-comment"></span></li>
                                     <li>{{count($alert->alertcomments)}}</li>
