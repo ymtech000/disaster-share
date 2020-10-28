@@ -3,13 +3,19 @@
 @section('content')
     <h1 class="text-center font-weight-bold font-family-Tahoma">DISASTER  INFORMATION</h1>
     <div class='form-row'>
-        <div class="col-sm-4 offset-sm-8">
+        <div class="col-md-4 offset-md-8">
             <div class="submit-select">
-                @include('commons.area_search')
-                <div class="city"></div>
+                <span>@include('commons.area_search')</span>
+                <span>
+                    <div class="city">
+                        @include('cities.search_hokkaido')
+                    </div>
+                </span>
             </div>
         </div>
     </div>
-    @include('alerts.posts', ['alerts'=>$alerts])
+    <div class="posts">
+        @include('alerts.posts', ['alerts'=>$alerts])
+    </div>
     <script src="{{ asset('/js/city_search.js') }}"></script>
 @endsection

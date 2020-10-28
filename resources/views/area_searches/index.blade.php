@@ -5,8 +5,12 @@
     <div class='form-row'>
         <div class="col-md-4 offset-md-8">
             <div class="submit-select">
-                @include('commons.area_search')
-                <div class="city"></div>
+                <span>@include('commons.area_search')</span>
+                <span>
+                    <div class="city">
+                        @include('cities.search_hokkaido')
+                    </div>
+                </span>
             </div>
         </div>
     </div>
