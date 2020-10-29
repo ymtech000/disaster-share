@@ -7,9 +7,11 @@
             <div class="submit-select">
                 <span>@include('commons.area_search')</span>
                 <span>
-                    <div class="city">
-                        @include('cities.search_hokkaido')
-                    </div>
+                    <form id="submit_form" method="get" action="area_searches">
+                        <div class="city">
+                            @include('cities.search_hokkaido')
+                        </div>
+                    </form>
                 </span>
             </div>
         </div>
@@ -18,4 +20,5 @@
         @include('alerts.posts', ['alerts'=>$alerts])
     </div>
     <script src="{{ asset('/js/city_search.js') }}"></script>
+    <script src="{{ asset('/js/area_searches.js') }}"></script>
 @endsection
