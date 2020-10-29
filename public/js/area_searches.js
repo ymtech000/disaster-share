@@ -1,3 +1,3 @@
-$("#submit_select").change(function(){
+$("#submit_city").change(function(){
   $("#submit_form").submit();
 });
