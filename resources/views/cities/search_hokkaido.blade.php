@@ -185,3 +185,4 @@
     <option value="稚内市">稚内市</option>
     <option value="和寒町">和寒町</option>
 </select>
+<input type="hidden" name="area" value="北海道">

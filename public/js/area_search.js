@@ -189,7 +189,8 @@ $("#submit_area").change(function(){
         '<option value="礼文町">礼文町</option>'+
         '<option value="稚内市">稚内市</option>'+
         '<option value="和寒町">和寒町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="北海道">';
 
     Aomori =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -234,7 +235,8 @@ $("#submit_area").change(function(){
         '<option value="蓬田村">蓬田村</option>'+
         '<option value="六戸町">六戸町</option>'+
         '<option value="六ヶ所村">六ヶ所村</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="青森県">';
 
     Iwate =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -272,7 +274,8 @@ $("#submit_area").change(function(){
         '<option value="矢巾町">矢巾町</option>'+
         '<option value="山田町">山田町</option>'+
         '<option value="陸前高田市">陸前高田市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="岩手県">';
 
     Miyagi=
     '<select class="form-control" id="submit_city" name="search">'+
@@ -312,7 +315,8 @@ $("#submit_area").change(function(){
         '<option value="利府町">利府町</option>'+
         '<option value="涌谷町">涌谷町</option>'+
         '<option value="亘理町">亘理町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="宮城県">';
 
     Akita =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -342,7 +346,8 @@ $("#submit_area").change(function(){
         '<option value="湯沢市">湯沢市</option>'+
         '<option value="由利本荘市">由利本荘市</option>'+
         '<option value="横手市">横手市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="秋田県">';
 
     Yamagata =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -382,7 +387,8 @@ $("#submit_area").change(function(){
         '<option value="山辺町">山辺町</option>'+
         '<option value="遊佐町">遊佐町</option>'+
         '<option value="米沢市">米沢市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="山形県">';
 
     Fukushima =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -446,7 +452,8 @@ $("#submit_area").change(function(){
         '<option value="矢吹町">矢吹町</option>'+
         '<option value="矢祭町">矢祭町</option>'+
         '<option value="湯川村">湯川村</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="福島県">';
 
     Ibaraki =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -495,7 +502,8 @@ $("#submit_area").change(function(){
         '<option value="八千代町">八千代町</option>'+
         '<option value="結城市">結城市</option>'+
         '<option value="龍ケ崎市">龍ケ崎市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="茨城県">';
 
     Tochigi =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -525,47 +533,49 @@ $("#submit_area").change(function(){
         '<option value="真岡市">真岡市</option>'+
         '<option value="茂木町">茂木町</option>'+
         '<option value="矢板市">矢板市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="栃木県">';
 
     Gunma = 
-        '<select class="form-control" id="submit_city" name="search">'+
-            '<option value="未選択">未選択</option>'+
-            '<option value="安中市">安中市</option>'+
-            '<option value="伊勢崎市">伊勢崎市</option>'+
-            '<option value="板倉町">板倉町</option>'+
-            '<option value="上野村">上野村</option>'+
-            '<option value="邑楽町">邑楽町</option>'+
-            '<option value="大泉町">大泉町</option>'+
-            '<option value="太田市">太田市</option>'+
-            '<option value="片品村">片品村</option>'+
-            '<option value="川場村">川場村</option>'+
-            '<option value="神流町">神流町</option>'+
-            '<option value="甘楽町">甘楽町</option>'+
-            '<option value="桐生市">桐生市</option>'+
-            '<option value="草津町">草津町</option>'+
-            '<option value="渋川市">渋川市</option>'+
-            '<option value="下仁田町">下仁田町</option>'+
-            '<option value="昭和村">昭和村</option>'+
-            '<option value="榛東村">榛東村</option>'+
-            '<option value="高崎市">高崎市</option>'+
-            '<option value="高山村">高山村</option>'+
-            '<option value="館林市">館林市</option>'+
-            '<option value="玉村町">玉村町</option>'+
-            '<option value="千代田町">千代田町</option>'+
-            '<option value="嬬恋村">嬬恋村</option>'+
-            '<option value="富岡市">富岡市</option>'+
-            '<option value="中之条町">中之条町</option>'+
-            '<option value="長野原町">長野原町</option>'+
-            '<option value="南牧村">南牧村</option>'+
-            '<option value="沼田市">沼田市</option>'+
-            '<option value="東吾妻町">東吾妻町</option>'+
-            '<option value="藤岡市">藤岡市</option>'+
-            '<option value="前橋市">前橋市</option>'+
-            '<option value="みどり市">みどり市</option>'+
-            '<option value="みなかみ町">みなかみ町</option>'+
-            '<option value="明和町">明和町</option>'+
-            '<option value="吉岡町">吉岡町</option>'+
-        '</select>';
+    '<select class="form-control" id="submit_city" name="search">'+
+        '<option value="未選択">未選択</option>'+
+        '<option value="安中市">安中市</option>'+
+        '<option value="伊勢崎市">伊勢崎市</option>'+
+        '<option value="板倉町">板倉町</option>'+
+        '<option value="上野村">上野村</option>'+
+        '<option value="邑楽町">邑楽町</option>'+
+        '<option value="大泉町">大泉町</option>'+
+        '<option value="太田市">太田市</option>'+
+        '<option value="片品村">片品村</option>'+
+        '<option value="川場村">川場村</option>'+
+        '<option value="神流町">神流町</option>'+
+        '<option value="甘楽町">甘楽町</option>'+
+        '<option value="桐生市">桐生市</option>'+
+        '<option value="草津町">草津町</option>'+
+        '<option value="渋川市">渋川市</option>'+
+        '<option value="下仁田町">下仁田町</option>'+
+        '<option value="昭和村">昭和村</option>'+
+        '<option value="榛東村">榛東村</option>'+
+        '<option value="高崎市">高崎市</option>'+
+        '<option value="高山村">高山村</option>'+
+        '<option value="館林市">館林市</option>'+
+        '<option value="玉村町">玉村町</option>'+
+        '<option value="千代田町">千代田町</option>'+
+        '<option value="嬬恋村">嬬恋村</option>'+
+        '<option value="富岡市">富岡市</option>'+
+        '<option value="中之条町">中之条町</option>'+
+        '<option value="長野原町">長野原町</option>'+
+        '<option value="南牧村">南牧村</option>'+
+        '<option value="沼田市">沼田市</option>'+
+        '<option value="東吾妻町">東吾妻町</option>'+
+        '<option value="藤岡市">藤岡市</option>'+
+        '<option value="前橋市">前橋市</option>'+
+        '<option value="みどり市">みどり市</option>'+
+        '<option value="みなかみ町">みなかみ町</option>'+
+        '<option value="明和町">明和町</option>'+
+        '<option value="吉岡町">吉岡町</option>'+
+    '</select>'+
+    '<input type="hidden" name="area" value="群馬県">';
 
     Saitama =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -633,7 +643,8 @@ $("#submit_area").change(function(){
         '<option value="嵐山町">嵐山町</option>'+
         '<option value="和光市">和光市</option>'+
         '<option value="蕨市">蕨市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="埼玉県">';
 
     Chiba =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -692,7 +703,8 @@ $("#submit_area").change(function(){
         '<option value="八街市">八街市</option>'+
         '<option value="横芝光町">横芝光町</option>'+
         '<option value="四街道市">四街道市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="千葉県">';
 
     Tokyo =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -759,7 +771,8 @@ $("#submit_area").change(function(){
         '<option value="武蔵野市">武蔵野市</option>'+
         '<option value="武蔵村山市">武蔵村山市</option>'+
         '<option value="目黒区">目黒区</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="東京都">';
 
     Kanagawa = 
     '<select class="form-control" id="submit_city" name="search">'+
@@ -797,7 +810,8 @@ $("#submit_area").change(function(){
         '<option value="湯河原町">湯河原町</option>'+
         '<option value="横須賀市">横須賀市</option>'+
         '<option value="横浜市">横浜市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="神奈川県">';
 
     Niigata =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -832,7 +846,8 @@ $("#submit_area").change(function(){
         '<option value="村上市">村上市</option>'+
         '<option value="弥彦村">弥彦村</option>'+
         '<option value="湯沢町">湯沢町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="新潟県">';
 
     Toyama =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -852,7 +867,8 @@ $("#submit_area").change(function(){
         '<option value="入善町">入善町</option>'+
         '<option value="氷見市">氷見市</option>'+
         '<option value="舟橋村">舟橋村</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="富山県">';
 
     Ishikawa =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -876,7 +892,8 @@ $("#submit_area").change(function(){
         '<option value="白山市">白山市</option>'+
         '<option value="宝達志水町">宝達志水町</option>'+
         '<option value="輪島市">輪島市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="石川県">';
 
     Fukui =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -898,7 +915,8 @@ $("#submit_area").change(function(){
         '<option value="南越前町">南越前町</option>'+
         '<option value="美浜町">美浜町</option>'+
         '<option value="若狭町">若狭町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="福井県">';
 
     Yamanashi =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -930,7 +948,8 @@ $("#submit_area").change(function(){
         '<option value="身延町">身延町</option>'+
         '<option value="山中湖村">山中湖村</option>'+
         '<option value="山梨市">山梨市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="山梨県">';
 
     Nagano =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1012,7 +1031,8 @@ $("#submit_area").change(function(){
         '<option value="泰阜村">泰阜村</option>'+
         '<option value="山形村">山形村</option>'+
         '<option value="山ノ内町">山ノ内町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="長野県">';
 
     Gifu =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1059,7 +1079,8 @@ $("#submit_area").change(function(){
         '<option value="山県市">山県市</option>'+
         '<option value="養老町">養老町</option>'+
         '<option value="輪之内町">輪之内町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="岐阜県">';
 
     Shizuoka =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1099,7 +1120,8 @@ $("#submit_area").change(function(){
         '<option value="森町">森町</option>'+
         '<option value="焼津市">焼津市</option>'+
         '<option value="吉田町">吉田町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="静岡県">';
 
     Aichi =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1158,7 +1180,8 @@ $("#submit_area").change(function(){
         '<option value="美浜町">美浜町</option>'+
         '<option value="みよし市">みよし市</option>'+
         '<option value="弥富市">弥富市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="愛知県">';
     
     Mie =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1192,7 +1215,8 @@ $("#submit_area").change(function(){
         '<option value="明和町">明和町</option>'+
         '<option value="四日市市">四日市市</option>'+
         '<option value="度会町">度会町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="三重県">';
 
     Shiga =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1216,7 +1240,8 @@ $("#submit_area").change(function(){
         '<option value="野洲市">野洲市</option>'+
         '<option value="栗東市">栗東市</option>'+
         '<option value="竜王町">竜王町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="滋賀県">';
 
     Kyoto =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1247,7 +1272,8 @@ $("#submit_area").change(function(){
         '<option value="八幡市">八幡市</option>'+
         '<option value="与謝野町">与謝野町</option>'+
         '<option value="和束町">和束町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="京都府">';
 
     Osaka = 
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1303,7 +1329,8 @@ $("#submit_area").change(function(){
         '<option value="美原町">美原町</option>'+
         '<option value="守口市">守口市</option>'+
         '<option value="八尾市">八尾市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="大阪府">';
 
     Hyogo =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1349,7 +1376,8 @@ $("#submit_area").change(function(){
         '<option value="三木市">三木市</option>'+
         '<option value="南あわじ市">南あわじ市</option>'+
         '<option value="養父市">養父市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="兵庫県">';
 
     Nara =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1393,7 +1421,8 @@ $("#submit_area").change(function(){
         '<option value="大和郡山市">大和郡山市</option>'+
         '<option value="大和高田市">大和高田市</option>'+
         '<option value="吉野町">吉野町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="奈良県">';
 
     Wakayama =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1428,7 +1457,8 @@ $("#submit_area").change(function(){
         '<option value="湯浅町">湯浅町</option>'+
         '<option value="由良町">由良町</option>'+
         '<option value="和歌山市">和歌山市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="和歌山県">';
 
     Tottori =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1452,7 +1482,8 @@ $("#submit_area").change(function(){
         '<option value="湯梨浜町">湯梨浜町</option>'+
         '<option value="米子市">米子市</option>'+
         '<option value="若桜町">若桜町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="鳥取県">';
 
     Shimane =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1476,7 +1507,8 @@ $("#submit_area").change(function(){
         '<option value="美郷町">美郷町</option>'+
         '<option value="安来市">安来市</option>'+
         '<option value="吉賀町">吉賀町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="島根県">';
 
     Okayama =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1508,7 +1540,8 @@ $("#submit_area").change(function(){
         '<option value="美作市">美作市</option>'+
         '<option value="矢掛町">矢掛町</option>'+
         '<option value="和気町">和気町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="岡山県">';
 
     Hiroshima =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1536,7 +1569,8 @@ $("#submit_area").change(function(){
         '<option value="府中町">府中町</option>'+
         '<option value="三原市">三原市</option>'+
         '<option value="三次市">三次市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="広島県">';
 
     Yamaguchi =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1560,7 +1594,8 @@ $("#submit_area").change(function(){
         '<option value="柳井市">柳井市</option>'+
         '<option value="山口市">山口市</option>'+
         '<option value="和木町">和木町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="山口県">';
 
     Tokushima =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1589,7 +1624,8 @@ $("#submit_area").change(function(){
         '<option value="三好市">三好市</option>'+
         '<option value="牟岐町">牟岐町</option>'+
         '<option value="吉野川市">吉野川市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="徳島県">';
 
     Kagawa =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1611,7 +1647,8 @@ $("#submit_area").change(function(){
         '<option value="まんのう町">まんのう町</option>'+
         '<option value="三木町">三木町</option>'+
         '<option value="三豊市">三豊市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="香川県">';
 
     Ehime =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1636,7 +1673,8 @@ $("#submit_area").change(function(){
         '<option value="松野町">松野町</option>'+
         '<option value="松山市">松山市</option>'+
         '<option value="八幡浜市">八幡浜市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="愛媛県">';
 
     Kochi =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1675,7 +1713,8 @@ $("#submit_area").change(function(){
         '<option value="本山町">本山町</option>'+
         '<option value="安田町">安田町</option>'+
         '<option value="檮原町">檮原町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="高知県">';
 
     Fukuoka =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1740,7 +1779,8 @@ $("#submit_area").change(function(){
         '<option value="八女市">八女市</option>'+
         '<option value="行橋市">行橋市</option>'+
         '<option value="吉富町">吉富町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="福岡県">';
 
     Saga =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1764,7 +1804,8 @@ $("#submit_area").change(function(){
         '<option value="鳥栖市">鳥栖市</option>'+
         '<option value="みやき町">みやき町</option>'+
         '<option value="吉野ヶ里町">吉野ヶ里町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="佐賀県">';
 
     Nagasaki =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1790,7 +1831,8 @@ $("#submit_area").change(function(){
         '<option value="平戸市">平戸市</option>'+
         '<option value="松浦市">松浦市</option>'+
         '<option value="南島原市">南島原市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="長崎県">';
 
     Kumamoto =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1840,7 +1882,8 @@ $("#submit_area").change(function(){
         '<option value="山都町">山都町</option>'+
         '<option value="湯前町">湯前町</option>'+
         '<option value="苓北町">苓北町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="熊本県">';
 
     Oita =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1863,7 +1906,8 @@ $("#submit_area").change(function(){
         '<option value="豊後高田市">豊後高田市</option>'+
         '<option value="別府市">別府市</option>'+
         '<option value="由布市">由布市</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="大分県">';
 
     Miyazaki =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1894,7 +1938,8 @@ $("#submit_area").change(function(){
         '<option value="都城市">都城市</option>'+
         '<option value="宮崎市">宮崎市</option>'+
         '<option value="諸塚村">諸塚村</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="宮崎県">';
 
     Kagoshima =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1942,7 +1987,8 @@ $("#submit_area").change(function(){
         '<option value="湧水町">湧水町</option>'+
         '<option value="与論町">与論町</option>'+
         '<option value="和泊町">和泊町</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="鹿児島県">';
 
     Okinawa =
     '<select class="form-control" id="submit_city" name="search">'+
@@ -1988,7 +2034,8 @@ $("#submit_area").change(function(){
         '<option value="与那国町">与那国町</option>'+
         '<option value="与那原町">与那原町</option>'+
         '<option value="読谷村">読谷村</option>'+
-    '</select>';
+    '</select>'+
+    '<input type="hidden" name="area" value="沖縄県">';
 
     $city.empty();
     if(area === '北海道'){
