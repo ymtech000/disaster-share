@@ -77,4 +77,6 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="{{asset('/js/alerts_response.js')}}"></script>
+<script src="{{ asset('/js/city_search.js') }}"></script>
+<script src="{{ asset('/js/area_search.js') }}"></script>
 <link rel="stylesheet" href="{{asset('/css/alerts_posts.css')}}">
