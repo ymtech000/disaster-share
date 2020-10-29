@@ -1,3 +1,3 @@
-$("#submit_city").change(function(){
+$(document).on('change', '#submit_city', function(){
   $("#submit_form").submit();
 });
