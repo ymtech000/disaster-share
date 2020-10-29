@@ -21,5 +21,5 @@
         @include('alerts.posts', ['alerts'=>$alerts])
     </div>
     <script src="{{ asset('/js/city_search.js') }}"></script>
-    <script src="{{asset('/js/area_searches.js') }}"></script>
+    <script src="{{asset('/js/area_search.js') }}"></script>
 @endsection
