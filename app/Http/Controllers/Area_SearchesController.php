@@ -19,7 +19,8 @@ class Area_SearchesController extends Controller
                 $alerts = $query->where('city', 'like', '%'.$searches.'%')->paginate(9);
             }   
             return view('area_searches.index',[
-                'alerts' => $alerts
+                'alerts' => $alerts,
+                'area' => $request->area,
             ]);
         }
     }
