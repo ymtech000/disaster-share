@@ -1,5 +1,5 @@
-$("#submit_select").change(function(){
-    var area = $('#submit_select option:selected').text();
+$("#submit_area").change(function(){
+    var area = $('#submit_area option:selected').text();
     var $city =$('.city');
 
     Hokkaido = 
