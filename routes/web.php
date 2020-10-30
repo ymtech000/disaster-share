@@ -36,7 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'destroy', 'update', 'edit']]);
     Route::delete('alertdestroys/{id}', 'AlertdestroysController@destroy')->name('alertdestroys.destroy');
     Route::resource('alerts', 'AlertsController');
-    Route::get('post_searches', 'Post_SearchesController@index');
+    Route::resource('post_searches', 'Post_SearchesController', ['only' => ['index']]);
     Route::get('city_searches', 'Area_SearchesController@index');
     Route::resource('unsubscribe', 'UnsubscribesController', ['only' => ['index']]);
     Route::resource('alertcomments', 'AlertcommentsController', ['only' => ['destroy']]);
