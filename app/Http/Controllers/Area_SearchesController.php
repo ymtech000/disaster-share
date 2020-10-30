@@ -21,6 +21,7 @@ class Area_SearchesController extends Controller
             return view('area_searches.index',[
                 'alerts' => $alerts,
                 'area' => $request->area,
+                'city' => $searches,
             ]);
         }
     }
