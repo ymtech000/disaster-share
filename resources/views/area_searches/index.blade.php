@@ -2,7 +2,8 @@
 
 @section('content')
     <h1 class="text-center font-weight-bold font-family-Tahoma">DISASTER  INFORMATION</h1>
-    <div id="area_name" value="{{$area}}"></div>
+    <input type="hidden" id="area_name" value="{{$area}}">
+    <input type="hidden" id="city_name" value="{{$city}}">
     <div class='form-row'>
         <div class="col-md-4 offset-md-8">
             <div class="submit-select">
