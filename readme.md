@@ -21,8 +21,8 @@ URL: [https://www.disaster-share.com](https://www.disaster-share.com)
 - Database agnostic [schema migrations](https://laravel.com/docs/migrations).
 - [Robust background job processing](https://laravel.com/docs/queues).
 - [Real-time event broadcasting](https://laravel.com/docs/broadcasting). -->
-トップページのログインボタンからログインページに遷移していただき、「ゲストログインボタン」からゲストユーザーとしてログインしアプリをご使用いただけます。
-こちらのサービスで用いている災害の写真は以下のサイトのものを利用しており、実際に起こった災害とは一切関係がありません。<br>                                                   
+トップページのログインボタンからログインページに遷移していただき、「ゲストログインボタン」からゲストユーザーとしてログインしアプリをご使用いただけます。こちらのサービスで用いている災害の写真は以下のサイトのものを利用しており、実際に起こった災害とは一切関係がありません。
+<br>
 災害写真データベース: [http://www.saigaichousa-db-isad.jp/drsdb_photo/photoSearch.do](http://www.saigaichousa-db-isad.jp/drsdb_photo/photoSearch.do)
 
 
@@ -33,9 +33,7 @@ URL: [https://www.disaster-share.com](https://www.disaster-share.com)
 <!-- Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
 
 If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library. -->
-私は大学時代に自然災害をはじめとする災害の被害最小化について学んできました。
-その中で、災害が起こった後の二次被害（地震後の津波、大雨の後の土砂崩れなど）により命を落としたり、怪我を負ってしまう方が自分の想像よりも多くいることを知ります。
-そこで、二次災害が起きる前にその情報を共有できれば被害を減少させられるのではないか、自分にも災害の被害を最小化し、いち早く安全安心な暮らしへ復興するためにできることがあるのではないか？と考え本サービスを作成しました。
+私は大学時代に自然災害をはじめとする災害の被害最小化について学んできました。 その中で、災害が起こった後の二次被害（地震後の津波、大雨の後の土砂崩れなど）により命を落としたり、怪我を負ってしまう方が自分の想像よりも多くいることを知ります。 そこで、二次災害が起きる前にその情報を共有できれば被害を減少させられるのではないか、自分にも災害の被害を最小化し、いち早く安全安心な暮らしへ復興するためにできることがあるのではないか？と考え本サービスを作成しました
 <!-- ## 工夫した点
 ・無限コメント機能
 ・CI/CDパイプラインの構築 -->
