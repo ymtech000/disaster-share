@@ -61,7 +61,7 @@ If you're not in the mood to read, [Laracasts](https://laracasts.com) contains o
 - 場所一覧
 ### コメント機能
 - 投稿（コメント対しコメントが延々とできる, 非同期）
-- コメントの表示（非同期, 同一スレッド上にある直前, 直後のコメントを表示可能）
+- コメントの表示（同一スレッド上にある直前, 直後のコメントを表示可能, 非同期）
 - 削除(非同期)
 ### フォロー機能
 - ユーザーのフォロー・フォロー解除（非同期）
@@ -88,7 +88,7 @@ If you're not in the mood to read, [Laracasts](https://laracasts.com) contains o
 ### DB
 - MySQL 8.0.19
 ### インフラ・開発環境等
-- AWS(ACM,EC2,ALB,ECR,ECS,RDS,Route53,VPC,S3)
+- AWS(ACM, EC2, ALB, ECR, ECS, RDS, Route53, VPC, S3)
 - Docker/docker-compose
 - CircleCI(CI/CD)
 ### その他
