@@ -9,7 +9,7 @@
 
 # 災害情報共有サービス　DISASTER SHARE
 
-災害時に地域毎の有益な情報を共有し合うことにより、二次被害を防いだり、身を守る行動をより早く取れるようにすることを目的としたサービスです。本サービスは大阪府を対象として作成されています。
+災害時に地域毎の有益な情報を共有し合うことにより、二次被害を防いだり、身を守る行動をより早く取れるようにすることを目的としたサービスです。
 <!-- Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as: -->
 
 ## URL
@@ -22,7 +22,7 @@ URL: [https://www.disaster-share.com](https://www.disaster-share.com)
 - [Robust background job processing](https://laravel.com/docs/queues).
 - [Real-time event broadcasting](https://laravel.com/docs/broadcasting). -->
 トップページのログインボタンからログインページに遷移していただき、「ゲストログインボタン」からゲストユーザーとしてログインしアプリをご使用いただけます。
-こちらのサービスで用いている災害の写真は以下ののサイトのものを利用しており、実際に起こった災害とは一切関係がありません<br>                                                   
+こちらのサービスで用いている災害の写真は以下のサイトのものを利用しており、実際に起こった災害とは一切関係がありません。<br>                                                   
 災害写真データベース: [http://www.saigaichousa-db-isad.jp/drsdb_photo/photoSearch.do](http://www.saigaichousa-db-isad.jp/drsdb_photo/photoSearch.do)
 
 
@@ -33,7 +33,9 @@ URL: [https://www.disaster-share.com](https://www.disaster-share.com)
 <!-- Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
 
 If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library. -->
-大学４年間、様々な分野の「安全」について学び自然災害をはじめとする災害の被害最小化について学んできました。そこで東日本大震災をはじめとする災害の悲惨さを度々目の当たりにし、胸を痛めると同時に自分にも災害の被害を最小化し、災害からいち早く安全安心な暮らしへ復興するために私にもできることがあるのではないか？と考え本サービスを作成しました。
+私は大学時代に自然災害をはじめとする災害の被害最小化について学んできました。
+その中で、災害が起こった後の二次被害（地震後の津波、大雨の後の土砂崩れなど）により命を落としたり、怪我を負ってしまう方が自分の想像よりも多くいることを知ります。
+そこで、二次災害が起きる前にその情報を共有できれば被害を減少させられるのではないか、自分にも災害の被害を最小化し、いち早く安全安心な暮らしへ復興するためにできることがあるのではないか？と考え本サービスを作成しました。
 <!-- ## 工夫した点
 ・無限コメント機能
 ・CI/CDパイプラインの構築 -->
@@ -51,23 +53,22 @@ If you're not in the mood to read, [Laracasts](https://laracasts.com) contains o
     - フォロワー
     - お気に入りに追加した投稿
 ### 投稿機能
-- 投稿（画像, タイトル, メッセージ, 場所, 位置情報）・編集・削除
+- 投稿（画像, タイトル, メッセージ, 都道府県・市区町村, 場所, 位置情報）・編集・削除
 - 一覧表示、詳細表示
 - 地図表示（Google Maps API）
-- お気に入り追加（非同期、いいね数のカウント）
-- 検索（キーワード検索・タグ検索）
-- コメント（コメントにもコメントができる）
+- お気に入り追加（いいね数のカウント, 非同期）
+- 検索（キーワード検索・メニュー検索）
 - 場所一覧
 ### コメント機能
-- 投稿（非同期）
-- コメントの表示（非同期, 同一スレッド上にある直前、直後のコメントを表示可能）
+- 投稿（コメント対しコメントが延々とできる, 非同期）
+- コメントの表示（非同期, 同一スレッド上にある直前, 直後のコメントを表示可能）
 - 削除(非同期)
 ### フォロー機能
-•	ユーザーのフォロー・フォロー解除（非同期）
-•	フォロー中のユーザーとフォロワーの一覧表示
+- ユーザーのフォロー・フォロー解除（非同期）
+- フォロー中のユーザーとフォロワーの一覧表示
 ### その他
-•	レスポンシブ対応
-•	テスト
+- レスポンシブ対応
+- テスト
 
 <!-- ## Laravel Sponsors -->
 ## 使用技術
@@ -75,7 +76,7 @@ If you're not in the mood to read, [Laracasts](https://laracasts.com) contains o
 - HTML
 - CSS
 - JavaScript
-- jQuery
+- jQuery(Ajax)
 - bootstrap
 ### バックエンド
 - PHP 7.2.33
