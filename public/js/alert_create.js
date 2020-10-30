@@ -80,5 +80,5 @@ function search(){
         }
         
     });
-    }
+}
 window.onload = initialize; 

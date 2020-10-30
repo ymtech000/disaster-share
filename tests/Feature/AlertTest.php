@@ -31,6 +31,7 @@ class AlertTest extends TestCase
             'content' => $alert->content,
             'location' => $alert->location,
             'area' => $alert->area,
+            'city' => $alert->city,
             'lat' => $alert->lat,
             'lng' => $alert->lng,
         ];
@@ -50,6 +51,7 @@ class AlertTest extends TestCase
             'content' => $alert->content,
             'location' => $alert->location,
             'area' => $alert->area,
+            'city' => $alert->city,
             'lat' => $alert->lat,
             'lng' => $alert->lng,
         ];
@@ -71,6 +73,7 @@ class AlertTest extends TestCase
             'content' => $alert->content,
             'location' => $alert->location,
             'area' => $alert->area,
+            'city' => $alert->city,
             'lat' => $alert->lat,
             'lng' => $alert->lng,
         ];
@@ -92,6 +95,7 @@ class AlertTest extends TestCase
             'content' => $alert->content,
             'location' => $alert->location,
             'area' => $alert->area,
+            'city' => $alert->city,
             'lat' => $alert->lat,
             'lng' => $alert->lng,
         ];

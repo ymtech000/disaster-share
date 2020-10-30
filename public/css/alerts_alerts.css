@@ -39,6 +39,13 @@
     white-space: nowrap;
 }
 
+.city_name{
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 @media screen and (max-width: 575px) {
     .alert_card{
        max-width:300px;

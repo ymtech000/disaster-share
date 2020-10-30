@@ -26,12 +26,9 @@
     border-radius:50%;
     margin-bottom:10px;
 }
-.submit-select{
-    margin-left:20px;
-    width:90%;
-    padding-bottom:10px;
-    max-width:250px;
-    margin:0 auto;
+
+.city{
+    margin-left:5px;
 }
 .search_form{
     display: flex;
@@ -40,32 +37,79 @@
     justify-content: center;
 }
 
+.city_name{
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.posts{
+    margin-top:10px;
+}
+
+@media screen and (min-width: 992px) {
+    .submit-select{
+        float:right;
+    }
+    .submit-select span{
+        float:left;
+    }
+    .city{
+        max-width:130px;
+    }
+}
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
+    .submit-select{
+        display:flex;
+    }
     .side{
        font-size:small;
     }
     .submit-form{
         margin-right:80px;
     }
+    .submit-select span{
+        min-width:130px;
+    }
 }
 @media screen and (min-width: 576px) and (max-width: 767px) {
+    .submit-select{
+        display:flex;
+    }
+    .submit-select span{
+        width:100%;
+    }
     .side{
        font-size:small;
     }
     .submit-form{
      margin-right:40px;
-}
+    }
 }
  @media screen and (max-width: 575px) {
+    .submit-select span{
+        float:left;
+    }
+    .submit-select{
+        margin-left:20px;
+        width:90%;
+        padding-bottom:10px;
+        max-width:250px;
+        margin:0 auto;
+    }
      .side{
        font-size:small;
     }
     .submit-form{
      margin-right:40px;
-}
+    }
     .alert_card{
        max-width:300px;
        margin:0 auto;
+    }
+    .city{
+        max-width:110px;
     }
 }

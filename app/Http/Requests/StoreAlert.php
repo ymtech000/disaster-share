@@ -29,6 +29,7 @@ class StoreAlert extends FormRequest
             'location' => 'required|max:15',
             'lat' => 'required',
             'area' => 'required',
+            'city' => 'required',
             'thefile' => [
                'required',
                'file',

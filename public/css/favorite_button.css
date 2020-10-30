@@ -1,0 +1,14 @@
+.fa-thumbs-up{
+    cursor:pointer;
+}
+.favorite:hover {
+  border-bottom-color: transparent;
+  transform: translateY(0.1875em);
+}
+.unfavorite:hover{
+    border-bottom-color: transparent;
+  transform: translateY(0.1875em);
+}
+.unfavorite{
+    color:red;
+}

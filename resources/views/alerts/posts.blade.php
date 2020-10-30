@@ -33,13 +33,11 @@
                                 </ul>
                             </small>
                         </div>
-                        <!-- <div class="card-body" style="max-height:235px;"> -->
-                            <a href="alerts/{{$alert->id}}"><img src="{{$alert->image}}" style="width:100%; max-height:200px;"></a>
-                        <!-- </div> -->
+                        <a href="alerts/{{$alert->id}}"><img src="{{$alert->image}}" style="width:100%; max-height:200px;"></a>
                         <div class="card-footer" style="border-top:solid; border-width:thin;">
                             <div class="title" style="font-size:1.3em;　text-align:left;">{{$alert->title}}</div>
                             <div class="side">
-                                <p>地区：{{$alert->area}}</p>
+                                <div class="city_name">{{$alert->area}}<span style="padding-left:8px;">{{$alert->city}}</span></div>
                                 <ul class="icons">
                                     <li><span class="far fa-comment"></span></li>
                                     <li>{{count($alert->alertcomments)}}</li>
@@ -72,7 +70,6 @@
                         </div>
                     </div>
                 </div>
-                
             @endforeach
         </table>
     @endif
@@ -80,5 +77,6 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="{{asset('/js/alerts_response.js')}}"></script>
-<script src="{{ asset('/js/area_searches.js') }}"></script>
+<script src="{{ asset('/js/city_search.js') }}"></script>
+<script src="{{ asset('/js/area_search.js') }}"></script>
 <link rel="stylesheet" href="{{asset('/css/alerts_posts.css')}}">

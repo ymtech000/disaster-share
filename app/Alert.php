@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alert extends Model
 {
-   protected $fillable = ['content', 'user_id', 'area', 'location', 'time', 'image', 'title', 'lat', 'lng', 'edit'];
+   protected $fillable = ['content', 'user_id', 'area', 'city', 'location', 'time', 'image', 'title', 'lat', 'lng', 'edit'];
 
     public function user()
     {
