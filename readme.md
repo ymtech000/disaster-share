@@ -21,7 +21,6 @@ URL: [https://www.disaster-share.com](https://www.disaster-share.com)
 - Database agnostic [schema migrations](https://laravel.com/docs/migrations).
 - [Robust background job processing](https://laravel.com/docs/queues).
 - [Real-time event broadcasting](https://laravel.com/docs/broadcasting). -->
-トップページのログインボタンからログインページに遷移していただき、「ゲストログインボタン」からゲストユーザーとしてログインしアプリをご使用いただけます。
 災害写真データベース: [http://www.saigaichousa-db-isad.jp/drsdb_photo/photoSearch.do](http://www.saigaichousa-db-isad.jp/drsdb_photo/photoSearch.do)
 
 
@@ -32,6 +31,7 @@ URL: [https://www.disaster-share.com](https://www.disaster-share.com)
 <!-- Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
 
 If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library. -->
+
 <!-- ## 工夫した点
 ・無限コメント機能
 ・CI/CDパイプラインの構築 -->
