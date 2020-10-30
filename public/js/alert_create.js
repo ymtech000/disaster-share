@@ -3,7 +3,7 @@ var marker;
 function initialize() {
     // 地図を表示する際のオプションを設定
     var mapOptions = {
-        center: new google.maps.LatLng( 34.7024, 135.4959 ),
+        center: new google.maps.LatLng( 35.6809591, 139.7673068 ),
         zoom: 14,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
