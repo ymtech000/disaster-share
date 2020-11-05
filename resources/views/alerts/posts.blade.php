@@ -79,4 +79,5 @@
 <script src="{{asset('/js/alerts_response.js')}}"></script>
 <script src="{{ asset('/js/city_search.js') }}"></script>
 <script src="{{ asset('/js/area_search.js') }}"></script>
+<script src="{{ asset('/js/submit_disable.js') }}"></script>
 <link rel="stylesheet" href="{{asset('/css/alerts_posts.css')}}">

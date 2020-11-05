@@ -273,6 +273,7 @@
     <script src="{{asset('/js/favorite.js')}}"></script>
     <script src="{{asset('/js/comment_ajax.js')}}"></script>
     <script src="{{asset('/js/map.js')}}"></script>
+    <script src="{{ asset('/js/submit_disable.js') }}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoKnN8__KItXFDswfAfs_y3VHwfbX3_ms&callback=initMap"></script>
     <link rel="stylesheet" href="{{ asset('css/alerts_show.css') }}">
 @endsection

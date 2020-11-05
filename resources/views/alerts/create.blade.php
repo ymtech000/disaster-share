@@ -45,12 +45,13 @@
                 <input type="hidden" name='lng' id='lng' class="form-control">
             </div>
         </div>
-        <p class="submit">{!! Form::button('投稿', ['class' => 'btn btn-primary', 'onclick' => 'submit();']) !!}</p>
+        <p class="submit">{!! Form::button('投稿', ['class' => 'btn btn-primary submit_button', 'onclick' => 'submit();']) !!}</p>
     {!! Form::close() !!}
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="{{ asset('/js/alert_create.js') }}"></script>
 <script src="{{ asset('/js/city.js') }}"></script>
+<script src="{{ asset('/js/submit_disable.js') }}"></script>
 <script src="{{ asset('/js/file_upload.js') }}"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoKnN8__KItXFDswfAfs_y3VHwfbX3_ms"></script>
 @endsection
