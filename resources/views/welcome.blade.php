@@ -53,7 +53,7 @@
             <div class="bg-mask">
                 <div class="app-title">
                 <font face="Courier"><h1>DISASTER SHARE</h1></font>
-                <font face="Courier"><h4 style="margin-top:40px;">大阪府を対象とした災害情報共有サービス</h4></font>
+                <font face="Courier"><h4 style="margin-top:40px;">災害情報共有サービス</h4></font>
                     <p>{!! link_to_route('signup.get', '新規登録はこちら', [], ['class' => 'btn btn-lg btn-primary']) !!}</p>
                 </div>
             </div>

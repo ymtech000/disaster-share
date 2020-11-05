@@ -54,5 +54,6 @@
 <script src="{{ asset('/js/city.js') }}"></script>
 <script src="{{ asset('/js/file_upload.js') }}"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoKnN8__KItXFDswfAfs_y3VHwfbX3_ms"></script>
+<script src="{{ asset('/js/submit_disable.js') }}"></script>
 @endsection
 <link rel="stylesheet" href="{{asset('/css/alerts_create_edit.css')}}">
