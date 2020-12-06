@@ -52,9 +52,12 @@
         <div class="full-image">
             <div class="bg-mask">
                 <div class="app-title">
-                <font face="Courier"><h1>DISASTER SHARE</h1></font>
-                <font face="Courier"><h4 style="margin-top:40px;">災害情報共有サービス</h4></font>
-                    <p>{!! link_to_route('signup.get', '新規登録はこちら', [], ['class' => 'btn btn-lg btn-primary']) !!}</p>
+                    <font face="Courier"><h1>DISASTER SHARE</h1></font>
+                    <font face="Courier"><h4 style="margin-top:40px;">災害情報共有サービス</h4></font>
+                    <div class="buttons">
+                        <p class="left">{!! link_to_route('signup.get', '新規登録はこちら', [], ['class' => 'btn btn-lg btn-primary']) !!}</p>
+                        <p class="right">{!! link_to_route('login.guest', 'ゲストログイン', [], ['class' => 'btn btn-lg btn-warning']) !!}</p>
+                    </div>
                 </div>
             </div>
         </div>
