@@ -5,6 +5,17 @@
     background-size: cover;
     height: 100vh;
 }
+.buttons{
+    display:flex;
+    margin: 0 auto;
+    max-width: 410px;
+}
+.left{
+    margin-right:20px;
+}
+.right{
+    margin-left:20px;
+}
 h1{
     font-size:4rem;
 }
